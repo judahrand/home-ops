@@ -16,7 +16,7 @@ vars:
   PIP_REQUIREMENTS_FILE: "{{.ROOT_DIR}}/requirements.txt"
   SOPS_CONFIG_FILE: "{{.ROOT_DIR}}/.sops.yaml"
   # Binaries
-  PYTHON_BIN: python3
+  UV_BIN: uv
 
 env:
   KUBECONFIG: "{{.KUBECONFIG_FILE}}"
@@ -42,7 +42,7 @@ tasks:
   init:
     desc: Initialize configuration files
     cmds:
-      - cp -n {{.BOOTSTRAP_CONFIG_FILE | replace ".yaml" ".sample.yaml"}} {{.BOOTSTRAP_CONFIG_FILE}}
+      - cp --update=none {{.BOOTSTRAP_CONFIG_FILE | replace ".yaml" ".sample.yaml"}} {{.BOOTSTRAP_CONFIG_FILE}}
       - cmd: echo === Configuration file copied ===
       - cmd: echo Proceed with updating the configuration files...
       - cmd: echo {{.BOOTSTRAP_CONFIG_FILE}}
@@ -61,7 +61,7 @@ tasks:
 
   .template:
     internal: true
-    cmd: "{{.VIRTUAL_ENV}}/bin/makejinja"
+    cmd: "{{.UV_BIN}} run makejinja"
     preconditions:
       - msg: Missing virtual environment
         sh: test -d {{.VIRTUAL_ENV}}

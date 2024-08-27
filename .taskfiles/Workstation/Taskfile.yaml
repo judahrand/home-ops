@@ -19,9 +19,8 @@ tasks:
   venv:
     desc: Set up virtual environment
     cmds:
-      - "{{.PYTHON_BIN}} -m venv {{.VIRTUAL_ENV}}"
-      - '{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade pip setuptools wheel'
-      - '{{.VIRTUAL_ENV}}/bin/python3 -m pip install --upgrade --requirement "{{.PIP_REQUIREMENTS_FILE}}"'
+      - '{{.UV_BIN}} venv {{.VIRTUAL_ENV}}'
+      - '{{.UV_BIN}} pip sync "{{.PIP_REQUIREMENTS_FILE}}"'
     sources:
       - "{{.PIP_REQUIREMENTS_FILE}}"
     generates:
@@ -69,3 +68,4 @@ tasks:
         platforms: ["linux/arm64"]
       - cmd: chmod +x kubectl
       - cmd: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | USE_SUDO="false" HELM_INSTALL_DIR="." bash
+      - cmd: curl -LsSf https://astral.sh/uv/install.sh | bash
