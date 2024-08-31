@@ -1,6 +1,5 @@
 ---
-autoDirectNodeRoutes: false
-directRoutingSkipUnreachable: false
+autoDirectNodeRoutes: true
 bpf:
   masquerade: false # Required for Talos `.machine.features.hostDNS.forwardKubeDNSToHost`
 cgroup:
@@ -37,7 +36,7 @@ operator:
   replicas: 1
   rollOutPods: true
 rollOutCiliumPods: true
-routingMode: tunnel
+routingMode: native
 securityContext:
   capabilities:
     ciliumAgent:
