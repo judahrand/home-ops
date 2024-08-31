@@ -53,6 +53,13 @@ nodes:
           - network: 0.0.0.0/0
             gateway: "192.168.1.1"
         mtu: 1500
+  - hostname: "kubernetes-oracle-0"
+    ipAddress: "152.67.151.244"
+    installDisk: "/dev/sda"
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    patches:
+      - "@./patches/oracle/ntp.yaml"
 
 # Global patches
 patches:
@@ -61,6 +68,7 @@ patches:
   - "@./patches/global/disable-search-domain.yaml"
   - "@./patches/global/hostdns.yaml"
   - "@./patches/global/kubelet.yaml"
+  - "@./patches/global/kubespan.yaml"
   - "@./patches/global/openebs-local.yaml"
   - "@./patches/global/sysctl.yaml"
 
