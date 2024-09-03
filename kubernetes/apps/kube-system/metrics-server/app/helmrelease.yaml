@@ -22,7 +22,7 @@ spec:
       retries: 3
   values:
     args:
-      - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+      - --kubelet-preferred-address-types=Hostname,InternalDNS,InternalIP,ExternalDNS,ExternalIP
       - --kubelet-use-node-status-port
       - --metric-resolution=15s
     metrics:
