@@ -21,11 +21,9 @@ spec:
     remediation:
       retries: 3
   values:
-    defaultArgs:
-      - --cert-dir=/tmp
-      - --kubelet-preferred-address-types=Hostname,InternalDNS,InternalIP,ExternalDNS,ExternalIP
-      - --kubelet-use-node-status-port
-      - --metric-resolution=15s
+    args:
+      # TODO: Work out how to securely deploy the `mertics-server`
+      - --kubelet-insecure-tls
     metrics:
       enabled: true
     serviceMonitor:
