@@ -6,6 +6,7 @@ resources:
   - ./cilium.yaml
   - ./coredns.yaml
   - ./descheduler.yaml
+  - ./external-secrets.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
