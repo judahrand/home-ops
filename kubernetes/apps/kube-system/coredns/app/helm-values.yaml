@@ -44,7 +44,7 @@ servers:
       - name: cache
         parameters: 30
       - name: forward
-        parameters: . 10.97.43.236
+        parameters: . 10.100.129.13
 affinity:
   nodeAffinity:
     requiredDuringSchedulingIgnoredDuringExecution:
