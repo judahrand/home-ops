@@ -28,6 +28,12 @@ servers:
         configBlock: |-
           pods insecure
           fallthrough in-addr.arpa ip6.arpa
+      - name: tailscale
+        parameters: ts.net
+        configBlock: |-
+          errors
+          cache 30
+          forward . 10.100.124.196
       - name: forward
         parameters: . /etc/resolv.conf
       - name: cache

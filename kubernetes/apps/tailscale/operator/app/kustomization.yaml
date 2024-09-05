@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./operator-oauth.sops.yaml
+  - ./ts-dns.yaml
