@@ -11,6 +11,7 @@ resources:
   - ./external-secrets.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
+  - ./minio.yaml
   - ./node-feature-discovery.yaml
   - ./openebs.yaml
   - ./postfinance.yaml
