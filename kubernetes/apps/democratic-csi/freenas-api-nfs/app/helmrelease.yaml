@@ -43,14 +43,14 @@ spec:
           allowInsecure: true
         zfs:
           datasetProperties:
-            "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+            "org.truenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
           datasetParentName: main/kubernetes/main/nfs/volumes
-          detachedSnapshotsDatasetParentName: main/kubernetess/main/snapshots
+          detachedSnapshotsDatasetParentName: main/kubernetess/main/nfs/snapshots
           datasetEnableQuotas: true
           datasetEnableReservation: false
-          datasetPermissionsMode: "0777"
-          datasetPermissionsUser: 0
-          datasetPermissionsGroup: 0
+          datasetPermissionsMode: "0750"
+          datasetPermissionsUser: 3004  # democratic-csi
+          datasetPermissionsGroup: 3004  # democratic-csi
           # not supported yet
           #datasetPermissionsAcls:
           #- "-m everyone@:full_set:allow"
@@ -60,10 +60,8 @@ spec:
           shareAlldirs: false
           shareAllowedHosts: []
           shareAllowedNetworks: []
-          shareMaprootUser: root
-          shareMaprootGroup: root
-          shareMapallUser: ""
-          shareMapallGroup: ""
+          shareMapallUser: democratic-csi
+          shareMapallGroup: democratic-csi
 
     storageClasses:
       - name: freenas-api-nfs
