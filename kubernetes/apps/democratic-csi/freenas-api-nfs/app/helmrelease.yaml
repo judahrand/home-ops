@@ -30,6 +30,7 @@ spec:
   values:
     csiDriver:
       name: org.democratic-csi.nfs
+
     driver:
       config:
         driver: freenas-api-nfs
@@ -63,3 +64,22 @@ spec:
           shareMaprootGroup: root
           shareMapallUser: ""
           shareMapallGroup: ""
+
+    storageClasses:
+      - name: freenas-api-nfs
+        defaultClass: false
+        reclaimPolicy: Delete
+        volumeBindingMode: Immediate
+        allowVolumeExpansion: true
+        parameters:
+          fsType: nfs
+        mountOptions:
+          - noatime
+          - nfsvers=4.2
+          - nolock
+        secrets:
+          provisioner-secret:
+          controller-publish-secret:
+          node-stage-secret:
+          node-publish-secret:
+          controller-expand-secret:
