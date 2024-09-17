@@ -2,13 +2,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: minio-tenant
+  name: minio
 spec:
   interval: 30m
   chart:
     spec:
-      chart: tenant
-      version: 6.0.3
+      chart: minio
+      version: 5.2.0
       sourceRef:
         kind: HelmRepository
         name: minio
@@ -21,16 +21,25 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  valuesFrom:
-    - targetPath: tenant.configSecret.accessKey
-      kind: Secret
-      name: minio-secret
-      valuesKey: MINIO_ROOT_USER
-    - targetPath: tenant.configSecret.secretKey
-      kind: Secret
-      name: minio-secret
-      valuesKey: MINIO_ROOT_PASSWORD
   values:
+    image:
+      repository: quay.io/minio/minio
+      tag: RELEASE.2024-09-13T20-26-02Z
+
+    mcImage:
+      repository: quay.io/minio/mc
+      tag: RELEASE.2024-09-13T20-26-02Z
+
+    mode: standalone
+    existingSecret: minio-secret
+
+    # Number of drives attached to a node
+    drivesPerNode: 1
+    # Number of MinIO containers running
+    replicas: 1
+    # Number of expanded MinIO clusters
+    pools: 1
+
     tenant:
       name: minio
       pools:
