@@ -12,11 +12,8 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: csi-driver-nfs
-      namespace: kube-system
     - name: external-secrets-stores
-      namespace: external-secrets
     - name: tailscale-dns
-      namespace: tailscale
   path: ./kubernetes/apps/minio/minio/app
   prune: true
   sourceRef:
