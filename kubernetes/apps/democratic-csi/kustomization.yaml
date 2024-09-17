@@ -7,4 +7,3 @@ resources:
   - ./namespace.yaml
   # Flux-Kustomizations
   - ./freenas-api-nfs/ks.yaml
-  - ./snapshot-controller/ks.yaml
