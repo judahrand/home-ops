@@ -2,7 +2,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app democratic-csi
+  name: &app freenas-api-nfs
   namespace: flux-system
 spec:
   targetNamespace: democratic-csi
@@ -11,7 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: tailscale-dns
-  path: ./kubernetes/apps/democratic-csi/democratic-csi/app
+  path: ./kubernetes/apps/democratic-csi/freenas-api-nfs/app
   prune: true
   sourceRef:
     kind: GitRepository
