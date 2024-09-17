@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: csi-driver-nfs
+    - name: freenas-api-nfs
     - name: external-secrets-stores
     - name: minio-operator
     - name: tailscale-dns
