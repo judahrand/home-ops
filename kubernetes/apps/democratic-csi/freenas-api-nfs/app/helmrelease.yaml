@@ -44,7 +44,7 @@ spec:
         zfs:
           datasetProperties:
             "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
-          datasetParentName: main/kubernetes/main/volumes
+          datasetParentName: main/kubernetes/main/nfs/volumes
           detachedSnapshotsDatasetParentName: main/kubernetess/main/snapshots
           datasetEnableQuotas: true
           datasetEnableReservation: false
