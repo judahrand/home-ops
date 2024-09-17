@@ -10,6 +10,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: tailscale-operator
+      namespace: tailscale
   path: ./kubernetes/apps/tailscale/dns/app
   prune: true
   sourceRef:

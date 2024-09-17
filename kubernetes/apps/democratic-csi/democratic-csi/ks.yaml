@@ -9,6 +9,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  dependsOn:
+    - name: tailscale-dns
+      namespace: tailscale
   path: ./kubernetes/apps/democratic-csi/democratic-csi/app
   prune: true
   sourceRef:
