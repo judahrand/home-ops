@@ -88,10 +88,4 @@ kind: Workers
 name: default
 machineClass:
   name: Metal Nodes
-  size: 1
----
-kind: Workers
-name: oracle
-machineClass:
-  name: Oracle Nodes
-  size: 1
+  size: 2
