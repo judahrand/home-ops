@@ -2,7 +2,7 @@
 kind: Cluster
 name: main
 kubernetes:
-  version: v1.30.4
+  version: v1.30.5
 talos:
   version: v1.7.6
 features:
