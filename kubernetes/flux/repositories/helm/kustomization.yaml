@@ -10,6 +10,7 @@ resources:
   - ./csi-driver-nfs.yaml
   - ./democratic-csi.yaml
   - ./descheduler.yaml
+  - ./emqx.yaml
   - ./external-secrets.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
