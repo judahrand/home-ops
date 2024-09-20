@@ -60,6 +60,14 @@ patches:
                 - rw
               source: /var/openebs/local
               type: bind
+  - name: hostdns.yaml
+    inline:
+      machine:
+        features:
+          hostDNS:
+            enabled: true
+            resolveMemberNames: true
+            forwardKubeDNSToHost: false
 ---
 kind: ControlPlane
 machineClass:
