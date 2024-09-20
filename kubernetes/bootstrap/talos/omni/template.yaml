@@ -5,6 +5,9 @@ kubernetes:
   version: v1.30.5
 talos:
   version: v1.7.6
+systemExtensions:
+  - siderolabs/qemu-guest-agent
+  - siderolabs/iscsi-tools
 features:
   backupConfiguration:
     interval: 1h0m0s
