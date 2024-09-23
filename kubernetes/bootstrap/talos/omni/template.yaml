@@ -2,9 +2,9 @@
 kind: Cluster
 name: main
 kubernetes:
-  version: v1.30.5
+  version: v1.31.1
 talos:
-  version: v1.7.6
+  version: v1.8.0
 systemExtensions:
   - siderolabs/qemu-guest-agent
   - siderolabs/iscsi-tools
