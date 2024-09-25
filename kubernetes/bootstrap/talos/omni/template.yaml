@@ -59,12 +59,12 @@ patches:
           openebs.io/engine: mayastor
         kubelet:
           extraMounts:
-            - destination: /var/openebs/local
+            - destination: /var/local/openebs
               options:
                 - bind
                 - rshared
                 - rw
-              source: /var/openebs/local
+              source: /var/local/openebs
               type: bind
   - name: hostdns.yaml
     inline:
