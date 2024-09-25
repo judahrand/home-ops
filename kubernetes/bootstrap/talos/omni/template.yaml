@@ -7,7 +7,6 @@ talos:
   version: v1.8.0
 systemExtensions:
   - siderolabs/qemu-guest-agent
-  - siderolabs/iscsi-tools
 features:
   backupConfiguration:
     interval: 1h0m0s
