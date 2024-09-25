@@ -29,7 +29,7 @@ spec:
           enabled: false
       replicated:
         mayastor:
-          enabled: true
+          enabled: false
           io_engine:
             resources:
               limits:
