@@ -102,4 +102,4 @@ kind: Workers
 name: default
 machineClass:
   name: Metal Nodes
-  size: 2
+  size: 3
