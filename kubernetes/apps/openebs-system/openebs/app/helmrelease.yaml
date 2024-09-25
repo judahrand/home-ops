@@ -30,6 +30,12 @@ spec:
       replicated:
         mayastor:
           enabled: true
+          io_engine:
+            resources:
+              limits:
+                cpu: "250m"
+              requests:
+                cpu: "250m"
     openebs-crds:
       csi:
         volumeSnapshots:
