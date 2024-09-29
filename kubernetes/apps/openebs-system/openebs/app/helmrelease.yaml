@@ -36,13 +36,9 @@ spec:
           enabled: false
     localpv-provisioner:
       localpv:
+        basePath: /var/local/openebs
         image:
           registry: quay.io/
       helperPod:
         image:
           registry: quay.io/
-      hostpathClass:
-        enabled: true
-        name: openebs-hostpath
-        isDefaultClass: false
-        basePath: /var/openebs/local

@@ -1,18 +1,21 @@
 ---
-autoDirectNodeRoutes: false
+autoDirectNodeRoutes: true
+bandwidthManager:
+  enabled: true
+  bbr: true
 bpf:
-  masquerade: false # Required for Talos `.machine.features.hostDNS.forwardKubeDNSToHost`
+  masquerade: true
+  tproxy: true
 cgroup:
   automount:
     enabled: false
   hostRoot: /sys/fs/cgroup
 cluster:
   id: 1
-  name: "home-kubernetes"
-cni:
-  exclusive: false
+  name: main
 # NOTE: devices might need to be set if you have more than one active NIC on your hosts
 # devices: eno+ eth+
+enableRuntimeDeviceDetection: true
 endpointRoutes:
   enabled: true
 envoy:
@@ -21,7 +24,7 @@ hubble:
   enabled: false
 ipam:
   mode: kubernetes
-ipv4NativeRoutingCIDR: ""
+ipv4NativeRoutingCIDR: 10.244.0.0/16
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
@@ -30,13 +33,12 @@ l2announcements:
   enabled: true
 loadBalancer:
   algorithm: maglev
-  mode: snat
+  mode: dsr
 localRedirectPolicy: true
 operator:
-  replicas: 1
   rollOutPods: true
 rollOutCiliumPods: true
-routingMode: tunnel
+routingMode: native
 securityContext:
   capabilities:
     ciliumAgent:

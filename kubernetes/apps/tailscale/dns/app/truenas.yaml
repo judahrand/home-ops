@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: truenas
+  namespace: tailscale
+  annotations:
+    tailscale.com/tailnet-fqdn: truenas.tail419a1.ts.net
+spec:
+  externalName: ts-truenas
+  type: ExternalName
