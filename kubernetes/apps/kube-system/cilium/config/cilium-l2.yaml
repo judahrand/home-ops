@@ -21,4 +21,6 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - cidr: "192.168.1.0/24"
+    - # Controller VIP: 10.0.42.120
+      start: 10.0.42.121
+      stop: 10.0.42.149
