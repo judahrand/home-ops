@@ -7,7 +7,6 @@ talos:
   version: v1.8.0
 systemExtensions:
   - siderolabs/qemu-guest-agent
-  - siderolabs/iscsi-tools
 features:
   backupConfiguration:
     interval: 1h0m0s
@@ -60,12 +59,12 @@ patches:
           openebs.io/engine: mayastor
         kubelet:
           extraMounts:
-            - destination: /var/openebs/local
+            - destination: /var/local/openebs
               options:
                 - bind
                 - rshared
                 - rw
-              source: /var/openebs/local
+              source: /var/local/openebs
               type: bind
   - name: hostdns.yaml
     inline:
@@ -103,4 +102,4 @@ kind: Workers
 name: default
 machineClass:
   name: Metal Nodes
-  size: 2
+  size: 3
