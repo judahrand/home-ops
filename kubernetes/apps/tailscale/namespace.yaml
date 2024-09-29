@@ -5,4 +5,4 @@ metadata:
   name: tailscale
   labels:
     pod-security.kubernetes.io/enforce: privileged
-    kustomize.toolkit.fluxcd.io/prune: disabled
+    goldilocks.fairwinds.com/enabled: "true"
