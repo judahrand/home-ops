@@ -97,6 +97,14 @@ patches:
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
+  - name: virtual-shared-ip.yaml
+    inline:
+      machine:
+        network:
+          interfaces:
+            - interface: vmbr0
+              vip:
+                ip: 10.0.42.120
 ---
 kind: Workers
 name: default
