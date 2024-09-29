@@ -12,6 +12,7 @@ resources:
   - ./descheduler.yaml
   - ./emqx.yaml
   - ./external-secrets.yaml
+  - ./fairwinds.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
