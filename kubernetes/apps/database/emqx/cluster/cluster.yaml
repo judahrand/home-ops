@@ -45,3 +45,10 @@ spec:
         - name: init-user
           secret:
             secretName: emqx-init-user-secret
+  listenersServiceTemplate:
+    metadata:
+      annotations:
+        external-dns.alpha.kubernetes.io/hostname: mqtt.judahrand.net
+        io.cilium/lb-ipam-ips: 10.0.42.126
+    spec:
+      type: LoadBalancer
