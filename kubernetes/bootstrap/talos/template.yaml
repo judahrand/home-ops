@@ -74,6 +74,12 @@ patches:
             enabled: true
             resolveMemberNames: true
             forwardKubeDNSToHost: false
+  - name: nameservers.yaml
+    inline:
+      machine:
+        network:
+          nameservers:
+            - 10.0.42.1
 ---
 kind: ControlPlane
 machineClass:
