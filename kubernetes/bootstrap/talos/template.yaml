@@ -96,6 +96,14 @@ patches:
         network:
           nameservers:
             - 10.0.42.1
+  - name: udev.yaml
+    inline:
+      machine:
+        udev:
+          rules:
+            # Google Coral USB Accelerator
+            - SUBSYSTEMS=="usb", ATTRS{idVendor}=="1a6e", ATTRS{idProduct}=="089a", GROUP="20", MODE="0660"
+            - SUBSYSTEMS=="usb", ATTRS{idVendor}=="18d1", ATTRS{idProduct}=="9302", GROUP="20", MODE="0660"
 ---
 kind: ControlPlane
 machineClass:
