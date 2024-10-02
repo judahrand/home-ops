@@ -4,6 +4,7 @@ kind: Namespace
 metadata:
   name: home
   labels:
+    goldilocks.fairwinds.com/enabled: "true"
     kustomize.toolkit.fluxcd.io/prune: disabled
     # TODO: Temporary until Frigate workaround is found
     pod-security.kubernetes.io/audit: privileged
