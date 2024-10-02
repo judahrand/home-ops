@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zigbee2mqtt
+spec:
+  selector:
+    matchLabels:
+      app: zigbee2mqtt
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: zigbee2mqtt
+    spec:
+      containers:
+        - image: koenkk/zigbee2mqtt:1.40.0
+          name: zigbee2mqtt
+          envFrom:
+            - configMapRef:
+                name: zigbee2mqtt-config
+            - secretRef:
+                name: zigbee2mqtt-secret
+          env:
+            - name: "ZIGBEE2MQTT_CONFIG_FRONTEND"
+              value: "false"
+            - name: "ZIGBEE2MQTT_CONFIG_FRONTEND_PORT"
+              value: "8080"
+            - name: "ZIGBEE2MQTT_CONFIG_FRONTEND_URL"
+              value: https://zigbee2mqtt.judahrand.net
+          ports:
+            - containerPort: 8080
+              name: http
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 30
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          nfs:
+            server: truenas.lan
+            path: /mnt/main/kubernetes/main/nfs/volumes/zigbee2mqtt
