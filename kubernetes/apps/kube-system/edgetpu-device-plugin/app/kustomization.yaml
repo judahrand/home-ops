@@ -1,0 +1,9 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ./daemonset.yaml
+images:
+  - name: ghcr.io/judahrand/edgetpu-device-plugin
+    newName: ghcr.io/judahrand/edgetpu-device-plugin
+    newTag: latest@sha256:73fe0223b466a3b896e517b38995d31e7e807f58898281bb02d1b00c8abef33c
