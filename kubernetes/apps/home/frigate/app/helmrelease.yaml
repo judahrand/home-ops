@@ -33,9 +33,9 @@ spec:
     envFromSecrets:
       - frigate-secret
 
-    coral:
-      enabled: true
-      hostPath: /dev/bus/usb
+    resources:
+      limits:
+        judahrand.org/edgetpu: 1
 
     nodeSelector:
       feature.node.kubernetes.io/tpu: coral-usb
