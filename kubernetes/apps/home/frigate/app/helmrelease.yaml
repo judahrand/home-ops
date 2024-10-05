@@ -35,7 +35,7 @@ spec:
 
     resources:
       limits:
-        judahrand.org/edgetpu: 1
+        squat.ai/edgetpu: 1
 
     nodeSelector:
       feature.node.kubernetes.io/edgetpu.present: "true"

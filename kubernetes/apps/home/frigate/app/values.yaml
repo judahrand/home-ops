@@ -1,0 +1,212 @@
+image:
+  repository: ghcr.io/blakeblackshear/frigate
+  tag: 0.14.1
+
+env:
+  LIBVA_DRIVER_NAME: radeonsi
+
+envFromSecrets:
+  - frigate-secret
+
+resources:
+  limits:
+    judahrand.org/edgetpu: 1
+
+nodeSelector:
+  feature.node.kubernetes.io/tpu: coral-usb
+
+# TODO: get GPU acceleration working
+# extraVolumes:
+#   - name: renderd128
+#     hostPath:
+#       path: /dev/dri/renderD128
+
+# extraVolumeMounts:
+#   - name: renderd128
+#     mountPath: /dev/dri/renderD128
+
+# TODO: remove this when HomeAssistant can talk directly to Frigate
+service:
+  type: LoadBalancer
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: homeassistant-frigate.judahrand.net
+    io.cilium/lb-ipam-ips: 10.0.42.127
+
+ingress:
+  enabled: true
+  ingressClassName: internal
+  annotations:
+    external-dns.alpha.kubernetes.io/target: internal.judahrand.net
+  hosts:
+    - host: frigate.judahrand.net
+      paths:
+        - path: '/'
+          portName: http-auth
+
+persistence:
+  config:
+    enabled: true
+    existingClaim: frigate-config
+  media:
+    enabled: true
+    existingClaim: frigate-media
+
+config: |
+  mqtt:
+    host: emqx-listeners.database.svc.cluster.local
+    user: "{FRIGATE_MQTT_USER}"
+    password: "{FRIGATE_MQTT_PASSWORD}"
+
+  ffmpeg:
+    # hwaccel_args: preset-vaapi
+    output_args:
+      record: preset-record-generic-audio-copy
+
+  tls:
+    enabled: false
+
+  model:
+    path: plus://b7dfe8fcb375275b85f825644be3699c
+
+  detectors:
+    coral:
+      type: edgetpu
+      device: usb
+
+  logger:
+    default: info
+
+  objects:
+    track:
+      - amazon
+      - car
+      - cat
+      - dog
+      - face
+      - license_plate
+      - package
+      - person
+      - truck
+    filters:
+      dog:
+        min_score: .7
+        threshold: .9
+      cat:
+        min_score: .65
+        threshold: .8
+      face:
+        min_score: .7
+      package:
+        min_score: .65
+        threshold: .9
+      license_plate:
+        min_score: .6
+      amazon:
+        min_score: .75
+      ups:
+        min_score: .75
+      fedex:
+        min_score: .75
+      person:
+        min_score: .65
+        threshold: .85
+      car:
+        min_score: .65
+        threshold: .85
+
+  snapshots:
+    enabled: true
+    retain:
+      default: 90
+
+  record:
+    enabled: True
+    retain:
+      days: 0
+      mode: all
+    events:
+      retain:
+        default: 30
+        mode: motion
+
+  audio:
+    enabled: true
+    listen:
+      - bark
+      - car_alarm
+      - fire_alarm
+      - glass
+      - honk
+      - scream
+      - speech
+      - yell
+
+  go2rtc:
+    streams:
+      doorbell_cam:
+        - ffmpeg:http://10.0.60.153/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
+        - rtsp://reolink_ip/Preview_01_sub
+        # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.lan:554/Preview_01_main
+        # - ffmpeg:doorbell_cam#video=copy#audio=copy#audio=opus
+      doorbell_cam_sub:
+        - ffmpeg:http://10.0.60.153/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+        # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.lan/Preview_01_sub
+        # - ffmpeg:doorbell_cam#audio=aac
+      webrtc:
+        candidates:
+          - homeassistant.local:8555
+          - stun:8555
+
+  cameras:
+    doorbell_cam:
+      audio:
+        enabled: true
+      ffmpeg:
+        inputs:
+          - path: rtsp://127.0.0.1:8554/doorbell_cam?video=copy&audio=aac
+            input_args: preset-rtsp-restream
+            roles:
+              - record
+          - path: rtsp://127.0.0.1:8554/doorbell_cam_sub?video=copy&audio=aac
+            input_args: preset-rtsp-restream
+            roles:
+              - audio
+              - detect
+      record:
+        enabled: true
+        events:
+          pre_capture: 30
+          post_capture: 30
+          retain:
+            default: 30
+            mode: active_objects
+      detect:
+        width: 640
+        height: 480
+        fps: 7
+      zones:
+        driveway:
+          coordinates: 166,303,383,339,373,480,0,480,0,329
+          objects:
+            - person
+            - cat
+            - dog
+        driveway_entrance:
+          coordinates: 213,289,365,309,369,328,198,301
+          objects:
+            - car
+            - truck
+      motion:
+        threshold: 25
+        mask: 0.641,0,0.636,0.06,0.345,0.06,0.347,0
+      review:
+        alerts:
+          required_zones:
+            - driveway
+            - driveway_entrance
+  version: 0.14
+  camera_groups:
+    Driveway:
+      order: 1
+      icon: LuCar
+      cameras: doorbell_cam
