@@ -5,6 +5,8 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  TIMEZONE: "Europe/London"
+
   # Load balancer IPs
   LOAD_BALANCER_INTERNAL_NGINX: 10.0.42.121
   LOAD_BALANCER_POSTGRES: 10.0.42.125

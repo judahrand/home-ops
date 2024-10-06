@@ -1,0 +1,115 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app esphome
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.0
+      interval: 15m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    crds: CreateReplace
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: uninstall
+  rollback:
+    recreate: true
+    cleanupOnFail: true
+  uninstall:
+    keepHistory: false
+  values:
+    controllers:
+      esphome:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name":"multus-servers",
+                "namespace": "home",
+                "ips": ["10.0.42.85/24"]
+              }]
+        containers:
+          app:
+            image:
+              repository: esphome/esphome
+              tag: 2024.9.2
+              pullPolicy: IfNotPresent
+            env:
+              TZ: "${TIMEZONE}"
+              ESPHOME__INSTANCE_NAME: ESPHome
+              ESPHOME__PORT: &port 6052
+              ESPHOME__APPLICATION_URL: &host "esphome.judahrand.net"
+              ESPHOME__LOG_LEVEL: info
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
+            resources:
+              requests:
+                memory: "256M"
+              limits:
+                memory: "8G"
+
+    # defaultPodOptions:
+    #   affinity:
+    #     podAffinity:
+    #       requiredDuringSchedulingIgnoredDuringExecution:
+    #         - labelSelector:
+    #             matchExpressions:
+    #               - key: app.kubernetes.io/name
+    #                 operator: In
+    #                 values: ["multus"]
+    #           topologyKey: kubernetes.io/hostname
+    #           namespaceSelector: {}
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    persistence:
+      config:
+        enabled: true
+        type: nfs
+        server: truenas.lan
+        path: /mnt/main/esphome
+
+    ingress:
+      app:
+        enabled: true
+        className: "internal"
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        # tls:
+        #   - hosts:
+        #     - *host
