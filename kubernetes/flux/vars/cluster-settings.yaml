@@ -5,4 +5,8 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
-  SETTING_EXAMPLE: Global settings for your cluster go in this file, this file is NOT encrypted
+  # Load balancer IPs
+  LOAD_BALANCER_INTERNAL_NGINX: 10.0.42.121
+  LOAD_BALANCER_POSTGRES: 10.0.42.125
+  LOAD_BALANCER_EMQX: 10.0.42.126
+  LOAD_BALANCER_FRIGATE: 10.0.42.127
