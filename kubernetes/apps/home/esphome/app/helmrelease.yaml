@@ -41,7 +41,7 @@ spec:
               [{
                 "name":"multus-servers",
                 "namespace": "home",
-                "ips": ["10.0.42.85/24"]
+                "ips": ["${MULTUS_ESPHOME}/24"]
               }]
         containers:
           app:
