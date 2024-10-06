@@ -238,4 +238,4 @@ spec:
             path: /run/k8s.cni.cncf.io
         - name: host-run-netns
           hostPath:
-            path: /run/netns/
+            path: /var/run/netns/
