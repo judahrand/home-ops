@@ -96,6 +96,22 @@ patches:
         network:
           nameservers:
             - 10.0.42.1
+  - name: interfaces.yaml
+    inline:
+      machine:
+        network:
+          interfaces:
+            - deviceSelector:
+                hardwareAddr: bc:24:11:*
+                driver: virtio*
+              dhcp: true
+              # vlans:
+              #   - vlanId: 42
+              #     dhcp: true
+              #     mtu: 1500
+              #   - vlanId: 60
+              #     dhcp: true
+              #     mtu: 1500
 ---
 kind: ControlPlane
 machineClass:
