@@ -104,19 +104,18 @@ patches:
             - deviceSelector:
                 hardwareAddr: bc:24:11:*
                 driver: virtio*
-              dhcp: true
-              # vlans:
-              #   - vlanId: 42
-              #     dhcp: true
-              #     mtu: 1500
-              #   - vlanId: 60
-              #     dhcp: true
-              #     mtu: 1500
+              dhcp: false
+              vlans:
+                - vlanId: 42
+                  dhcp: true
+                  mtu: 1500
+                - vlanId: 60
+                  dhcp: true
+                  mtu: 1500
 ---
 kind: ControlPlane
-machineClass:
-  name: Metal Nodes
-  size: 1
+machines:
+  - 333b61fe-a6c0-4422-8258-2f3b036489ae
 patches:
   - name: cluster.yaml
     inline:
@@ -146,6 +145,16 @@ patches:
 ---
 kind: Workers
 name: default
-machineClass:
-  name: Metal Nodes
-  size: 3
+machines:
+  - 58fea026-c1e8-4d2d-b80b-d643abc0bf13
+  - aacb7562-23f2-4e27-b13c-76fc775bf1f9
+  - 788bd098-54fd-454a-bfe4-1e33440c9eae
+---
+kind: Machine
+name: 58fea026-c1e8-4d2d-b80b-d643abc0bf13
+---
+kind: Machine
+name: aacb7562-23f2-4e27-b13c-76fc775bf1f9
+---
+kind: Machine
+name: 788bd098-54fd-454a-bfe4-1e33440c9eae
