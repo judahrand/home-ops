@@ -40,9 +40,9 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"multus-servers",
+                "name":"iot-vlan",
                 "namespace": "home",
-                "ips": ["10.0.42.86/24"]
+                "ips": ["10.0.60.86/24"]
               }]
           securityContext:
             runAsUser: 0       # ${APP_UID}   # Must be run as root user

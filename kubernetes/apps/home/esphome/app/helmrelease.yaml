@@ -39,7 +39,7 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"multus-servers",
+                "name":"iot-vlan",
                 "namespace": "home",
                 "ips": ["${MULTUS_ESPHOME}/24"]
               }]
