@@ -109,9 +109,15 @@ patches:
                 - vlanId: 42
                   dhcp: true
                   mtu: 1500
-                - vlanId: 60
-                  dhcp: true
-                  mtu: 1500
+            - interface: br0
+              bridge:
+                interfaces:
+                    - enxbc24112d68ba
+                    - enxbc24116169f6
+                    - enxbc2411ccf93f
+                    - enxbc24119e2598
+                stp:
+                    enabled: false
 ---
 kind: ControlPlane
 machines:
@@ -149,6 +155,9 @@ machines:
   - 58fea026-c1e8-4d2d-b80b-d643abc0bf13
   - aacb7562-23f2-4e27-b13c-76fc775bf1f9
   - 788bd098-54fd-454a-bfe4-1e33440c9eae
+---
+kind: Machine
+name: 333b61fe-a6c0-4422-8258-2f3b036489ae
 ---
 kind: Machine
 name: 58fea026-c1e8-4d2d-b80b-d643abc0bf13
