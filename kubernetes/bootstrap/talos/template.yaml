@@ -118,6 +118,13 @@ patches:
                     - enxbc24119e2598
                 stp:
                     enabled: false
+  - name: nodeip.yaml
+    inline:
+      machine:
+        kubelet:
+          nodeIP:
+              validSubnets:
+                  - 10.0.42.0/24
 ---
 kind: ControlPlane
 machines:
