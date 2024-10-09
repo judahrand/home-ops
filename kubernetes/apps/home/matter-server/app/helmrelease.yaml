@@ -63,7 +63,7 @@ spec:
               TZ: "${TIMEZONE}"
               MATTER_SERVER__INSTANCE_NAME: Matter-Server
               MATTER_SERVER__PORT: &port 5580
-              MATTER_SERVER__APPLICATION_URL: &host "matter.judahrand.net"
+              MATTER_SERVER__APPLICATION_URL: &host matter.judahrand.net
               MATTER_SERVER__LOG_LEVEL: debug
             probes:
               liveness:
@@ -86,6 +86,8 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
+          annotations:
+          external-dns.alpha.kubernetes.io/hostname: *host
           io.cilium/lb-ipam-ips: "${LOAD_BALANCER_MATTER_SERVER}"
         ports:
           http:
