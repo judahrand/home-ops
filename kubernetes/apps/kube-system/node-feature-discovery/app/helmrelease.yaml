@@ -25,6 +25,7 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    nodeFeatureRule.createCRD	: true
     worker:
       config:
         core:
