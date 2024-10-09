@@ -11,9 +11,8 @@ spec:
       "plugins": [
         {
           "type": "macvlan",
-          "master": "br0",
+          "master": "br0.60",
           "mode": "bridge",
-          "vlan": 60,
           "capabilities": {
             "ips": true
           },
