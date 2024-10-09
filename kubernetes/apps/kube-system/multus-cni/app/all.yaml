@@ -193,12 +193,10 @@ spec:
         - name: install-multus-binary
           image: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot-thick
           command:
-            - sh
-            - -c
-            - |
-              if [ ! -f /host/opt/cni/bin/multus-shim ]; then
-                cp /usr/src/multus-cni/bin/multus-shim /host/opt/cni/bin/multus-shim;
-              fi
+            - cp
+            - --force
+            - /usr/src/multus-cni/bin/multus-shim
+            - /host/opt/cni/bin/multus-shim
           resources:
             requests:
               cpu: "10m"
