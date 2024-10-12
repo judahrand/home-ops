@@ -37,9 +37,6 @@ spec:
       limits:
         squat.ai/edgetpu: 1
 
-    nodeSelector:
-      feature.node.kubernetes.io/edgetpu.present: "true"
-
     # TODO: get GPU acceleration working
     # extraVolumes:
     #   - name: renderd128
