@@ -96,28 +96,6 @@ patches:
         network:
           nameservers:
             - 10.0.42.1
-  - name: interfaces.yaml
-    inline:
-      machine:
-        network:
-          interfaces:
-            - deviceSelector:
-                hardwareAddr: bc:24:11:*
-                driver: virtio*
-              dhcp: false
-              vlans:
-                - vlanId: 42
-                  dhcp: true
-                  mtu: 1500
-            - interface: br0
-              bridge:
-                interfaces:
-                    - enxbc24112d68ba
-                    - enxbc24116169f6
-                    - enxbc2411ccf93f
-                    - enxbc24119e2598
-                stp:
-                    enabled: false
   - name: nodeip.yaml
     inline:
       machine:
@@ -147,14 +125,33 @@ patches:
         scheduler:
           extraArgs:
             bind-address: 0.0.0.0
-  - name: virtual-shared-ip.yaml
+  - name: interfaces.yaml
     inline:
       machine:
         network:
           interfaces:
-            - interface: vmbr0
-              vip:
-                ip: 10.0.42.120
+            - interface: br0
+              bridge:
+                interfaces:
+                    - enxbc24112d68ba
+                    - enxbc24116169f6
+                    - enxbc2411ccf93f
+                    - enxbc24119e2598
+                stp:
+                    enabled: true
+              vlans:
+                - vlanId: 42
+                  dhcp: true
+                  mtu: 1500
+                  dhcpOptions:
+                    routeMetric: 1024
+                  vip:
+                    ip: 10.0.42.120
+                - vlanId: 60
+                  dhcp: true
+                  mtu: 1500
+                  dhcpOptions:
+                    routeMetric: 4096
 ---
 kind: Workers
 name: default
@@ -162,6 +159,32 @@ machines:
   - 58fea026-c1e8-4d2d-b80b-d643abc0bf13
   - aacb7562-23f2-4e27-b13c-76fc775bf1f9
   - 788bd098-54fd-454a-bfe4-1e33440c9eae
+patches:
+  - name: interfaces.yaml
+    inline:
+      machine:
+        network:
+          interfaces:
+            - interface: br0
+              bridge:
+                interfaces:
+                    - enxbc24112d68ba
+                    - enxbc24116169f6
+                    - enxbc2411ccf93f
+                    - enxbc24119e2598
+                stp:
+                    enabled: true
+              vlans:
+                - vlanId: 42
+                  dhcp: true
+                  mtu: 1500
+                  dhcpOptions:
+                    routeMetric: 1024
+                - vlanId: 60
+                  dhcp: true
+                  mtu: 1500
+                  dhcpOptions:
+                    routeMetric: 4096
 ---
 kind: Machine
 name: 333b61fe-a6c0-4422-8258-2f3b036489ae
