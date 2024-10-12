@@ -86,7 +86,6 @@ spec:
         controller: *app
         type: LoadBalancer
         annotations:
-          annotations:
           external-dns.alpha.kubernetes.io/hostname: *host
           io.cilium/lb-ipam-ips: "${LOAD_BALANCER_MATTER_SERVER}"
         ports:
