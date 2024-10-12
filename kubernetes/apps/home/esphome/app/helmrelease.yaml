@@ -41,7 +41,8 @@ spec:
               [{
                 "name":"iot-vlan",
                 "namespace": "home",
-                "ips": ["${MULTUS_ESPHOME}/24"]
+                "ips": ["${MULTUS_ESPHOME}/24"],
+                "mac": "2c:4c:c0:c5:0c:d9"
               }]
         containers:
           app:
