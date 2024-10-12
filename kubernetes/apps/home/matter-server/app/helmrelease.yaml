@@ -42,23 +42,34 @@ spec:
               [{
                 "name":"iot-vlan",
                 "namespace": "home",
-                "ips": ["${MULTUS_MATTER_SERVER}/24"]
+                "ips": ["${MULTUS_MATTER_SERVER}/24"],
+                "mac": "36:3b:ef:15:c3:00"
               }]
           securityContext:
-            runAsUser: 0       # ${APP_UID}   # Must be run as root user
+            runAsUser: 0  # Must be run as root user
             runAsGroup: ${APP_GID}
-            runAsNonRoot: false               # Must be run as root user
+            runAsNonRoot: false  # Must be run as root user
             fsGroup: ${APP_GID}
             fsGroupChangePolicy: "OnRootMismatch"
             supplementalGroups:
               - 34
+            sysctls:
+              - name: net.ipv6.conf.net1.forwarding
+                value: "0"
+              - name: net.ipv6.conf.net1.accept_ra
+                value: "1"
+              - name: net.ipv6.conf.net1.accept_ra_rt_info_max_plen
+                value: "64"
 
         containers:
           app:
             image:
               repository: ghcr.io/home-assistant-libs/python-matter-server
-              tag: 6.5.1
+              tag: 6.6.0
               pullPolicy: IfNotPresent
+            args:
+              - --storage-path=/data
+              - --primary-interface=net1
             env:
               TZ: "${TIMEZONE}"
               MATTER_SERVER__INSTANCE_NAME: Matter-Server
@@ -89,10 +100,6 @@ spec:
           external-dns.alpha.kubernetes.io/hostname: *host
           io.cilium/lb-ipam-ips: "${LOAD_BALANCER_MATTER_SERVER}"
         ports:
-          http:
-            enabled: false
-            primary: false
-            port: 65535
           api:
             enabled: true
             primary: true
@@ -123,7 +130,7 @@ spec:
               - path: /
                 service:
                   identifier: app
-                  port: http
+                  port: api
         tls:
           - hosts:
             - *host
