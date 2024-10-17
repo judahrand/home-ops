@@ -118,9 +118,10 @@ patches:
   - name: cluster.yaml
     inline:
       cluster:
-        etcd:
-          advertisedSubnets:
-            - 10.0.42.0/24
+        apiServer:
+          certSANs:
+            - 127.0.0.1
+            - 10.0.42.120
         allowSchedulingOnControlPlanes: true
         controllerManager:
           extraArgs:
