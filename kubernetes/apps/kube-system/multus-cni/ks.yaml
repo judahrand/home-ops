@@ -11,6 +11,7 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/kube-system/multus-cni/app
   prune: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
