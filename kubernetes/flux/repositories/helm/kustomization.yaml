@@ -16,6 +16,7 @@ resources:
   - ./external-secrets.yaml
   - ./fairwinds.yaml
   - ./ingress-nginx.yaml
+  - ./intel.yaml
   - ./jetstack.yaml
   - ./metrics-server.yaml
   - ./node-feature-discovery.yaml
