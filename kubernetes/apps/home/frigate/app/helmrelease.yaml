@@ -27,25 +27,13 @@ spec:
       repository: ghcr.io/blakeblackshear/frigate
       tag: 0.14.1
 
-    env:
-      LIBVA_DRIVER_NAME: radeonsi
-
     envFromSecrets:
       - frigate-secret
 
     resources:
       limits:
         squat.ai/edgetpu: 1
-
-    # TODO: get GPU acceleration working
-    # extraVolumes:
-    #   - name: renderd128
-    #     hostPath:
-    #       path: /dev/dri/renderD128
-
-    # extraVolumeMounts:
-    #   - name: renderd128
-    #     mountPath: /dev/dri/renderD128
+        gpu.intel.com/i915: 1
 
     # TODO: remove this when HomeAssistant can talk directly to Frigate
     service:
@@ -80,7 +68,7 @@ spec:
         password: "{FRIGATE_MQTT_PASSWORD}"
 
       ffmpeg:
-        # hwaccel_args: preset-vaapi
+        hwaccel_args: preset-vaapi
         output_args:
           record: preset-record-generic-audio-copy
 
