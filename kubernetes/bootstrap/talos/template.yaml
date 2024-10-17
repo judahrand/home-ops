@@ -157,13 +157,14 @@ patches:
     inline:
       machine:
         network:
+          hostname: k8s-0
           interfaces:
-            - interface: br0
-              bridge:
+            - interface: bond0
+              bond:
+                mode: active-backup
                 interfaces:
                   - enxbc2411908a93
-                stp:
-                    enabled: true
+              dhcp: false
               vlans:
                 - vlanId: 42
                   dhcp: true
@@ -200,8 +201,13 @@ patches:
     inline:
       machine:
         network:
+          hostname: k8s-1
           interfaces:
-            - interface: enp1s0
+            - interface: bond0
+              bond:
+                mode: active-backup
+                interfaces:
+                  - enp1s0
               dhcp: true
               dhcpOptions:
                 routeMetric: 1024
@@ -236,8 +242,13 @@ patches:
     inline:
       machine:
         network:
+          hostname: k8s-2
           interfaces:
-            - interface: enp1s0
+            - interface: bond0
+              bond:
+                mode: active-backup
+                interfaces:
+                  - enp1s0
               dhcp: true
               dhcpOptions:
                 routeMetric: 1024
