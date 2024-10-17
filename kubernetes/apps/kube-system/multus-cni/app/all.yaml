@@ -154,7 +154,7 @@ spec:
               memory: "65Mi"
             limits:
               cpu: "100m"
-              memory: "65Mi"
+              memory: "500Mi"
           securityContext:
             privileged: true
           terminationMessagePolicy: FallbackToLogsOnError
