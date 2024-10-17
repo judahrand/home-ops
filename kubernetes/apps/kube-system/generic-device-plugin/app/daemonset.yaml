@@ -32,7 +32,8 @@ spec:
             groups:
               - count: 10
                 paths:
-                  - path: /dev/dri
+                  - path: /dev/dri/renderD128
+                  - path: /dev/dri/card0
           - --device
           - |
             name: fuse
