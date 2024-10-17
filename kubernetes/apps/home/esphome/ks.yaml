@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: multus-networks
+    - name: multus-config
   path: ./kubernetes/apps/home/esphome/app
   prune: true
   sourceRef:

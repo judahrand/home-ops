@@ -12,11 +12,11 @@ spec:
       app.kubernetes.io/name: *appname
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/network/multus/app"
+  path: ./kubernetes/apps/network/multus/app
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   suspend: true
 ---
@@ -33,11 +33,11 @@ spec:
       app.kubernetes.io/name: *appname
   interval: 30m
   timeout: 5m
-  path: "./kubernetes/main/apps/network/multus/config"
+  path: ./kubernetes/apps/network/multus/config
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops-kubernetes
+    name: home-ops
   wait: true
   dependsOn:
     - name: multus
