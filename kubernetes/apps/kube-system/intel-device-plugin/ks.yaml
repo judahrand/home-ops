@@ -33,6 +33,8 @@ spec:
       app.kubernetes.io/name: *app
   path: ./kubernetes/apps/kube-system/intel-device-plugin/gpu
   prune: true
+  dependsOn:
+    - name: intel-device-plugin
   sourceRef:
     kind: GitRepository
     name: home-kubernetes
