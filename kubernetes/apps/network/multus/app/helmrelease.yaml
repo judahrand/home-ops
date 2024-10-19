@@ -64,6 +64,11 @@ spec:
                 rm -rf /host/etc/cni/net.d/*multus*
                 rm -rf /host/opt/cni/bin/*multus*
 
+            securityContext:
+              capabilities:
+                drop:
+                  - ALL
+
       multus:
         type: daemonset
 
