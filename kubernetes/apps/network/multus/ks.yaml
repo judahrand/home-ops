@@ -16,7 +16,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: home-kubernetes
   wait: true
   suspend: true
 ---
@@ -37,7 +37,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-ops
+    name: home-kubernetes
   wait: true
   dependsOn:
     - name: multus
