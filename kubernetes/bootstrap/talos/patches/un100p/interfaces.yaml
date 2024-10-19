@@ -1,0 +1,19 @@
+machine:
+  network:
+    interfaces:
+      - interface: bond0
+        bond:
+          mode: active-backup
+          interfaces:
+            - enp1s0
+        dhcp: true
+        dhcpOptions:
+          routeMetric: 1024
+        vip:
+          ip: 10.0.42.120
+        vlans:
+          - vlanId: 60
+            dhcp: true
+            mtu: 1500
+            dhcpOptions:
+              routeMetric: 4096

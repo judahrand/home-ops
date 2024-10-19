@@ -1,0 +1,19 @@
+cluster:
+  apiServer:
+    certSANs:
+      - 127.0.0.1
+      - 10.0.42.120
+  allowSchedulingOnControlPlanes: true
+  controllerManager:
+    extraArgs:
+      bind-address: 0.0.0.0
+  coreDNS:
+    disabled: true
+  network:
+    cni:
+      name: none
+  proxy:
+    disabled: true
+  scheduler:
+    extraArgs:
+      bind-address: 0.0.0.0

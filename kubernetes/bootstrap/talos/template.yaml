@@ -9,105 +9,15 @@ features:
   backupConfiguration:
     interval: 1h0m0s
 patches:
-  - name: cluster-discovery.yaml
-    inline:
-      cluster:
-        discovery:
-          registries:
-            kubernetes:
-              disabled: false
-            service:
-              disabled: true
-  - name: containerd.yaml
-    inline:
-      machine:
-        files:
-          - content: |-
-              [plugins."io.containerd.grpc.v1.cri"]
-                enable_unprivileged_ports = true
-                enable_unprivileged_icmp = true
-              [plugins."io.containerd.grpc.v1.cri".containerd]
-                discard_unpacked_layers = false
-              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
-                discard_unpacked_layers = false
-            op: create
-            path: /etc/cri/conf.d/20-customization.part
-  - name: nfs.yaml
-    inline:
-      machine:
-        files:
-          - content: |-
-              [ NFSMount_Global_Options ]
-              nfsvers=4.2
-              hard=True
-              noatime=True
-              nodiratime=True
-              rsize=131072
-              wsize=131072
-              nconnect=8
-            op: overwrite
-            permissions: 420
-            path: /etc/nfsmount.conf
-  - name: sysctl.yaml
-    inline:
-      machine:
-        sysctls:
-          fs.inotify.max_queued_events: "65536"
-          fs.inotify.max_user_instances: "8192"
-          fs.inotify.max_user_watches: "524288"
-          net.core.rmem_max: "2500000"
-          net.core.wmem_max: "2500000"
-  - name: openebs-local.yaml
-    inline:
-      machine:
-        sysctls:
-          vm.nr_hugepages: "1024"
-        nodeLabels:
-          openebs.io/engine: mayastor
-        kubelet:
-          extraMounts:
-            - destination: /var/local/openebs
-              options:
-                - bind
-                - rshared
-                - rw
-              source: /var/local/openebs
-              type: bind
-  - name: hostdns.yaml
-    inline:
-      machine:
-        features:
-          hostDNS:
-            enabled: true
-            resolveMemberNames: true
-            forwardKubeDNSToHost: false
-  - name: nameservers.yaml
-    inline:
-      machine:
-        network:
-          nameservers:
-            - 10.0.42.1
-  - name: nodeip.yaml
-    inline:
-      machine:
-        certSANs:
-          - 127.0.0.1
-          - 10.0.42.120
-        kubelet:
-          nodeIP:
-            validSubnets:
-              - 10.0.42.0/24
-  - name: matter-server.yaml
-    inline:
-      machine:
-        kubelet:
-          extraConfig:
-            allowedUnsafeSysctls:
-              - net.*
-        sysctls:
-          net.ipv6.conf.all.forwarding: "1"
-          net.ipv6.conf.all.accept_ra: "2"
-          net.ipv6.conf.all.accept_ra_rt_info_max_plen: "64"
+  - file: ./patches/cluster/cluster-discovery.yaml
+  - file: ./patches/cluster/containerd.yaml
+  - file: ./patches/cluster/nfs.yaml
+  - file: ./patches/cluster/sysctl.yaml
+  - file: ./patches/cluster/openebs-local.yaml
+  - file: ./patches/cluster/hostdns.yaml
+  - file: ./patches/cluster/nameservers.yaml
+  - file: ./patches/cluster/nodeip.yaml
+  - file: ./patches/cluster/matter-server.yaml
 ---
 kind: ControlPlane
 machines:
@@ -115,27 +25,7 @@ machines:
   - 27784e80-6699-11ef-8573-998d87080b00
   - 6636e600-6652-11ef-8d81-e890dc700f00
 patches:
-  - name: cluster.yaml
-    inline:
-      cluster:
-        apiServer:
-          certSANs:
-            - 127.0.0.1
-            - 10.0.42.120
-        allowSchedulingOnControlPlanes: true
-        controllerManager:
-          extraArgs:
-            bind-address: 0.0.0.0
-        coreDNS:
-          disabled: true
-        network:
-          cni:
-            name: none
-        proxy:
-          disabled: true
-        scheduler:
-          extraArgs:
-            bind-address: 0.0.0.0
+  - file: ./patches/control-plane/cluster.yaml
 ---
 kind: Machine
 name: 5e9756d4-a256-4c38-a4f5-6bf4d8f4d45c
@@ -167,17 +57,7 @@ patches:
                   mtu: 1500
                   dhcpOptions:
                     routeMetric: 4096
-  - name: volume-management.yaml
-    inline:
-      apiVersion: v1alpha1
-      kind: VolumeConfig
-      name: EPHEMERAL
-      provisioning:
-        diskSelector:
-          match: system_disk
-        minSize: 2GB
-        maxSize: 40GB
-        grow: true
+  - file: ./patches/cluster/volume-config.yaml
 ---
 kind: Machine
 name: 27784e80-6699-11ef-8573-998d87080b00
@@ -186,39 +66,13 @@ install:
 systemExtensions:
   - siderolabs/i915-ucode
 patches:
-  - name: interfaces.yaml
+  - name: hostname.yaml
     inline:
       machine:
         network:
           hostname: k8s-1
-          interfaces:
-            - interface: bond0
-              bond:
-                mode: active-backup
-                interfaces:
-                  - enp1s0
-              dhcp: true
-              dhcpOptions:
-                routeMetric: 1024
-              vip:
-                ip: 10.0.42.120
-              vlans:
-                - vlanId: 60
-                  dhcp: true
-                  mtu: 1500
-                  dhcpOptions:
-                    routeMetric: 4096
-  - name: volume-management.yaml
-    inline:
-      apiVersion: v1alpha1
-      kind: VolumeConfig
-      name: EPHEMERAL
-      provisioning:
-        diskSelector:
-          match: system_disk
-        minSize: 2GB
-        maxSize: 40GB
-        grow: true
+  - file: ./patches/un100p/interfaces.yaml
+  - file: ./patches/cluster/volume-config.yaml
 ---
 kind: Machine
 name: 6636e600-6652-11ef-8d81-e890dc700f00
@@ -227,36 +81,10 @@ install:
 systemExtensions:
   - siderolabs/i915-ucode
 patches:
-  - name: interfaces.yaml
+  - name: hostname.yaml
     inline:
       machine:
         network:
           hostname: k8s-2
-          interfaces:
-            - interface: bond0
-              bond:
-                mode: active-backup
-                interfaces:
-                  - enp1s0
-              dhcp: true
-              dhcpOptions:
-                routeMetric: 1024
-              vip:
-                ip: 10.0.42.120
-              vlans:
-                - vlanId: 60
-                  dhcp: true
-                  mtu: 1500
-                  dhcpOptions:
-                    routeMetric: 4096
-  - name: volume-management.yaml
-    inline:
-      apiVersion: v1alpha1
-      kind: VolumeConfig
-      name: EPHEMERAL
-      provisioning:
-        diskSelector:
-          match: system_disk
-        minSize: 2GB
-        maxSize: 40GB
-        grow: true
+  - file: ./patches/un100p/interfaces.yaml
+  - file: ./patches/cluster/volume-config.yaml
