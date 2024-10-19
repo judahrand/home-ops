@@ -95,8 +95,8 @@ patches:
           - 10.0.42.120
         kubelet:
           nodeIP:
-              validSubnets:
-                  - 10.0.42.0/24
+            validSubnets:
+              - 10.0.42.0/24
   - name: matter-server.yaml
     inline:
       machine:
