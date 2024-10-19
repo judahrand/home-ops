@@ -36,9 +36,16 @@ spec:
                   - path: /dev/dri/card0
           - --device
           - |
+            name: tun
+            groups:
+              - count: 1000
+                paths:
+                  - path: /dev/net/tun
+          - --device
+          - |
             name: fuse
             groups:
-              - count: 10
+              - count: 1000
                 paths:
                   - path: /dev/fuse
           - --device
