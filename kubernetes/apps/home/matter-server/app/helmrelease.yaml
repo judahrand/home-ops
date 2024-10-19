@@ -69,6 +69,7 @@ spec:
               pullPolicy: IfNotPresent
             args:
               - --storage-path=/data
+              - --paa-root-cert-dir=/data/credentials
               - --primary-interface=net1
             env:
               TZ: "${TIMEZONE}"
