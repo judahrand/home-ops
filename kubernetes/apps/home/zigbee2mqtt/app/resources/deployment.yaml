@@ -47,4 +47,4 @@ spec:
         - name: data
           nfs:
             server: truenas.lan
-            path: /mnt/main/kubernetes/main/nfs/volumes/zigbee2mqtt
+            path: /mnt/main/zigbee2mqtt
