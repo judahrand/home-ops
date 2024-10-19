@@ -3,6 +3,10 @@ cluster:
     certSANs:
       - 127.0.0.1
       - 10.0.42.120
+  etcd:
+    extraArgs:
+      election-timeout: "5000"
+    subnet: 10.0.42.0/24
   allowSchedulingOnControlPlanes: true
   controllerManager:
     extraArgs:
