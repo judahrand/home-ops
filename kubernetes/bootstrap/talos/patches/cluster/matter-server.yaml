@@ -4,6 +4,6 @@ machine:
       allowedUnsafeSysctls:
         - net.*
   sysctls:
-    net.ipv6.conf.all.forwarding: "1"
-    net.ipv6.conf.all.accept_ra: "2"
-    net.ipv6.conf.all.accept_ra_rt_info_max_plen: "64"
+    net.ipv6.conf.bond0/60.forwarding: "0"
+    net.ipv6.conf.bond0/60.accept_ra: "1"
+    net.ipv6.conf.bond0/60.accept_ra_rt_info_max_plen: "64"
