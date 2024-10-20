@@ -8,26 +8,41 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:16.4-4
   primaryUpdateStrategy: unsupervised
+
   storage:
     size: 20Gi  # this is not enforced because we're using a hostpath storage class
     storageClass: openebs-hostpath
+
   superuserSecret:
     name: cloudnative-pg-secret
+
   enableSuperuserAccess: true
+
+  managed:
+    roles:
+      - name: autobrr
+        login: true
+        passwordSecret:
+          name: cloudnative-pg-autobrr-secret
+
   postgresql:
     parameters:
       max_connections: "400"
       shared_buffers: 256MB
+
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true
+
   resources:
     requests:
       cpu: 500m
     limits:
       memory: 4Gi
+
   monitoring:
     enablePodMonitor: true
+
   backup:
     retentionPolicy: 30d
     barmanObjectStore: &barmanObjectStore
