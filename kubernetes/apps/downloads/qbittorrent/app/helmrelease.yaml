@@ -26,7 +26,7 @@ spec:
         pod:
           securityContext:
             fsGroup: 2000
-            fsGroupChangePolicy: "OnRootMismatch"
+            fsGroupChangePolicy: OnRootMismatch
             supplementalGroups:
               - 65542  # gladius:external-services
           terminationGracePeriodSeconds: 120
