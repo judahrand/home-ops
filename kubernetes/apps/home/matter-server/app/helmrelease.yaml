@@ -50,7 +50,7 @@ spec:
             runAsGroup: ${APP_GID}
             runAsNonRoot: false  # Must be run as root user
             fsGroup: ${APP_GID}
-            fsGroupChangePolicy: "OnRootMismatch"
+            fsGroupChangePolicy: OnRootMismatch
             supplementalGroups:
               - 34
             appArmorProfile:
