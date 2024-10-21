@@ -44,6 +44,7 @@ spec:
               - sync
             env:
               COMPlus_EnableDiagnostics: "0"
+              GIT_CONFIG_GLOBAL: /config/repositories/.gitconfig
             envFrom:
               - secretRef:
                   name: recyclarr-secret
