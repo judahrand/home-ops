@@ -24,6 +24,14 @@ spec:
         login: true
         passwordSecret:
           name: cloudnative-pg-autobrr-secret
+      - name: radarr
+        login: true
+        passwordSecret:
+          name: cloudnative-pg-radarr-secret
+      - name: sonarr
+        login: true
+        passwordSecret:
+          name: cloudnative-pg-sonarr-secret
 
   postgresql:
     parameters:
