@@ -18,6 +18,7 @@ data:
   # Multus IPs
   MULTUS_ESPHOME: 10.0.60.85
   MULTUS_MATTER_SERVER: 10.0.60.86
+  MULTUS_HOME_ASSISTANT: 10.0.60.87
 
   # Users & Groups
   APP_UID: "568"

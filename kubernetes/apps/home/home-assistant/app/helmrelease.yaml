@@ -1,0 +1,149 @@
+
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      strategy: rollback
+      retries: 3
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        pod:
+          annotations:
+              k8s.v1.cni.cncf.io/networks: |
+                [{
+                  "name":"iot-vlan",
+                  "namespace": "network",
+                  "ips": ["${MULTUS_HOME_ASSISTANT}/24"],
+                  "mac": "52:4a:1d:f2:2e:fe"
+                }]
+
+        containers:
+          app:
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2024.10.3@sha256:59cb3b01ea4695c5df8f4cc1e4d01fa7e22090caa3fd3f000a96b6a5de909f91
+            env:
+              TZ: "${TIMEZONE}"
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secret
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: ["ALL"]
+            resources:
+              requests:
+                cpu: 50m
+                memory: 4Gi
+              limits:
+                memory: 4Gi
+
+          code-server:
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.93.1@sha256:c69e398d1b64589b3b77a7becfd03f4ec524982def20e6bffbb51b1b839e72ba
+            args: [
+              "--auth", "none",
+              "--user-data-dir", "/config/.vscode",
+              "--extensions-dir", "/config/.vscode",
+              "--port", "12321",
+              "/config"
+            ]
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 512Mi
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+
+    service:
+      app:
+        controller: home-assistant
+        ports:
+          http:
+            port: 8123
+          code-server:
+            port: 12321
+
+    ingress:
+      app:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
+        className: internal
+        hosts:
+          - host: homeassistant.judahrand.net
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+
+      code-server:
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
+        className: internal
+        hosts:
+          - host: hass-code.judahrand.net
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: code-server
+
+    persistence:
+      config:
+        type: nfs
+        server: truenas.lan
+        path: /mnt/main/homeassistant/config
+        globalMounts:
+          - path: /config
+      logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
+      tts:
+        type: emptyDir
+        globalMounts:
+          - path: /config/tts
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp
+      deploy-key:
+        type: secret
+        name: home-assistant-secret
+        defaultMode: 256
+        globalMounts:
+          - path: /root/.ssh/id_rsa
+            subPath: GH_DEPLOY_KEY
