@@ -28,6 +28,15 @@ spec:
             runAsGroup: 2000
             runAsNonRoot: true
 
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: autobrr-db-secret
+
         containers:
           app:
             image:

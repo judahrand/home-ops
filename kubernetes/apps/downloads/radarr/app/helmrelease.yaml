@@ -32,6 +32,15 @@ spec:
             supplementalGroups:
               - 65542 # gladius:external-services
 
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: radarr-db-secret
+
         containers:
           app:
             image:

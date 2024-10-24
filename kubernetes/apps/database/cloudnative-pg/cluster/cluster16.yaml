@@ -18,21 +18,6 @@ spec:
 
   enableSuperuserAccess: true
 
-  managed:
-    roles:
-      - name: autobrr
-        login: true
-        passwordSecret:
-          name: cloudnative-pg-autobrr-secret
-      - name: radarr
-        login: true
-        passwordSecret:
-          name: cloudnative-pg-radarr-secret
-      - name: sonarr
-        login: true
-        passwordSecret:
-          name: cloudnative-pg-sonarr-secret
-
   postgresql:
     parameters:
       max_connections: "400"
