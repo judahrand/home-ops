@@ -39,11 +39,35 @@ spec:
                   "mac": "52:4a:1d:f2:2e:fe"
                 }]
 
+        initContainers:
+          git-init:
+            securityContext:
+              runAsUser: 65534
+            image: &gitSyncImage
+              repository: alpine/git
+              tag: v2.45.2
+              # repository: registry.k8s.io/git-sync/git-sync
+              # tag: v4.3.0
+            command:
+              - /bin/sh
+              - -c
+              - |
+                  git clone --depth 1 -- git@github.com:judahrand/hass-config.git /config
+
+                  mkdir -p /storage/.storage
+                  ln -s /storage/.storage /config/.storage
+
+                  mkdir -p /storage/.cloud
+                  ln -s /storage/.cloud /config/.cloud
+            env:
+              GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519 -o IdentitiesOnly=yes"
+              GIT_DISCOVERY_ACROSS_FILESYSTEM: "1"
+
         containers:
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.10.3@sha256:59cb3b01ea4695c5df8f4cc1e4d01fa7e22090caa3fd3f000a96b6a5de909f91
+              tag: 2024.10.3
             env:
               TZ: "${TIMEZONE}"
             envFrom:
@@ -60,6 +84,11 @@ spec:
                 memory: 4Gi
               limits:
                 memory: 4Gi
+
+          # git-sync:
+          #   securityContext: *gitSyncSecurityContext
+          #   image: *gitSyncImage
+          #   env: *gitSyncEnv
 
           code-server:
             image:
@@ -82,8 +111,8 @@ spec:
       securityContext:
         runAsNonRoot: true
         runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsGroup: 65534
+        fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
 
@@ -122,28 +151,29 @@ spec:
                   port: code-server
 
     persistence:
-      config:
+      storage:
         type: nfs
         server: truenas.lan
-        path: /mnt/main/homeassistant/config
+        path: /mnt/main/homeassistant/storage
+        globalMounts:
+          - path: /storage
+
+      config:
+        type: emptyDir
         globalMounts:
           - path: /config
-      logs:
-        type: emptyDir
-        globalMounts:
-          - path: /config/logs
-      tts:
-        type: emptyDir
-        globalMounts:
-          - path: /config/tts
+
       tmp:
         type: emptyDir
         globalMounts:
           - path: /tmp
+
       deploy-key:
         type: secret
         name: home-assistant-secret
         defaultMode: 256
         globalMounts:
-          - path: /root/.ssh/id_rsa
+          - path: /.ssh/id_ed25519
             subPath: GH_DEPLOY_KEY
+          - path: /.ssh/known_hosts
+            subPath: GH_KNOWN_HOSTS
