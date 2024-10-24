@@ -8,16 +8,51 @@ sonarr:
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
 
-    quality_definition:
-      type: series
+    include:
+      # Comment out any of the following includes to disable them
+      - template: sonarr-quality-definition-series
+      - template: sonarr-v4-quality-profile-web-1080p
+      - template: sonarr-v4-custom-formats-web-1080p
+      - template: sonarr-v4-quality-profile-web-2160p
+      - template: sonarr-v4-custom-formats-web-2160p
+
+    # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
     custom_formats:
+      # HDR Formats
       - trash_ids:
-          # Unwanted
-          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
-          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
-          - e2315f990da2e2cbfc9fa5b7a6fcfe48 # LQ (Release Title)
+          # Comment out the next line if you and all of your users' setups are fully DV compatible
+          - 9b27ab6498ec0f31a3353992e19434ca # DV (WEBDL)
+          # HDR10Plus Boost - Uncomment the next line if any of your devices DO support HDR10+
+          # - 0dad0a507451acddd754fe6dc3a7f5e7 # HDR10Plus Boost
+        assign_scores_to:
+          - name: WEB-2160p
+
+
+      # Optional
+      - trash_ids:
+           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
+           - 82d40da2bc6923f41e14394075dd4b03 # No-RlsGroup
+           - e1a997ddb54e3ecbfe06341ad323c458 # Obfuscated
+           - 06d66ab109d4d2eddb2794d21526d140 # Retags
+           - 1b3994c551cbb92a2c781af061f4ab44 # Scene
+        assign_scores_to:
+          - name: WEB-1080p
+          - name: WEB-2160p
+
+      - trash_ids:
+          - 2016d1676f5ee13a5b7257ff86ac9a93 # SDR
+        assign_scores_to:
+          - name: WEB-2160p
+            # score: 0 # Uncomment this line to enable SDR releases
+
+      - trash_ids:
+      # Uncomment the next six lines to allow x265 HD releases with HDR/DV
           - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
-          - fbcb31d8dabd2a319072b84fc0b7249c # Extras
+        assign_scores_to:
+          - name: WEB-1080p
+            score: 0
+      - trash_ids:
+          - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
         assign_scores_to:
           - name: WEB-1080p
 
@@ -29,17 +64,55 @@ radarr:
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
 
-    quality_definition:
-      type: movie
-      preferred_ratio: 0.5
+    include:
+      - template: radarr-quality-definition-sqp-streaming
+      # 1080p
+      - template: radarr-quality-profile-sqp-1-1080p
+      - template: radarr-custom-formats-sqp-1-1080p
+
+      # 2160p
+      - template: radarr-custom-formats-sqp-1-2160p
+      - template: radarr-quality-profile-sqp-1-2160p-4k-only-imax-e
+
+      - template: radarr-custom-formats-sqp-2
+      - template: radarr-quality-profile-sqp-2
+
+      - template: radarr-custom-formats-sqp-3
+      - template: radarr-quality-profile-sqp-3
+
+      - template: radarr-custom-formats-sqp-4
+      - template: radarr-quality-profile-sqp-4
+
+      - template: radarr-custom-formats-sqp-5
+      - template: radarr-quality-profile-sqp-5
+
     custom_formats:
       - trash_ids:
-        # HQ Release Groups
-        - ed27ebfef2f323e964fb1f61391bcb35 # HD Bluray Tier 01
-        - c20c8647f2746a1f4c4262b0fbbeeeae # HD Bluray Tier 02
-        - 5608c71bcebba0a5e666223bae8c9227 # HD Bluray Tier 03
-        - c20f169ef63c5f40c2def54abaf4438e # WEB Tier 01
-        - 403816d65392c79236dcb6dd591aeda4 # WEB Tier 02
-        - af94e0fe497124d1f9ce732069ec8c3b # WEB Tier 03
+          # Optional - uncomment any of the following if you want them added to your profile
+          - b6832f586342ef70d9c128d40c07b872 # Bad Dual Groups
+          - 90cedc1fea7ea5d11298bebd3d1d3223 # EVO (no WEBDL)
+          - ae9b7c9ebde1f3bd336a8cbd1ec4c5e5 # No-RlsGroup
+          - 7357cf5161efbf8c4d5d0c30b4815ee2 # Obfuscated
+          - 5c44f52a8714fdd79bb4d98e2673be1f # Retags
+          - f537cf427b64c38c8e36298f657e4828 # Scene
         assign_scores_to:
-          - name: HD
+          - name: SQP-1 (1080p)
+          - name: SQP-1 (2160p)
+          - name: SQP-2
+          - name: SQP-3
+          - name: SQP-4
+          - name: SQP-5
+
+      # Optional SDR
+      # Only ever use ONE of the following custom formats:
+      # SDR - block ALL SDR releases
+      # SDR (no WEBDL) - block UHD/4k Remux and Bluray encode SDR releases, but allow SDR WEB
+      - trash_ids:
+          - 9c38ebb7384dada637be8899efa68e6f # SDR
+          # - 25c12f78430a3a23413652cbd1d48d77 # SDR (no WEBDL)
+        assign_scores_to:
+          - name: SQP-1 (2160p)
+          - name: SQP-2
+          - name: SQP-3
+          - name: SQP-4
+          - name: SQP-5
