@@ -127,8 +127,8 @@ spec:
     ingress:
       app:
         annotations:
-          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-        className: internal
+          external-dns.alpha.kubernetes.io/target: external.judahrand.net
+        className: external
         hosts:
           - host: homeassistant.judahrand.net
             paths:
