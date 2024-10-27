@@ -32,11 +32,23 @@ spec:
             supplementalGroups:
               - 65542 # gladius:external-services
 
+        initContainers:
+          init-db:
+            image:
+              repository: ghcr.io/onedr0p/postgres-init
+              tag: 16
+            envFrom:
+              - secretRef:
+                  name: bazarr-db-secret
+
         containers:
           app:
             image:
               repository: ghcr.io/onedr0p/bazarr
               tag: 1.4.5@sha256:c0bf91443c32f3978777b4ddd2732908f51b157bbe00cd3259b23f7716bb4af7
+            envFrom:
+              - secretRef:
+                  name: bazarr-db-secret
             probes:
               liveness: &probes
                 enabled: true
