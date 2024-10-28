@@ -109,7 +109,7 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
+        runAsUser: 65534
         runAsGroup: 65534
         fsGroup: 65534
         fsGroupChangePolicy: OnRootMismatch
@@ -176,3 +176,17 @@ spec:
             subPath: GH_DEPLOY_KEY
           - path: /.ssh/known_hosts
             subPath: GH_KNOWN_HOSTS
+
+      # TODO: Try to avoid needing this. It is the best way
+      # I could find to allow us to use the same UID/GID
+      # in this init-container as the main application in
+      # order to make the config files read/writable.
+      init-passwd:
+        type: configMap
+        name: home-assistant-init-config-passwd
+        advancedMounts:
+          home-assistant:
+            init-config:
+              - path: /etc/passwd
+                readOnly: false
+                subPath: passwd

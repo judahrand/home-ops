@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: home-assistant-init-config-passwd
+data:
+  passwd: |
+    user:x:568:568:user:/:/sbin/nologin
