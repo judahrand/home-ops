@@ -56,7 +56,11 @@ spec:
               - /bin/sh
               - -c
               - |
-                  git clone --recurse-submodules --depth 1 -- git@github.com:judahrand/hass-config.git /config
+                  git clone \
+                    --recurse-submodules \
+                    --shallow-submodules \
+                    --depth 1 \
+                    -- git@github.com:judahrand/hass-config.git /config
 
                   mkdir -p /storage/.storage
                   ln -s /storage/.storage /config/.storage
