@@ -48,18 +48,6 @@ spec:
               - secretRef:
                   name: home-assistant-secret
 
-          init-config:
-            image:
-              repository: alpine/git
-              tag: v2.45.2
-            command:
-              - /bin/sh
-              - -c
-              - cd /config && git config --global --add safe.directory /config && git pull
-            env:
-              GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519 -o IdentitiesOnly=yes"
-              GIT_DISCOVERY_ACROSS_FILESYSTEM: "1"
-
         containers:
           app:
             image:
@@ -158,21 +146,7 @@ spec:
         name: home-assistant-secret
         defaultMode: 256
         globalMounts:
-          - path: /.ssh/id_ed25519
+          - path: /root/.ssh/id_ed25519
             subPath: GH_DEPLOY_KEY
-          - path: /.ssh/known_hosts
+          - path: /root/.ssh/known_hosts
             subPath: GH_KNOWN_HOSTS
-
-      # TODO: Try to avoid needing this. It is the best way
-      # I could find to allow us to use the same UID/GID
-      # in this init-container as the main application in
-      # order to make the config files read/writable.
-      init-passwd:
-        type: configMap
-        name: home-assistant-init-config-passwd
-        advancedMounts:
-          home-assistant:
-            init-config:
-              - path: /etc/passwd
-                readOnly: false
-                subPath: passwd
