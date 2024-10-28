@@ -52,7 +52,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/home-assistant
-              tag: 2024.10.3
+              tag: 2024.10.4
             env:
               TIMEZONE: "${TIMEZONE}"
             envFrom: *envFrom
