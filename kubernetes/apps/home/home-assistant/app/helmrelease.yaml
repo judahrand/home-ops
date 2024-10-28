@@ -55,18 +55,7 @@ spec:
             command:
               - /bin/sh
               - -c
-              - |
-                  git clone \
-                    --recurse-submodules \
-                    --shallow-submodules \
-                    --depth 1 \
-                    -- git@github.com:judahrand/hass-config.git /config
-
-                  mkdir -p /storage/.storage
-                  ln -s /storage/.storage /config/.storage
-
-                  mkdir -p /storage/.cloud
-                  ln -s /storage/.cloud /config/.cloud
+              - cd /config && git config --global --add safe.directory /config && git pull
             env:
               GIT_SSH_COMMAND: "ssh -i /.ssh/id_ed25519 -o IdentitiesOnly=yes"
               GIT_DISCOVERY_ACROSS_FILESYSTEM: "1"
@@ -152,15 +141,10 @@ spec:
                   port: code-server
 
     persistence:
-      storage:
+      config:
         type: nfs
         server: truenas.lan
-        path: /mnt/main/homeassistant/storage
-        globalMounts:
-          - path: /storage
-
-      config:
-        type: emptyDir
+        path: /mnt/main/homeassistant/config
         globalMounts:
           - path: /config
 
