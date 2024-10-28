@@ -46,7 +46,7 @@ spec:
           tagging: &container
             image:
               repository: ghcr.io/buroa/qbtools
-              tag: v0.19.3
+              tag: v0.19.6
             envFrom:
               - secretRef:
                   name: qbtools-login-secret
