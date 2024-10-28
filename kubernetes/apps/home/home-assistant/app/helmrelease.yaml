@@ -49,8 +49,6 @@ spec:
                   name: home-assistant-secret
 
           init-config:
-            securityContext:
-              runAsUser: 65534
             image:
               repository: alpine/git
               tag: v2.45.2
@@ -109,9 +107,9 @@ spec:
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 65534
-        runAsGroup: 65534
-        fsGroup: 65534
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
 
