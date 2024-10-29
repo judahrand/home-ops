@@ -53,8 +53,6 @@ spec:
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups:
               - 34
-            appArmorProfile:
-              type: Unconfined
             sysctls:
               - name: net.ipv6.conf.net1.forwarding
                 value: "0"
