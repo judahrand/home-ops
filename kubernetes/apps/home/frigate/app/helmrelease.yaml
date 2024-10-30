@@ -35,6 +35,15 @@ spec:
         squat.ai/edgetpu: 1
         gpu.intel.com/i915: 1
 
+    securityContext:
+      capabilities:
+        add:
+          - PERFMON
+      runAsUser: 0
+      runAsGroup: 0
+      runAsNonRoot: false
+      seccompProfile: { type: RuntimeDefault }
+
     # TODO: remove this when HomeAssistant can talk directly to Frigate
     service:
       type: LoadBalancer
