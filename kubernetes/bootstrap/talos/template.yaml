@@ -2,9 +2,9 @@
 kind: Cluster
 name: main
 kubernetes:
-  version: v1.31.1
+  version: v1.31.2
 talos:
-  version: v1.8.1
+  version: v1.8.2
 features:
   backupConfiguration:
     interval: 1h0m0s
