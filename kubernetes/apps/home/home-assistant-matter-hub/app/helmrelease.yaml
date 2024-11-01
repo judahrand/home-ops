@@ -87,9 +87,10 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                memory: "100M"
+                cpu: 25m
+                memory: 150Mi
               limits:
-                memory: "500M"
+                memory: 500Mi
     service:
       app:
         controller: *app
