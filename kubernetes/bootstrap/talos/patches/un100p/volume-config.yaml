@@ -3,7 +3,7 @@ kind: VolumeConfig
 name: EPHEMERAL
 provisioning:
   diskSelector:
-    match: system_disk
+    match: disk.dev_path == "/dev/nvme0n1"
   minSize: 2GB
   maxSize: 100GB
   grow: true
