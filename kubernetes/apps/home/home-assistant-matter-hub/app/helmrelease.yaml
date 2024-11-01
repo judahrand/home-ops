@@ -43,7 +43,7 @@ spec:
                 "name":"iot-vlan",
                 "namespace": "network",
                 "ips": ["${MULTUS_HOME_ASSISTANT_MATTER_HUB}/24"],
-                "mac": "ab:b4:ee:5a:17:7b"
+                "mac": "a0:36:9f:5a:17:7b"
               }]
           securityContext:
             runAsUser: 568
