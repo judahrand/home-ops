@@ -36,7 +36,7 @@ spec:
                   "name":"iot-vlan",
                   "namespace": "network",
                   "ips": ["${MULTUS_HOME_ASSISTANT}/24"],
-                  "mac": "52:4a:1d:f2:2e:fe"
+                  "mac": "a0:41:a7:f2:2e:fe"
                 }]
 
         initContainers:
