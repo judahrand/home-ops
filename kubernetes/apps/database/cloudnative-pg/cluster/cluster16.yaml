@@ -8,6 +8,7 @@ spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:16.4-4
   primaryUpdateStrategy: unsupervised
+  enablePDB: true
 
   storage:
     size: 20Gi  # this is not enforced because we're using a hostpath storage class
@@ -22,10 +23,6 @@ spec:
     parameters:
       max_connections: "400"
       shared_buffers: 256MB
-
-  nodeMaintenanceWindow:
-    inProgress: false
-    reusePVC: true
 
   resources:
     requests:
@@ -46,7 +43,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://cloudnative-pg/
       endpointURL: http://truenas.lan:9000
-      # Note: serverName version needs to be inclemented
+      # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
       serverName: &currentCluster postgres16-v1
       s3Credentials:
