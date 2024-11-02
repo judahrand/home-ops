@@ -5,5 +5,4 @@ provisioning:
   diskSelector:
     match: disk.dev_path == "/dev/nvme0n1"
   minSize: 2GB
-  maxSize: 100GB
   grow: true
