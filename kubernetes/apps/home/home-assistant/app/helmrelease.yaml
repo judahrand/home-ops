@@ -55,6 +55,7 @@ spec:
               tag: 2024.10.4
             env:
               TIMEZONE: "${TIMEZONE}"
+              UV_NO_CACHE: "true"
             envFrom: *envFrom
             securityContext:
               allowPrivilegeEscalation: false
