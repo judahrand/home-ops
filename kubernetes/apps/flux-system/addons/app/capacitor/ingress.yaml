@@ -3,13 +3,18 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: capacitor
+  annotations:
+    external-dns.alpha.kubernetes.io/target: internal.judahrand.net
 spec:
-  defaultBackend:
-    service:
-      name: capacitor
-      port:
-        name: http
-  ingressClassName: tailscale
-  tls:
-    - hosts:
-        - capacitor
+  ingressClassName: internal
+  rules:
+    - host: capacitor.judahrand.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: capacitor
+                port:
+                  name: http
