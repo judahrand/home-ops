@@ -40,6 +40,12 @@ spec:
           path: /
     toolbox:
       enabled: true
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
     configOverride: |
       [global]
       bdev_enable_discard = true
@@ -109,6 +115,18 @@ spec:
             memory: 128Mi
           limits:
             memory: 256Mi
+        crashcollector:
+          requests:
+            cpu: 1m
+            memory: 16Mi
+          limits:
+            memory: 60Mi
+        logcollector:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+          limits:
+            memory: 1Gi
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -163,8 +181,8 @@ spec:
                       app.kubernetes.io/part-of: *cephFileSystemName
             resources:
               requests:
-                cpu: 100m
-                memory: 1Gi
+                cpu: 10m
+                memory: 256Mi
               limits:
                 memory: 4Gi
         storageClass:
