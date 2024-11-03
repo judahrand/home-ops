@@ -36,7 +36,6 @@ spec:
           cpu: 1m
           memory: 64Mi
         limits:
-          cpu: 50m
           memory: 512Mi
 
     master:
