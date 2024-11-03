@@ -1,6 +1,8 @@
 machine:
   files:
-    - content: |-
+    - op: create
+      path: /etc/cri/conf.d/20-customization.part
+      content: |-
         [plugins."io.containerd.grpc.v1.cri"]
           enable_unprivileged_ports = true
           enable_unprivileged_icmp = true
@@ -8,5 +10,3 @@ machine:
           discard_unpacked_layers = false
         [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
           discard_unpacked_layers = false
-      op: create
-      path: /etc/cri/conf.d/20-customization.part
