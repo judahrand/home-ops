@@ -31,6 +31,8 @@ kind: Machine
 name: 3411fb80-b7c8-11ee-b2cc-90bf27fa6400
 install:
   disk: /dev/nvme0n1
+systemExtensions:
+  - siderolabs/amdgpu-firmware
 patches:
   - name: hostname.yaml
     inline:
