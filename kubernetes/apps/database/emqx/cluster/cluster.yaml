@@ -45,6 +45,12 @@ spec:
         - name: init-user
           secret:
             secretName: emqx-init-user-secret
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 512Mi
   listenersServiceTemplate:
     metadata:
       annotations:
