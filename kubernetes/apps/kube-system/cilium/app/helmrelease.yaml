@@ -45,6 +45,13 @@ spec:
         prometheus:
           serviceMonitor:
             enabled: true
+        resources:
+          requests:
+            cpu: 5m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
       ui:
         enabled: true
         rollOutPods: true
@@ -54,6 +61,22 @@ spec:
             external-dns.alpha.kubernetes.io/target: internal.judahrand.net
           className: internal
           hosts: ["hubble.judahrand.net"]
+        backend:
+          resources:
+            requests:
+              cpu: 1m
+              memory: 32Mi
+            limits:
+              cpu: 100m
+              memory: 64Mi
+        frontend:
+          resources:
+            requests:
+              cpu: 1m
+              memory: 16Mi
+            limits:
+              cpu: 100m
+              memory: 32Mi
     operator:
       prometheus:
         enabled: true
@@ -61,6 +84,13 @@ spec:
           enabled: true
       dashboards:
         enabled: true
+      resources:
+        requests:
+          cpu: 10m
+          memory: 256Mi
+        limits:
+          cpu: 1000m
+          memory: 4Gi
     prometheus:
       enabled: true
       serviceMonitor:
@@ -68,3 +98,10 @@ spec:
         trustCRDsExist: true
     dashboards:
       enabled: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 1000m
+        memory: 4Gi

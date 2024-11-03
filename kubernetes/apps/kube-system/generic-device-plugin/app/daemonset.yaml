@@ -60,11 +60,11 @@ spec:
                   product: "9302"
           resources:
             requests:
-              cpu: 50m
-              memory: 10Mi
+              cpu: 5m
+              memory: 16Mi
             limits:
               cpu: 50m
-              memory: 20Mi
+              memory: 32Mi
           ports:
             - containerPort: 8080
               name: http

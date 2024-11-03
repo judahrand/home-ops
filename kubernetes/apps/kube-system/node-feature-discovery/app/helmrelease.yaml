@@ -26,9 +26,36 @@ spec:
       retries: 3
   values:
     nodeFeatureRule.createCRD	: true
+
     worker:
       config:
         core:
           sources: ["pci", "system", "usb"]
+      resources:
+        requests:
+          cpu: 1m
+          memory: 64Mi
+        limits:
+          cpu: 50m
+          memory: 512Mi
+
+    master:
+      resources:
+        requests:
+          cpu: 1m
+          memory: 128Mi
+        limits:
+          cpu: 100m
+          memory: 4Gi
+
+    gc:
+      resources:
+        requests:
+          cpu: 1m
+          memory: 128Mi
+        limits:
+          cpu: 10m
+          memory: 1Gi
+
     prometheus:
       enable: true
