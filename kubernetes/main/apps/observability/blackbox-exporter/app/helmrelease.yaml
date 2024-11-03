@@ -27,10 +27,10 @@ spec:
     ingress:
       enabled: true
       annotations:
-        external-dns.alpha.kubernetes.io/target: internal.devbu.io
+        external-dns.alpha.kubernetes.io/target: internal.judahrand.net
       className: internal
       hosts:
-        - host: blackbox-exporter.devbu.io
+        - host: blackbox-exporter.judahrand.net
           paths:
             - path: /
               pathType: Prefix
