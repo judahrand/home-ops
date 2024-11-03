@@ -40,9 +40,9 @@ spec:
               requests:
                 cpu: 100m
                 memory: 512Mi
-                squat.ai/dri: "1"
               limits:
                 memory: 4Gi
+                squat.ai/dri: 1
 
     service:
       main:

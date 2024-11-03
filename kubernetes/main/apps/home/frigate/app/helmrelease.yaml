@@ -38,10 +38,10 @@ spec:
       requests:
         cpu: 500m
         memory: 1Gi
-        squat.ai/edgetpu: 1
-        squat.ai/dri: 1
       limits:
         memory: 1.2Gi
+        squat.ai/edgetpu: 1
+        squat.ai/dri: 1
 
     securityContext:
       capabilities:
