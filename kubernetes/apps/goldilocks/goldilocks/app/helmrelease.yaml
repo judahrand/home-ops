@@ -22,4 +22,15 @@ spec:
     remediation:
       strategy: rollback
       retries: 3
-  values: {}
+  values:
+    dashboard:
+      ingress:
+        enabled: true
+        ingressClassName: internal
+        annotations:
+          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
+        hosts:
+          - host: goldilocks.judahrand.net
+            paths:
+              - path: /
+                type: ImplementationSpecific
