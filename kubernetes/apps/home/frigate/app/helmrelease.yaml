@@ -27,6 +27,9 @@ spec:
       repository: ghcr.io/blakeblackshear/frigate
       tag: 0.14.1
 
+    env:
+      LIBVA_DRIVER_NAME: radeonsi
+
     envFromSecrets:
       - frigate-secret
 
@@ -36,7 +39,7 @@ spec:
         memory: 1Gi
       limits:
         squat.ai/edgetpu: 1
-        gpu.intel.com/i915: 1
+        squat.ai/dri: 1
         memory: 1.2Gi
 
     securityContext:
