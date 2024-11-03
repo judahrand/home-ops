@@ -31,9 +31,13 @@ spec:
       - frigate-secret
 
     resources:
+      requests:
+        cpu: 500m
+        memory: 1Gi
       limits:
         squat.ai/edgetpu: 1
         gpu.intel.com/i915: 1
+        memory: 1.2Gi
 
     securityContext:
       capabilities:

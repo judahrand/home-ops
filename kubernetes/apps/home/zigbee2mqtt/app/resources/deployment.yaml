@@ -40,6 +40,12 @@ spec:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 30
+          resources:
+            requests:
+              cpu: 100m
+              memory: 250M
+            limits:
+              memory: 250M
           volumeMounts:
             - name: data
               mountPath: /data

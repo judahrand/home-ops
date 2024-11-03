@@ -68,21 +68,10 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                memory: "256M"
+                cpu: 15m
+                memory: "100M"
               limits:
                 memory: "8G"
-
-    # defaultPodOptions:
-    #   affinity:
-    #     podAffinity:
-    #       requiredDuringSchedulingIgnoredDuringExecution:
-    #         - labelSelector:
-    #             matchExpressions:
-    #               - key: app.kubernetes.io/name
-    #                 operator: In
-    #                 values: ["multus"]
-    #           topologyKey: kubernetes.io/hostname
-    #           namespaceSelector: {}
 
     service:
       app:

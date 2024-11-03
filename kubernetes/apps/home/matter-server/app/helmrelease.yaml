@@ -89,9 +89,10 @@ spec:
                   periodSeconds: 5
             resources:
               requests:
-                memory: "100M"
+                cpu: 15m
+                memory: "150M"
               limits:
-                memory: "500M"
+                memory: "256M"
 
     service:
       app:
