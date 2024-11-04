@@ -22,4 +22,4 @@ spec:
   postBuild:
     substitute:
       APP: *app
-
+      GATUS_PATH: /api/v1/status

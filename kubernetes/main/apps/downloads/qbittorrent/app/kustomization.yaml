@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/guarded
 configMapGenerator:
   - name: qbittorrent-scripts
     files:

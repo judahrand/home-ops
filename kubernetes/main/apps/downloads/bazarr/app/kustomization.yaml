@@ -5,3 +5,12 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ../../../../templates/gatus/guarded
+configMapGenerator:
+  - name: bazarr-scripts
+    files:
+      - subcleaner.sh=./resources/subcleaner.sh
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
