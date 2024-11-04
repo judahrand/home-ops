@@ -25,6 +25,7 @@ spec:
   dependsOn:
     - name: kube-prometheus-stack
       namespace: observability
+  suspend: true
   values:
     fullnameOverride: *app
     config:
