@@ -7,3 +7,4 @@ resources:
   - ./resources/externalsecret.yaml
   - ./resources/ingress.yaml
   - ./resources/service.yaml
+  - ../../../../templates/gatus/guarded
