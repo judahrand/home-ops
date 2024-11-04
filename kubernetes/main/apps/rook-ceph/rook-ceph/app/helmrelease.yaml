@@ -65,7 +65,7 @@ spec:
         - name : csi-rbdplugin
           resource:
             requests:
-              cpu: 25
+              cpu: 25m
               memory: 512Mi
             limits:
               memory: 1Gi
