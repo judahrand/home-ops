@@ -44,7 +44,6 @@ spec:
           cpu: 1m
           memory: 128Mi
         limits:
-          cpu: 100m
           memory: 4Gi
 
     gc:
@@ -53,7 +52,6 @@ spec:
           cpu: 1m
           memory: 128Mi
         limits:
-          cpu: 10m
           memory: 1Gi
 
     prometheus:
