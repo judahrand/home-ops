@@ -88,8 +88,6 @@ spec:
           - path: /media
 
       config:
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/jellyfin
+        existingClaim: jellyfin
         globalMounts:
           - path: /config
