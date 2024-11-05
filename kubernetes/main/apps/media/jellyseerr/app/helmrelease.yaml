@@ -87,9 +87,7 @@ spec:
     # https://github.com/Fallenbagel/jellyseerr/pull/628
     persistence:
       config:
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/jellyseerr/config
+        existingClaim: jellyseerr
         globalMounts:
           - path: /app/config
       cache:
