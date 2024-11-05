@@ -6,7 +6,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: zigbee2mqtt
+      app: &app zigbee2mqtt
   strategy:
     type: Recreate
   template:
@@ -15,8 +15,8 @@ spec:
         app: zigbee2mqtt
     spec:
       containers:
-        - image: koenkk/zigbee2mqtt:1.41.0
-          name: zigbee2mqtt
+        - name: *app
+          image: koenkk/zigbee2mqtt:1.41.0
           envFrom:
             - configMapRef:
                 name: zigbee2mqtt-config
@@ -51,6 +51,5 @@ spec:
               mountPath: /data
       volumes:
         - name: data
-          nfs:
-            server: truenas.lan
-            path: /mnt/main/zigbee2mqtt
+          persistentVolumeClaim:
+            claimName: *app

@@ -8,3 +8,4 @@ resources:
   - ./resources/ingress.yaml
   - ./resources/service.yaml
   - ../../../../templates/gatus/guarded
+  - ../../../../templates/volsync
