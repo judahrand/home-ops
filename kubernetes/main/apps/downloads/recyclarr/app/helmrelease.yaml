@@ -63,13 +63,15 @@ spec:
 
     persistence:
       config:
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/recyclarr
+        existingClaim: recyclarr
         advancedMounts:
           recyclarr:
             app:
               - path: /config
+      config-logs:
+        type: emptyDir
+        globalMounts:
+          - path: /config/logs
       config-file:
         type: configMap
         name: recyclarr-configmap
