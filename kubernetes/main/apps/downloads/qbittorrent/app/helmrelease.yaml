@@ -149,10 +149,7 @@ spec:
 
     persistence:
       config:
-        enabled: true
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/qbittorrent
+        existingClaim: qbittorrent
         advancedMounts:
           qbittorrent:
             app:
