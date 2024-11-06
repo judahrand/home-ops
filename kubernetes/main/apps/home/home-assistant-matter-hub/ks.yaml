@@ -26,3 +26,6 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: matterhub
+      VOLSYNC_CAPACITY: 512Mi
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem

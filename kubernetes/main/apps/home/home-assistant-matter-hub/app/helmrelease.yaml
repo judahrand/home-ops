@@ -102,10 +102,7 @@ spec:
 
     persistence:
       config:
-        enabled: true
-        type: nfs
-        path: /mnt/main/home-assistant-matter-hub
-        server: truenas.lan
+        existingClaim: home-assistant-matter-hub
         advancedMounts:
           home-assistant-matter-hub:
             app:
