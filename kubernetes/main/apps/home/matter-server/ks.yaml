@@ -25,3 +25,7 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: matter
+      VOLSYNC_CAPACITY: 512Mi
+      VOLSYNC_ACCESSMODES: ReadWriteMany
+      VOLSYNC_STORAGECLASS: ceph-filesystem
+      VOLSYNC_SNAPSHOTCLASS: csi-ceph-filesystem
