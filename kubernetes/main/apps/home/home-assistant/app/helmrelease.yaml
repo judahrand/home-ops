@@ -132,9 +132,7 @@ spec:
 
     persistence:
       config:
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/homeassistant/config
+        existingClaim: home-assistant
         globalMounts:
           - path: /config
 
