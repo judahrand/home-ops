@@ -44,6 +44,12 @@ spec:
                 "ips": ["${MULTUS_ESPHOME}/24"],
                 "mac": "a0:41:a7:c5:0c:d9"
               }]
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+
         containers:
           app:
             image:
@@ -66,6 +72,10 @@ spec:
                 spec:
                   failureThreshold: 30
                   periodSeconds: 5
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities: { drop: ["ALL"] }
             resources:
               requests:
                 cpu: 15m
@@ -82,10 +92,7 @@ spec:
 
     persistence:
       config:
-        enabled: true
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/esphome
+        existingClaim: esphome
 
     ingress:
       app:
@@ -100,6 +107,3 @@ spec:
                 service:
                   identifier: app
                   port: http
-        # tls:
-        #   - hosts:
-        #     - *host
