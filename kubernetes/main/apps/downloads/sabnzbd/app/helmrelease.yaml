@@ -108,13 +108,19 @@ spec:
 
     persistence:
       config:
-        type: nfs
-        server: truenas.lan
-        path: /mnt/main/sabnzbd
+        existingClaim: sabnzbd
         advancedMounts:
           sabnzbd:
             app:
               - path: /config
+      scripts:
+        type: configMap
+        name: sabnzbd-scripts
+        defaultMode: 0775
+        advancedMounts:
+          sabnzbd:
+            app:
+              - path: /config/scripts
       media:
         type: nfs
         server: truenas.lan
@@ -144,11 +150,3 @@ spec:
             app:
               - path: /incomplete
                 subPath: incomplete
-      scripts:
-        type: configMap
-        name: sabnzbd-scripts
-        defaultMode: 0775
-        advancedMounts:
-          sabnzbd:
-            app:
-              - path: /config/scripts
