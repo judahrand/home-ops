@@ -73,7 +73,7 @@ spec:
     persistence:
       config:
         enabled: true
-        existingClaim: frigate-config
+        existingClaim: frigate
       media:
         enabled: true
         existingClaim: frigate-media

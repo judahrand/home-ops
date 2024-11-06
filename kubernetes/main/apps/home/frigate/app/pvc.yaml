@@ -1,15 +1,18 @@
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolume
 metadata:
-  name: frigate-config
+  name: frigate-media
 spec:
-  volumeName: frigate-config
+  capacity:
+    storage: 120Gi
+  volumeMode: Filesystem
   accessModes:
     - ReadWriteOncePod
-  resources:
-    requests:
-      storage: 500Mi
+  persistentVolumeReclaimPolicy: Delete
+  nfs:
+    path: /mnt/main/frigate/media
+    server: truenas.lan
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
