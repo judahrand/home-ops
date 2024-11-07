@@ -100,3 +100,8 @@ spec:
         type: configMap
         name: truenas-backup
         defaultMode: 0550
+        advancedMounts:
+          snapshot:
+            export:
+              - path: /scripts/export.sh
+                subPath: export.sh
