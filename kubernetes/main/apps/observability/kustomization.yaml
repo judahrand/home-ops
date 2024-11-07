@@ -9,6 +9,7 @@ resources:
   - ./blackbox-exporter/ks.yaml
   - ./gatus/ks.yaml
   - ./grafana/ks.yaml
+  - ./graphite-exporter/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./loki/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
