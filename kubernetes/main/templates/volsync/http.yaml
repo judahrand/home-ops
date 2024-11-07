@@ -3,13 +3,13 @@
 apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
-  name: "${APP}-volsync-http"
+  name: "${APP}-volsync"
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
     name: onepassword-connect
   target:
-    name: "${APP}-volsync-http-secret"
+    name: "${APP}-volsync-secret"
     template:
       engineVersion: v2
       data:
@@ -19,13 +19,13 @@ spec:
         RESTIC_REST_PASSWORD: "{{ .restic_rest_password }}"
   dataFrom:
     - extract:
-        key: volsync-http-template
+        key: volsync-template
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationsource_v1alpha1.json
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: "${APP}-http"
+  name: "${APP}"
 spec:
   sourcePVC: "${APP}"
   trigger:
@@ -33,7 +33,7 @@ spec:
   restic:
     copyMethod: "${VOLSYNC_COPYMETHOD:-Snapshot}"
     pruneIntervalDays: 14
-    repository: "${APP}-volsync-http-secret"
+    repository: "${APP}-volsync-secret"
     volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
     cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-10Gi}"
     cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
@@ -47,3 +47,29 @@ spec:
     retain:
       hourly: 24
       daily: 7
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/volsync.backube/replicationdestination_v1alpha1.json
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-dst"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: "${APP}-volsync-secret"
+    copyMethod: Snapshot
+    volumeSnapshotClassName: "${VOLSYNC_SNAPSHOTCLASS:-csi-ceph-blockpool}"
+    cacheStorageClassName: "${VOLSYNC_CACHE_SNAPSHOTCLASS:-openebs-hostpath}"
+    cacheAccessModes: ["${VOLSYNC_CACHE_ACCESSMODES:-ReadWriteOnce}"]
+    cacheCapacity: "${VOLSYNC_CACHE_CAPACITY:-10Gi}"
+    storageClassName: "${VOLSYNC_STORAGECLASS:-ceph-block}"
+    accessModes: ["${VOLSYNC_ACCESSMODES:-ReadWriteOnce}"]
+    capacity: "${VOLSYNC_CAPACITY:-5Gi}"
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:-568}
+      runAsGroup: ${VOLSYNC_PGID:-568}
+      fsGroup: ${VOLSYNC_PGID:-568}
+    enableFileDeletion: true
+    cleanupCachePVC: true
+    cleanupTempPVC: true

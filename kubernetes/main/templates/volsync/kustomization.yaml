@@ -5,5 +5,4 @@ kind: Kustomization
 resources:
   - ./claim.yaml
   - ./http.yaml
-  - ./nfs.yaml
   - ./r2.yaml
