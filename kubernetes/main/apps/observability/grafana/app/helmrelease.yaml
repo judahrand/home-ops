@@ -187,6 +187,18 @@ spec:
           revision: 1
           datasource:
             - { name: DS_PROMETHEUS, value: Prometheus }
+        truenas_scale:
+          url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/main/dashboards/truenas_scale.json
+          datasource:
+            - { name: DS_MIMIR, value: Prometheus }
+        truenas_scale_disk_insights:
+          url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/main/dashboards/truenas_scale_disk_insights.json
+          datasource:
+            - { name: DS_MIMIR, value: Prometheus }
+        truenas_scale_temperatures:
+          url: https://raw.githubusercontent.com/Supporterino/truenas-graphite-to-prometheus/main/dashboards/truenas_scale_temperatures.json
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
         volsync:
           # renovate: depName="VolSync Dashboard"
           gnetId: 21356

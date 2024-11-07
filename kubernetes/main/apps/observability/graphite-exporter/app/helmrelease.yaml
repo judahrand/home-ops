@@ -61,6 +61,7 @@ spec:
             runAsUser: 568
             runAsGroup: 568
             runAsNonRoot: true
+            seccompProfile: { type: RuntimeDefault }
         replicas: 2
         strategy: RollingUpdate
     persistence:
