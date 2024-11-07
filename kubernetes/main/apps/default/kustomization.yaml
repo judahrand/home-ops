@@ -6,4 +6,5 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./openwrt-backup/ks.yaml
   - ./truenas-backup/ks.yaml

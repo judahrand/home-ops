@@ -1,0 +1,122 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openwrt-backup
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: app-template
+      version: 3.5.1
+      interval: 30m
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+
+  values:
+    controllers:
+      snapshot:
+        type: cronjob
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        cronjob: &cronJobSpec
+          schedule: "@daily"
+          timeZone: "Europe/London"
+          concurrencyPolicy: Forbid
+          successfulJobsHistory: 1
+          failedJobsHistory: 1
+
+        defaultContainerOptions: &defaultContainerOptions
+          env:
+            RUSTIC_NO_CACHE: "true"
+            RUSTIC_REPOSITORY: opendal:s3
+          envFrom:
+            - secretRef:
+                name: openwrt-backup-secret
+          securityContext: &securityContext
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+
+        initContainers:
+          export:
+            image:
+              repository: ghcr.io/instrumentisto/rsync-ssh
+              tag: alpine3.20-r3
+            command: ["/scripts/export.sh", "/backup"]
+            securityContext:
+              <<: *securityContext
+              runAsUser: 65534
+
+        containers:
+          backup:
+            image: &rusticImage
+              repository: ghcr.io/rustic-rs/rustic
+              tag: v0.9.4
+            args:
+              - backup
+              - --init
+              - /backup
+          forget:
+            image: *rusticImage
+            args:
+              - forget
+              - --keep-daily=7
+              - --keep-weekly=4
+
+      prune:
+        type: cronjob
+
+        annotations:
+          reloader.stakater.com/auto: "true"
+
+        cronjob:
+          <<: *cronJobSpec
+          schedule: "@weekly"
+
+        defaultContainerOptions: *defaultContainerOptions
+
+        containers:
+          prune:
+            image: *rusticImage
+            args:
+              - prune
+
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile: { type: RuntimeDefault }
+
+    persistence:
+      backup:
+        type: emptyDir
+      scripts:
+        type: configMap
+        name: openwrt-backup
+        defaultMode: 0550
+        advancedMounts:
+          snapshot:
+            export:
+              - path: /scripts/export.sh
+                subPath: export.sh
+      ssh-key:
+        type: secret
+        name: openwrt-backup-secret
+        defaultMode: 256
+        advancedMounts:
+          snapshot:
+            export:
+            - path: .ssh/id_ed25519
+              subPath: SSH_KEY
+            - path: .ssh/known_hosts
+              subPath: KNOWN_HOSTS
+
