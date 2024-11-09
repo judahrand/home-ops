@@ -14,9 +14,11 @@ spec:
       labels:
         app: zigbee2mqtt
     spec:
+      securityContext:
+        fsGroup: 568
       containers:
         - name: *app
-          image: koenkk/zigbee2mqtt:1.41.0
+          image: ghcr.io/judahrand/zigbee2mqtt:1.41.0
           envFrom:
             - configMapRef:
                 name: zigbee2mqtt-config
@@ -32,11 +34,21 @@ spec:
           ports:
             - containerPort: 8080
               name: http
+          # readinessProbe:
+          #   failureThreshold: 5
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - /healthcheck.sh
+          #   initialDelaySeconds: 5
+          #   timeoutSeconds: 10
+          #   periodSeconds: 10
           livenessProbe:
             failureThreshold: 5
-            httpGet:
-              path: /
-              port: http
+            exec:
+              command:
+                - /bin/sh
+                - /healthcheck.sh
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 30
@@ -49,7 +61,16 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /data
+            - name: healthcheck
+              mountPath: /healthcheck.sh
+              subPath: healthcheck.sh
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: *app
+        - name: healthcheck
+          configMap:
+            name: zigbee2mqtt-healthcheck
+            items:
+              - key: healthcheck.sh
+                path: healthcheck.sh

@@ -32,3 +32,26 @@ data:
   ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
   ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ember
   ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://10.0.60.245:6638
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: zigbee2mqtt-healthcheck
+data:
+  healthcheck.sh: |
+    #! /bin/sh
+    set -e
+
+    status=$(
+        echo '{"topic": "zigbee2mqtt/bridge/request/health_check", "payload": {}}' \
+        | websocat -1 wss://zigbee2mqtt.judahrand.net/api \
+        | jq --raw-output '.payload.state'
+    )
+
+    if [ "$status" = "online" ]; then
+        echo "online"
+        exit 0
+    else
+        echo "offline"
+        exit 1
+    fi;
