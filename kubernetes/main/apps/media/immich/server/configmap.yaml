@@ -5,8 +5,9 @@ metadata:
   name: immich-server-config
 data:
   # URLS
-  IMMICH_SERVER_URL: http://immich-server:3001
+  IMMICH_SERVER_URL: http://immich-server:2283
   PUBLIC_IMMICH_SERVER_URL: https://immich.judahrand.net
+  IMMICH_MACHINE_LEARNING_URL: http://immich-machine-learning:3003
 
   # REDIS
   REDIS_HOSTNAME: "immich-redis"
