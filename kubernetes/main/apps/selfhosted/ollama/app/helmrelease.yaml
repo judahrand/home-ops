@@ -52,7 +52,7 @@ spec:
                 memory: 4Gi
                 # gpu.intel.com/i915: "1"
               limits:
-                memory: 16Gi
+                memory: 24Gi
                 # gpu.intel.com/i915: "1"
 
     service:
