@@ -4,7 +4,7 @@ name: main
 kubernetes:
   version: v1.31.2
 talos:
-  version: v1.8.2
+  version: v1.8.3
 patches:
   - file: ./patches/cluster/cluster-discovery.yaml
   - file: ./patches/cluster/containerd.yaml
