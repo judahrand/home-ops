@@ -44,29 +44,29 @@ spec:
         - name : csi-resizer
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 15Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-attacher
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 10Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-snapshotter
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 10Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-rbdplugin
           resource:
             requests:
-              cpu: 25m
-              memory: 512Mi
+              cpu: 5m
+              memory: 128Mi
             limits:
               memory: 1Gi
         - name : csi-omap-generator
@@ -79,8 +79,8 @@ spec:
         - name : liveness-prometheus
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 30Mi
+              cpu: 1m
             limits:
               memory: 256Mi
 
@@ -90,22 +90,22 @@ spec:
         - name : driver-registrar
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 10Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-rbdplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 25m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 1Gi
         - name : liveness-prometheus
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 30Mi
+              cpu: 1m
             limits:
               memory: 256Mi
 
@@ -115,43 +115,43 @@ spec:
         - name : csi-provisioner
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-resizer
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-attacher
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-snapshotter
           resource:
             requests:
-              memory: 128Mi
-              cpu: 100m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-cephfsplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 250m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 1Gi
         - name : liveness-prometheus
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 30Mi
+              cpu: 1m
             limits:
               memory: 256Mi
 
@@ -161,22 +161,22 @@ spec:
         - name : driver-registrar
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 10Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-cephfsplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 25m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 1Gi
         - name : liveness-prometheus
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 30Mi
+              cpu: 1m
             limits:
               memory: 256Mi
 
@@ -186,22 +186,22 @@ spec:
         - name : csi-provisioner
           resource:
             requests:
-              memory: 128Mi
+              memory: 64Mi
               cpu: 100m
             limits:
               memory: 256Mi
         - name : csi-nfsplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 250m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 1Gi
         - name : csi-attacher
           resource:
             requests:
-              memory: 512Mi
-              cpu: 250m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 1Gi
 
@@ -211,15 +211,15 @@ spec:
         - name : driver-registrar
           resource:
             requests:
-              memory: 128Mi
-              cpu: 50m
+              memory: 10Mi
+              cpu: 1m
             limits:
               memory: 256Mi
         - name : csi-nfsplugin
           resource:
             requests:
-              memory: 512Mi
-              cpu: 250m
+              memory: 64Mi
+              cpu: 1m
             limits:
               memory: 1Gi
 
