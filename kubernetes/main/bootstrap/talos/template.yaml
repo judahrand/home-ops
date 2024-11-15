@@ -24,6 +24,11 @@ machines:
 patches:
   - file: ./patches/control-plane/cluster.yaml
 ---
+kind: Workers
+name: arm64
+machines:
+  - 33653030-3634-3466-6163-313836323236
+---
 kind: Machine
 name: 3411fb80-b7c8-11ee-b2cc-90bf27fa6400
 install:
@@ -68,3 +73,43 @@ patches:
           hostname: k8s-2
   - file: ./patches/un100p/interfaces.yaml
   - file: ./patches/un100p/volume-config.yaml
+---
+kind: Machine
+name: 33653030-3634-3466-6163-313836323236
+install:
+  disk: /dev/nvme0n1
+patches:
+  - name: hostname.yaml
+    inline:
+      machine:
+        network:
+          hostname: k8s-3
+  - name: interfaces.yaml
+    inline:
+      machine:
+        network:
+          interfaces:
+            - interface: bond0
+              bond:
+                mode: active-backup
+                interfaces:
+                  - enP1p1s0
+              dhcp: true
+              dhcpOptions:
+                routeMetric: 1024
+              vlans:
+                - vlanId: 60
+                  dhcp: true
+                  mtu: 1500
+                  dhcpOptions:
+                    routeMetric: 4096
+  - name: volume-config.yaml
+    inline:
+      apiVersion: v1alpha1
+      kind: VolumeConfig
+      name: EPHEMERAL
+      provisioning:
+        diskSelector:
+          match: disk.dev_path == "/dev/nvme0n1"
+        minSize: 2GB
+        grow: true
