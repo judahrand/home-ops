@@ -8,6 +8,4 @@ machine:
         nfsvers=4.2
         hard=True
         noatime=True
-        rsize=131072
-        wsize=131072
-        nconnect=8
+        nconnect=16
