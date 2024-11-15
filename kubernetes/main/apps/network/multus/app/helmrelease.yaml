@@ -101,8 +101,8 @@ spec:
         initContainers:
           cni-plugins-installer:
             image:
-              repository: ghcr.io/angelnu/cni-plugins
-              tag: 1.5.1
+              repository: ghcr.io/skyssolutions/cni-plugins
+              tag: 1.6.0
             resources:
               requests:
                 cpu: "10m"
