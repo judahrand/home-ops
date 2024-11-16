@@ -9,3 +9,4 @@ resources:
   - ./immich/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
+  - ./kyoo/ks.yaml
