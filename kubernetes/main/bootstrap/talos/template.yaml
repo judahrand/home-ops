@@ -30,12 +30,19 @@ install:
   disk: /dev/nvme0n1
 systemExtensions:
   - siderolabs/amdgpu-firmware
+  - siderolabs/uinput
 patches:
   - name: hostname.yaml
     inline:
       machine:
         network:
           hostname: k8s-0
+  - name: uinput.yaml
+    inline:
+      machine:
+        kernel:
+          modules:
+            - name: uinput
   - file: ./patches/um780_xtx/interfaces.yaml
   - file: ./patches/um780_xtx/volume-config.yaml
 ---
