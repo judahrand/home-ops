@@ -42,7 +42,7 @@ spec:
           app:
             image:
               repository: docker.io/vikunja/vikunja
-              tag: 0.24.4
+              tag: 0.24.5
             env:
               VIKUNJA_FILES_BASEPATH: /files
               VIKUNJA_SERVICE_ENABLECALDAV: false
