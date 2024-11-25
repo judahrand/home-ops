@@ -32,8 +32,24 @@ spec:
             - name: "ZIGBEE2MQTT_CONFIG_FRONTEND_URL"
               value: https://zigbee2mqtt.judahrand.net
           ports:
-            - containerPort: 8080
+            - containerPort: &port 8080
               name: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: *port
+            failureThreshold: 5
+            initialDelaySeconds: 5
+            timeoutSeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: *port
+            failureThreshold: 5
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+            periodSeconds: 30
           # readinessProbe:
           #   failureThreshold: 5
           #   exec:
@@ -43,15 +59,15 @@ spec:
           #   initialDelaySeconds: 5
           #   timeoutSeconds: 10
           #   periodSeconds: 10
-          livenessProbe:
-            failureThreshold: 5
-            exec:
-              command:
-                - /bin/sh
-                - /healthcheck.sh
-            initialDelaySeconds: 10
-            timeoutSeconds: 10
-            periodSeconds: 30
+          # livenessProbe:
+          #   failureThreshold: 5
+          #   exec:
+          #     command:
+          #       - /bin/sh
+          #       - /healthcheck.sh
+          #   initialDelaySeconds: 10
+          #   timeoutSeconds: 10
+          #   periodSeconds: 30
           resources:
             requests:
               cpu: 100m
