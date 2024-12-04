@@ -3,11 +3,11 @@
 apiVersion: monitoring.coreos.com/v1alpha1
 kind: ScrapeConfig
 metadata:
-  name: &name zigbee-controller
+  name: &name slzb-06m
 spec:
   staticConfigs:
     - targets:
-        - zigbee-controller
+        - zslzb-06m
   metricsPath: /metrics
   relabelings:
     - action: replace

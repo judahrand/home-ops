@@ -11,4 +11,4 @@ spec:
   targets:
     staticConfig:
       static:
-        - zigbee-controller
+        - slzb-06m
