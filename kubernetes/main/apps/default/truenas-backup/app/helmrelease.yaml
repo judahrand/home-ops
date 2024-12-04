@@ -25,7 +25,7 @@ spec:
           reloader.stakater.com/auto: "true"
 
         cronjob: &cronJobSpec
-          schedule: "@hourly"
+          schedule: "@daily"
           timeZone: "${TIMEZONE}"
           concurrencyPolicy: Forbid
           successfulJobsHistory: 1
