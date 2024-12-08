@@ -6,6 +6,7 @@ resources:
   # Pre Flux-Kustomizations
   - ./namespace.yaml
   # Flux-Kustomizations
+  - ./actual/ks.yaml
   - ./ollama/ks.yaml
   - ./open-webui/ks.yaml
   - ./vikunja/ks.yaml
