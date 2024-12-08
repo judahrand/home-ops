@@ -72,8 +72,8 @@ spec:
         - ALTER SCHEMA vectors OWNER TO "immich";
         - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO "immich";
         - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
-        - CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA pg_catalog;
-        - CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA pg_catalog;
+        - CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
+        - CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
   #   recovery:
   #     source: &previousCluster immich-database
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
