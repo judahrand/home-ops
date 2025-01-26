@@ -102,7 +102,7 @@ spec:
           cni-plugins-installer:
             image:
               repository: ghcr.io/skyssolutions/cni-plugins
-              tag: 1.6.1
+              tag: 1.6.2
             resources:
               requests:
                 cpu: "10m"
