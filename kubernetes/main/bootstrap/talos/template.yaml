@@ -2,7 +2,7 @@
 kind: Cluster
 name: main
 kubernetes:
-  version: v1.31.5
+  version: v1.32.1
 talos:
   version: v1.9.3
 patches:
