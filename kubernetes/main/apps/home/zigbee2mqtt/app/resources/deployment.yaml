@@ -18,7 +18,7 @@ spec:
         fsGroup: 568
       containers:
         - name: *app
-          image: ghcr.io/judahrand/zigbee2mqtt:2.0.0
+          image: ghcr.io/judahrand/zigbee2mqtt:2.1.0
           envFrom:
             - configMapRef:
                 name: zigbee2mqtt-config
