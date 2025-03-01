@@ -8,13 +8,14 @@ talos:
 patches:
   - file: ./patches/cluster/cluster-discovery.yaml
   - file: ./patches/cluster/containerd.yaml
-  - file: ./patches/cluster/nfs.yaml
-  - file: ./patches/cluster/sysctl.yaml
-  - file: ./patches/cluster/openebs-local.yaml
   - file: ./patches/cluster/hostdns.yaml
-  - file: ./patches/cluster/nameservers.yaml
-  - file: ./patches/cluster/nodeip.yaml
   - file: ./patches/cluster/matter-server.yaml
+  - file: ./patches/cluster/nameservers.yaml
+  - file: ./patches/cluster/network-default-action.yaml
+  - file: ./patches/cluster/nfs.yaml
+  - file: ./patches/cluster/nodeip.yaml
+  - file: ./patches/cluster/openebs-local.yaml
+  - file: ./patches/cluster/sysctl.yaml
 ---
 kind: ControlPlane
 machines:
