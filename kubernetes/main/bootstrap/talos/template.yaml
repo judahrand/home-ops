@@ -2,9 +2,9 @@
 kind: Cluster
 name: main
 kubernetes:
-  version: v1.32.1
+  version: v1.32.2
 talos:
-  version: v1.9.3
+  version: v1.9.4
 patches:
   - file: ./patches/cluster/cluster-discovery.yaml
   - file: ./patches/cluster/containerd.yaml
