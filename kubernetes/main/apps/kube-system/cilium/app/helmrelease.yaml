@@ -24,6 +24,7 @@ spec:
     - kind: ConfigMap
       name: cilium-helm-values
   values:
+    MTU: 1500  # Escape hatch for MTU auto-detection with Sideolink: https://github.com/cilium/cilium/issues/37529#issuecomment-2662612355
     hubble:
       enabled: true
       metrics:
