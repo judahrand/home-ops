@@ -39,7 +39,7 @@ spec:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              RADARR__AUTH_APIKEY:
+              RADARR__AUTH__APIKEY:
                 valueFrom:
                   secretKeyRef:
                     name: radarr-secret
