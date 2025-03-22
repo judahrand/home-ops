@@ -42,7 +42,7 @@ spec:
         initContainers:
           init-db:
             image:
-              repository: ghcr.io/onedr0p/postgres-init
+              repository: ghcr.io/home-operations/postgres-init
               tag: 16
             envFrom: &envFrom
               - secretRef:
@@ -51,7 +51,7 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/onedr0p/home-assistant
+              repository: ghcr.io/home-operations/home-assistant
               tag: 2025.3.3
             env:
               TIMEZONE: "${TIMEZONE}"
