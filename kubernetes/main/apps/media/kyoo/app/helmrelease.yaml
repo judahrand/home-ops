@@ -148,8 +148,8 @@ spec:
             memory: 500Mi
           limits:
             cpu: 1
-            squat.ai/dri: 1
-            memory: 8Gi
+            gpu.intel.com/i915: 1
+            memory: 4Gi
 
     ingress:
       enabled: true
