@@ -105,7 +105,7 @@ spec:
         type: emptyDir
       media:
         type: nfs
-        server: truenas.lan
+        server: truenas.servers
         path: /mnt/main/media
         globalMounts:
           - path: /data/nas-media

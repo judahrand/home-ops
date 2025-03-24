@@ -142,7 +142,7 @@ spec:
             readOnly: true
       media:
         type: nfs
-        server: truenas.lan
+        server: truenas.servers
         path: /mnt/main/media
         advancedMounts:
           orphaned:

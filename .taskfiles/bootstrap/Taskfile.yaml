@@ -92,4 +92,4 @@ tasks:
     requires:
       vars: [CLUSTER]
     preconditions:
-      - ping -c1 truenas.lan
+      - ping -c1 truenas.servers

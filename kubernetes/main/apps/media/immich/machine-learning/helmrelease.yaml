@@ -65,7 +65,7 @@ spec:
     persistence:
       library:
         type: nfs
-        server: truenas.lan
+        server: truenas.servers
         path: /mnt/main/immich
         globalMounts:
           - path: *mediaLocation

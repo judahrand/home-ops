@@ -173,11 +173,11 @@ spec:
           doorbell_cam:
             - ffmpeg:http://10.0.60.153/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
             - rtsp://reolink_ip/Preview_01_sub
-            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.lan:554/Preview_01_main
+            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.iot:554/Preview_01_main
             # - ffmpeg:doorbell_cam#video=copy#audio=copy#audio=opus
           doorbell_cam_sub:
             - ffmpeg:http://10.0.60.153/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.lan/Preview_01_sub
+            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.iot/Preview_01_sub
             # - ffmpeg:doorbell_cam#audio=aac
           webrtc:
             candidates:
