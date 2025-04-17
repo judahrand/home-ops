@@ -10,8 +10,11 @@ devices:
     groups:
       - count: 10
         paths:
-          - path: /dev/dri/card0
-          - path: /dev/dri/renderD128
+          - path: /dev/dri
+      - count: 10
+        paths:
+          - path: /dev/dri
+          - path: /dev/kfd
 
   - name: fuse
     groups:
