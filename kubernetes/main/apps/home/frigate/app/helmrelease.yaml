@@ -97,9 +97,8 @@ spec:
         path: plus://7efe1d2424d8522a3f292a4efbb92324
 
       detectors:
-        ov:
-          type: openvino
-          device: GPU
+        onnx:
+          type: onnx
         # coral:
         #   type: edgetpu
         #   device: usb
