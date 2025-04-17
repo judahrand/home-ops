@@ -78,14 +78,6 @@ spec:
         enabled: true
         existingClaim: frigate-media
 
-    probes:
-      readiness:
-        enabled: false
-      liveness:
-        enabled: false
-      startup:
-        enabled: false
-
     config: |
       mqtt:
         host: emqx-listeners.database.svc.cluster.local
