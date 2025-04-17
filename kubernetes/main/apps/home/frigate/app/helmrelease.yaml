@@ -114,7 +114,6 @@ spec:
       semantic_search:
         enabled: true
         model_size: small
-        reindex: true
 
       objects:
         track:
