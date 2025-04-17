@@ -39,7 +39,7 @@ spec:
         cpu: 500m
         memory: 1Gi
       limits:
-        memory: 1.5Gi
+        memory: 8Gi
         squat.ai/edgetpu: 1
         squat.ai/dri: 1
 
@@ -78,6 +78,14 @@ spec:
         enabled: true
         existingClaim: frigate-media
 
+    probes:
+      readiness:
+        enabled: false
+      liveness:
+        enabled: false
+      startup:
+        enabled: false
+
     config: |
       mqtt:
         host: emqx-listeners.database.svc.cluster.local
@@ -102,6 +110,11 @@ spec:
 
       logger:
         default: info
+
+      semantic_search:
+        enabled: true
+        model_size: small
+        reindex: true
 
       objects:
         track:
