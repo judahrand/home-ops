@@ -197,9 +197,17 @@ spec:
         retain:
           days: 0
           mode: all
-        events:
+        alerts:
+          pre_capture: 30
+          post_capture: 30
           retain:
-            default: 30
+            days: 30
+            mode: motion
+        detections:
+          pre_capture: 30
+          post_capture: 30
+          retain:
+            days: 30
             mode: motion
 
       audio:
@@ -217,12 +225,12 @@ spec:
       go2rtc:
         streams:
           doorbell_cam:
-            - ffmpeg:http://10.0.60.153/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
+            - ffmpeg:http://reolink.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
             - rtsp://reolink_ip/Preview_01_sub
             # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.iot:554/Preview_01_main
             # - ffmpeg:doorbell_cam#video=copy#audio=copy#audio=opus
           doorbell_cam_sub:
-            - ffmpeg:http://10.0.60.153/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+            - ffmpeg:http://reolink.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
             # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.iot/Preview_01_sub
             # - ffmpeg:doorbell_cam#audio=aac
           webrtc:
@@ -232,6 +240,7 @@ spec:
 
       cameras:
         doorbell_cam:
+          webui_url: http://reolink.iot
           audio:
             enabled: true
           ffmpeg:
@@ -245,14 +254,6 @@ spec:
                 roles:
                   - audio
                   - detect
-          record:
-            enabled: true
-            events:
-              pre_capture: 30
-              post_capture: 30
-              retain:
-                default: 30
-                mode: active_objects
           detect:
             width: 640
             height: 480
@@ -277,7 +278,7 @@ spec:
               required_zones:
                 - driveway
                 - driveway_entrance
-      version: 0.14
+
       camera_groups:
         Driveway:
           order: 1
