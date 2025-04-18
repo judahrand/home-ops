@@ -30,6 +30,7 @@ spec:
     env:
       TZ: ${TIMEZONE}
       LIBVA_DRIVER_NAME: radeonsi
+      HSA_OVERRIDE_GFX_VERSION: 11.0.2
 
     envFromSecrets:
       - frigate-secret
