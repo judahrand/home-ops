@@ -114,40 +114,70 @@ spec:
       objects:
         track:
           - amazon
+          - bicycle
+          - bird
+          - bus
           - car
           - cat
           - dog
+          - dhl
+          - dpd
           - face
+          - fedex
+          - fox
           - license_plate
+          - motorcycle
           - package
           - person
           - truck
+          - ups
         filters:
-          dog:
-            min_score: .7
-            threshold: .9
-          cat:
-            min_score: .65
-            threshold: .8
-          face:
-            min_score: .7
-          package:
-            min_score: .65
-            threshold: .9
-          license_plate:
-            min_score: .6
           amazon:
             min_score: .75
-          ups:
-            min_score: .75
-          fedex:
-            min_score: .75
-          person:
+          bicycle:
+            min_score: .65
+          bird:
+            min_score: .7
+            threshold: .8
+          bus:
             min_score: .65
             threshold: .85
           car:
             min_score: .65
             threshold: .85
+          cat:
+            min_score: .65
+            threshold: .8
+          dog:
+            min_score: .7
+            threshold: .8
+          dhl:
+            min_score: .75
+          dpd:
+            min_score: .75
+          face:
+            min_score: .7
+          fedex:
+            min_score: .75
+          fox:
+            min_score: .65
+            threshold: .8
+          license_plate:
+            min_score: .6
+          motorcycle:
+            min_score: .65
+            threshold: .85
+          package:
+            min_score: .65
+            threshold: .9
+          person:
+            min_score: .65
+            threshold: .85
+          truck:
+            min_score: .65
+            threshold: .85
+          ups:
+            min_score: .75
 
       snapshots:
         enabled: true
