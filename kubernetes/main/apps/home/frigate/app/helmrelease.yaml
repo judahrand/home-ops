@@ -42,6 +42,7 @@ spec:
         memory: 8Gi
         squat.ai/edgetpu: 1
         squat.ai/dri: 1
+        squat.ai/kfd: 1
 
     securityContext:
       capabilities:

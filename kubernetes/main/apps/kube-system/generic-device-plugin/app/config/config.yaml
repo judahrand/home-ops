@@ -11,10 +11,12 @@ devices:
       - count: 10
         paths:
           - path: /dev/dri
-          - path: /dev/kfd
+
+  - name: kfd
+    groups:
       - count: 10
         paths:
-          - path: /dev/dri
+          - path: /dev/kfd
 
   - name: fuse
     groups:
