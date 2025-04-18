@@ -111,6 +111,14 @@ spec:
         enabled: true
         model_size: small
 
+      review:
+        alerts:
+          labels:
+            - car
+            - person
+            - motorcycle
+            - truck
+
       objects:
         track:
           - amazon
