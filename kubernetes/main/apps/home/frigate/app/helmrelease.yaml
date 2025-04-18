@@ -94,7 +94,7 @@ spec:
         enabled: false
 
       model:
-        path: plus://7efe1d2424d8522a3f292a4efbb92324
+        path: plus://ac97080e9fcaf057b04ecb8447b2b140
 
       detectors:
         onnx_0:
