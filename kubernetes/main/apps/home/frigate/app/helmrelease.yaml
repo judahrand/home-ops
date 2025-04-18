@@ -278,6 +278,10 @@ spec:
               required_zones:
                 - driveway
                 - driveway_entrance
+            detections:
+              required_zones:
+                - driveway
+                - driveway_entrance
 
       camera_groups:
         Driveway:
