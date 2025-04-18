@@ -94,16 +94,15 @@ spec:
         enabled: false
 
       model:
-        path: plus://b7dfe8fcb375275b85f825644be3699c
-        # path: plus://7efe1d2424d8522a3f292a4efbb92324
+        # path: plus://b7dfe8fcb375275b85f825644be3699c
+        path: plus://7efe1d2424d8522a3f292a4efbb92324
 
       detectors:
-        # onnx:
-        #   type: onnx
-        coral:
-          type: edgetpu
-          device: usb
-
+        onnx:
+          type: onnx
+        # coral:
+        #   type: edgetpu
+        #   device: usb
 
       logger:
         default: info
