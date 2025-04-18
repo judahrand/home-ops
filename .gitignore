@@ -1,26 +1,12 @@
-# Trash
-.DS_Store
-Thumbs.db
-# k8s
-kubeconfig
-talosconfig
-.decrypted~*.yaml
-.config.env
-*.agekey
-*.pub
+/.private/
+/.task/
+/.venv/
+*.crt
 *.key
-# Private
-.private
-.bin
-# Ansible
-.venv*
-# Taskfile
-.task
-# Brew
+.decrypted~*
+.DS_Store
 Brewfile.lock.json
-# intellij
-.idea
-# wiki
-wiki
-# Bootstrap
-/config.yaml
+Thumbs.db
+kubeconfig
+onepassword.env
+talosconfig
