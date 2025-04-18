@@ -1,0 +1,38 @@
+machine:
+  network:
+    hostname: k8s-2
+    interfaces:
+      - interface: bond0
+        bond:
+          interfaces:
+              - enp1s0
+          mode: active-backup
+        vlans:
+          - routes: []
+            dhcp: true
+            vlanId: 60
+            mtu: 1500
+            dhcpOptions:
+              routeMetric: 4096
+        dhcp: true
+        dhcpOptions:
+          routeMetric: 1024
+        vip:
+          ip: 10.0.42.120
+  install:
+    disk: /dev/nvme0n1
+    image: factory.talos.dev/installer/a30c16a32db3c99cb35f22401fad96807f80896dfc86aa4ec716ed6b4aff09de:{{ ENV.TALOS_VERSION }}
+    extraKernelArgs:
+      - apparmor=0                          # Less security, faster puter
+      - init_on_alloc=0                     # Less security, faster puter
+      - init_on_free=0                      # Less security, faster puter
+      - mitigations=off                     # Less security, faster puter
+      - security=none                       # Less security, faster puter
+      - talos.auditd.disabled=1             # Less security, faster puter
+      - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
+      - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU / iGPU
+    wipe: false
+  sysfs:
+    devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
+  nodeLabels:
+    intel.feature.node.kubernetes.io/gpu: "true"

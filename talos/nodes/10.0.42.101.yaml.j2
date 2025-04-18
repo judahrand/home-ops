@@ -1,0 +1,33 @@
+machine:
+  network:
+    hostname: k8s-0
+    interfaces:
+      - interface: bond0
+        bond:
+          interfaces:
+              - enp2s0
+              - enp3s0
+          mode: active-backup
+        vlans:
+          - routes: []
+            dhcp: true
+            vlanId: 60
+            mtu: 1500
+            dhcpOptions:
+              routeMetric: 4096
+        dhcp: true
+        dhcpOptions:
+          routeMetric: 1024
+        vip:
+          ip: 10.0.42.120
+  install:
+    disk: /dev/nvme1n1
+    image: factory.talos.dev/installer/5b3b9c7c93b1e332700ce6dccb34f32ef4824787afa617b87391119bebe2b05b:{{ ENV.TALOS_VERSION }}
+    extraKernelArgs:
+      - apparmor=0                          # Less security, faster puter
+      - init_on_alloc=0                     # Less security, faster puter
+      - init_on_free=0                      # Less security, faster puter
+      - mitigations=off                     # Less security, faster puter
+      - security=none                       # Less security, faster puter
+      - talos.auditd.disabled=1             # Less security, faster puter
+    wipe: false
