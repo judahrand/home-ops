@@ -2,39 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: volsync-system
+components:
+  - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./snapshot-controller/ks.yaml
   - ./volsync/ks.yaml
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/provider_v1beta3.json
-apiVersion: notification.toolkit.fluxcd.io/v1beta3
-kind: Provider
-metadata:
-  name: alert-manager
-  namespace: volsync-system
-spec:
-  type: alertmanager
-  address: http://alertmanager-operated.observability.svc.cluster.local:9093/api/v2/alerts/
----
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/notification.toolkit.fluxcd.io/alert_v1beta3.json
-apiVersion: notification.toolkit.fluxcd.io/v1beta3
-kind: Alert
-metadata:
-  name: alert-manager
-  namespace: volsync-system
-spec:
-  providerRef:
-    name: alert-manager
-  eventSeverity: error
-  eventSources:
-    - kind: HelmRelease
-      name: "*"
-  exclusionList:
-    - "error.*lookup github\\.com"
-    - "error.*lookup raw\\.githubusercontent\\.com"
-    - "dial.*tcp.*timeout"
-    - "waiting.*socket"
-  suspend: false
