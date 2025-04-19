@@ -4,29 +4,17 @@ kind: HelmRelease
 metadata:
   name: &app home-assistant-matter-hub
 spec:
-  interval: 15m
-  chart:
-    spec:
-      chart: app-template
-      version: 3.7.3
-      interval: 15m
-      sourceRef:
-        kind: HelmRepository
-        name: bjw-s
-        namespace: flux-system
-  maxHistory: 3
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: app-template
   install:
-    createNamespace: true
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
-    crds: CreateReplace
     cleanupOnFail: true
     remediation:
       retries: 3
-      strategy: uninstall
-  uninstall:
-    keepHistory: false
   values:
     global:
       nameOverride: *app
