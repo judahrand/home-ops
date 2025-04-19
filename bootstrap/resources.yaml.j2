@@ -25,6 +25,16 @@ stringData:
 apiVersion: v1
 kind: Secret
 metadata:
+  name: github-deploy-key
+  namespace: flux-system
+data:
+  identity: op://kubernetes/github/private-key
+  identity.pub: op://kubernetes/github/public-key
+  known_hosts: op://kubernetes/github/known-hosts
+---
+apiVersion: v1
+kind: Secret
+metadata:
   name: judahrand-net-tls
   namespace: kube-system
   annotations:
