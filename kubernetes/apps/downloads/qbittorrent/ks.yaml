@@ -16,7 +16,8 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   wait: true
   dependsOn:
     - name: generic-device-plugin
@@ -47,7 +48,8 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: home-kubernetes
+    name: flux-system
+    namespace: flux-system
   wait: false
   dependsOn:
     - name: qbittorrent
