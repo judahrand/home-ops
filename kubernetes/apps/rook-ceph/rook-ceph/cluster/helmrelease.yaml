@@ -38,14 +38,6 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
-    ingress:
-      dashboard:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-        ingressClassName: internal
-        host:
-          name: rook.judahrand.net
-          path: /
     toolbox:
       enabled: true
       resources:
