@@ -6,8 +6,5 @@ namespace: default
 components:
   - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./openwrt-backup/ks.yaml
   - ./truenas-backup/ks.yaml

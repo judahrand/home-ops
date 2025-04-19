@@ -6,9 +6,6 @@ namespace: media
 components:
   - ../../components/common
 resources:
-  # Pre Flux-Kustomizations
-  - ./namespace.yaml
-  # Flux-Kustomizations
   - ./immich/ks.yaml
   - ./jellyfin/ks.yaml
   - ./jellyseerr/ks.yaml
