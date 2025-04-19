@@ -29,7 +29,7 @@ spec:
                 [{
                   "name":"iot-vlan",
                   "namespace": "network",
-                  "ips": ["${MULTUS_HOME_ASSISTANT}/24"],
+                  "ips": ["10.0.60.87/24"],
                   "mac": "a0:41:a7:f2:2e:fe"
                 }]
 

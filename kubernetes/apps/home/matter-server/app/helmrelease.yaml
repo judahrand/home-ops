@@ -30,14 +30,14 @@ spec:
               [{
                 "name":"iot-vlan",
                 "namespace": "network",
-                "ips": ["${MULTUS_MATTER_SERVER}/24"],
+                "ips": ["10.0.60.86/24"],
                 "mac": "a0:41:a7:15:c3:00"
               }]
           securityContext:
             runAsUser: 0  # Must be run as root user
-            runAsGroup: ${APP_GID}
+            runAsGroup: 100
             runAsNonRoot: false  # Must be run as root user
-            fsGroup: ${APP_GID}
+            fsGroup: 100
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups:
               - 34
@@ -88,7 +88,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: *host
-          io.cilium/lb-ipam-ips: "${LOAD_BALANCER_MATTER_SERVER}"
+          io.cilium/lb-ipam-ips: 10.0.42.128
         ports:
           api:
             enabled: true

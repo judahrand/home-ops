@@ -69,7 +69,7 @@ spec:
         controller: graphite-exporter
         type: LoadBalancer
         annotations:
-          io.cilium/lb-ipam-ips: "${LOAD_BALANCER_GRAPHITE_EXPORTER}"
+          io.cilium/lb-ipam-ips: 10.0.42.130
         ports:
           graphite-tcp:
             protocol: TCP

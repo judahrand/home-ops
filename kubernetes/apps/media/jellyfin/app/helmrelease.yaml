@@ -38,8 +38,6 @@ spec:
     service:
       main:
         type: LoadBalancer
-        annotations:
-          lbipam.cilium.io/ips: "${LOAD_BALANCER_JELLYFIN}"
         controller: main
         ports:
           http:

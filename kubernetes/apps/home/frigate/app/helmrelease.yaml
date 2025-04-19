@@ -69,7 +69,7 @@ spec:
       type: LoadBalancer
       annotations:
         external-dns.alpha.kubernetes.io/hostname: homeassistant-frigate.judahrand.net
-        io.cilium/lb-ipam-ips: ${LOAD_BALANCER_FRIGATE}
+        io.cilium/lb-ipam-ips: 10.0.42.127
 
     ingress:
       enabled: true

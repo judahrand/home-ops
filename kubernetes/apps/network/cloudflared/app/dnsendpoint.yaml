@@ -8,4 +8,4 @@ spec:
   endpoints:
     - dnsName: external.judahrand.net
       recordType: CNAME
-      targets: ["${CLUSTER_CLOUDFLARE_TUNNEL_ID}.cfargotunnel.com"]
+      targets: ["32a8656e-42a1-453b-91d2-6689236bef7f.cfargotunnel.com"]

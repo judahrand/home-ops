@@ -40,7 +40,7 @@ spec:
       service:
         annotations:
           external-dns.alpha.kubernetes.io/hostname: external.judahrand.net
-          lbipam.cilium.io/ips: ${LOAD_BALANCER_EXTERNAL_NGINX}
+          lbipam.cilium.io/ips: 10.0.42.122
       ingressClassResource:
         name: external
         default: false

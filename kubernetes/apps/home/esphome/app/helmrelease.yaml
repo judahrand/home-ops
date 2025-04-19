@@ -26,7 +26,7 @@ spec:
               [{
                 "name":"iot-vlan",
                 "namespace": "network",
-                "ips": ["${MULTUS_ESPHOME}/24"],
+                "ips": ["10.0.60.85/24"],
                 "mac": "a0:41:a7:c5:0c:d9"
               }]
           securityContext:
