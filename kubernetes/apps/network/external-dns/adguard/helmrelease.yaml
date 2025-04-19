@@ -63,9 +63,9 @@ spec:
           - name: DRY_RUN
             value: "false"
     extraArgs:
-      - --ignore-ingress-tls-spec
+      - --gateway-name=external
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["crd", "gateway-httproute"]
     txtOwnerId: main
     txtPrefix: k8s.main.
     domainFilters: ["lan", "judahrand.net"]
