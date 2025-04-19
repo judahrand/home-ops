@@ -1,30 +1,39 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: cilium
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.17.3
+  url: oci://ghcr.io/home-operations/charts-mirror/cilium
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: cilium
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: cilium
-      version: 1.17.3
-      sourceRef:
-        kind: HelmRepository
-        name: cilium
-        namespace: flux-system
+  interval: 1h
+  chartRef:
+    kind: OCIRepository
+    name: cilium
   install:
     remediation:
-      retries: 3
+      retries: -1
   upgrade:
     cleanupOnFail: true
     remediation:
       retries: 3
   valuesFrom:
     - kind: ConfigMap
-      name: cilium-helm-values
+      name: cilium-values
   values:
-    MTU: 1500  # Escape hatch for MTU auto-detection with Sideolink: https://github.com/cilium/cilium/issues/37529#issuecomment-2662612355
     hubble:
       enabled: true
       metrics:
@@ -79,30 +88,4 @@ spec:
               cpu: 100m
               memory: 32Mi
     operator:
-      prometheus:
-        enabled: true
-        serviceMonitor:
-          enabled: true
-      dashboards:
-        enabled: true
-      resources:
-        requests:
-          cpu: 10m
-          memory: 256Mi
-        limits:
-          cpu: 1000m
-          memory: 4Gi
-    prometheus:
-      enabled: true
-      serviceMonitor:
-        enabled: true
-        trustCRDsExist: true
-    dashboards:
-      enabled: true
-    resources:
-      requests:
-        cpu: 100m
-        memory: 512Mi
-      limits:
-        cpu: 1000m
-        memory: 4Gi
+      tolerations: []
