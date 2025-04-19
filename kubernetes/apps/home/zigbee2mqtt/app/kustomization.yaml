@@ -5,5 +5,5 @@ resources:
   - ./resources/configmap.yaml
   - ./resources/deployment.yaml
   - ./resources/externalsecret.yaml
-  - ./resources/ingress.yaml
   - ./resources/service.yaml
+  - ./resources/route.yaml
