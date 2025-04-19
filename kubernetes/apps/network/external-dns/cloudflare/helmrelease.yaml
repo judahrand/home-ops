@@ -3,7 +3,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: OCIRepository
 metadata:
-  name: cloudflare-dns
+  name: external-dns-cloudflare
 spec:
   interval: 5m
   layerSelector:
@@ -22,7 +22,7 @@ spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: cloudflare-dns
+    name: external-dns-cloudflare
   install:
     remediation:
       retries: -1

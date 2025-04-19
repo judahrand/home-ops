@@ -1,10 +1,21 @@
 
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/helmrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: amd-gpu-device-plugin
+  namespace: &namespace kube-system
+spec:
+  interval: 2h
+  url: https://rocm.github.io/k8s-device-plugin/
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: amd-gpu-device-plugin
+  namespace: &namespace kube-system
 spec:
   interval: 30m
   chart:
@@ -13,8 +24,8 @@ spec:
       version: 0.19.0
       sourceRef:
         kind: HelmRepository
-        name: amd-gpu
-        namespace: flux-system
+        name: amd-gpu-device-plugin
+        namespace: *namespace
   install:
     crds: CreateReplace
     remediation:

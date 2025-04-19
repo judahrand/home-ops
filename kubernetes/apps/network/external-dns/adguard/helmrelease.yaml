@@ -1,9 +1,25 @@
 ---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1beta2.json
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: external-dns-adguard
+  namespace: &namespace network
+spec:
+  interval: 5m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.16.1
+  url: oci://ghcr.io/home-operations/charts-mirror/external-dns
+---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: &app external-dns-adguard
+  namespace: &namespace network
 spec:
   interval: 30m
   chart:
@@ -12,8 +28,8 @@ spec:
       version: 1.16.1
       sourceRef:
         kind: HelmRepository
-        name: external-dns
-        namespace: flux-system
+        name: external-dns-adguard
+        namespace: *namespace
   install:
     remediation:
       retries: 3
