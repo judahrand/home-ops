@@ -105,16 +105,15 @@ spec:
             app:
               - path: "/data"
 
-    ingress:
+    route:
       app:
-        enabled: false
-        className: "internal"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: api
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: api

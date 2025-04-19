@@ -106,30 +106,32 @@ spec:
           code-server:
             port: 12321
 
-    ingress:
+    route:
       app:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.judahrand.net
-        className: external
-        hosts:
-          - host: homeassistant.judahrand.net
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+          - homeassistant.judahrand.net
+          - hass.judahrand.net
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: *port
 
       code-server:
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-        className: internal
-        hosts:
-          - host: hass-code.judahrand.net
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: code-server
+        hostnames:
+          - hass-code.judahrand.net
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: *app
+                port: code-server
 
     persistence:
       config:

@@ -96,16 +96,16 @@ spec:
             app:
               - path: "/data"
 
-    ingress:
+    route:
       app:
-        enabled: true
-        className: internal
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-        hosts:
-          - host: matterhub.judahrand.net
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+          - matterhub.judahrand.net
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: http

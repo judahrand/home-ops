@@ -89,16 +89,15 @@ spec:
             app:
               - path: /cache
 
-    ingress:
+    route:
       app:
-        enabled: true
-        className: "internal"
-        annotations:
-          external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-        hosts:
-          - host: *host
-            paths:
-              - path: /
-                service:
-                  identifier: app
-                  port: http
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: app
+                port: http

@@ -46,22 +46,18 @@ spec:
             port: 7359
             protocol: UDP
 
-    ingress:
-      main:
-        enabled: true
-        className: external
-        annotations:
-          external-dns.alpha.kubernetes.io/target: external.judahrand.net
-        hosts:
-          - host: &host jellyfin.judahrand.net
-            paths:
-              - path: /
-                service:
-                  identifier: main
-                  port: http
-        tls:
-          - hosts:
-              - *host
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+        parentRefs:
+          - name: external
+            namespace: kube-system
+            sectionName: https
+        rules:
+          - backendRefs:
+              - name: main
+                port: http
 
     persistence:
       tmpfs:
