@@ -29,7 +29,8 @@ servers:
       - name: autopath
         parameters: "@kubernetes"
       - name: forward
-        parameters: . /etc/resolv.conf
+        parameters: . 10.0.1.1
+        # parameters: . /etc/resolv.conf
       - name: cache
         configBlock: |-
           success 9984
