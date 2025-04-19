@@ -11,8 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/guarded
-    - ../../../components/volsync
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   interval: 30m
   timeout: 5m
   path: ./kubernetes/apps/selfhosted/open-webui/app
@@ -24,7 +24,9 @@ spec:
   wait: false
   dependsOn:
     - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: ollama
+      namespace: selfhosted
   postBuild:
     substitute:
       APP: *app

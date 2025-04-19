@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/guarded
+    - ../../../../components/gatus/guarded
   interval: 30m
   timeout: 5m
   path: ./kubernetes/apps/downloads/autobrr/app
@@ -23,8 +23,11 @@ spec:
   wait: false
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
     - name: cloudnative-pg-cluster
+      namespace: database
     - name: qbittorrent
+      namespace: downloads
   postBuild:
     substitute:
       APP: *app

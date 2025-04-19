@@ -21,4 +21,6 @@ spec:
   wait: false
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
     - name: qbittorrent
+      namespace: downloads

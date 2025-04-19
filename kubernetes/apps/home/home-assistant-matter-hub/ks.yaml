@@ -11,11 +11,13 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/guarded
-    - ../../../components/volsync
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   dependsOn:
     - name: multus-config
+      namespace: network
     - name: external-secrets
+      namespace: external-secrets
   path: ./kubernetes/apps/home/home-assistant-matter-hub/app
   prune: true
   sourceRef:

@@ -21,6 +21,7 @@ spec:
   wait: false
   dependsOn:
     - name: openebs
+      namespace: openebs-system
   postBuild:
     substitute:
       APP: *app

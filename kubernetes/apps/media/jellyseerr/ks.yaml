@@ -11,8 +11,8 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/external
-    - ../../../components/volsync
+    - ../../../../components/gatus/external
+    - ../../../../components/volsync
   path: ./kubernetes/apps/media/jellyseerr/app
   prune: true
   sourceRef:

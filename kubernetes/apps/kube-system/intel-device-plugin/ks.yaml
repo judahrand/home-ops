@@ -36,6 +36,7 @@ spec:
   prune: true
   dependsOn:
     - name: intel-device-plugin
+      namespace: kube-system
   sourceRef:
     kind: GitRepository
     name: flux-system

@@ -35,6 +35,7 @@ spec:
   path: ./kubernetes/apps/kube-system/node-feature-discovery/rules
   dependsOn:
     - name: node-feature-discovery
+      namespace: kube-system
   prune: true
   sourceRef:
     kind: GitRepository

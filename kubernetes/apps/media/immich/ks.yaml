@@ -4,18 +4,19 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: &app immich-server
-  namespace: flux-system
 spec:
-  targetNamespace: media
+  targetNamespace: &namespace media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/external
+    - ../../../../components/gatus/external
   path: ./kubernetes/apps/media/immich/server
   dependsOn:
     - name: immich-database
+      namespace: *namespace
     - name: immich-redis
+      namespace: *namespace
   prune: true
   sourceRef:
     kind: GitRepository
@@ -44,7 +45,9 @@ spec:
   path: ./kubernetes/apps/media/immich/database
   dependsOn:
     - name: cloudnative-pg
+      namespace: database
     - name: external-secrets
+      namespace: external-secrets
   prune: true
   sourceRef:
     kind: GitRepository

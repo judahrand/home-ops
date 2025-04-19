@@ -12,6 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
   path: ./kubernetes/apps/network/nginx/certificates
   prune: false
   sourceRef:
@@ -29,12 +30,13 @@ metadata:
   name: &app nginx-internal
   namespace: flux-system
 spec:
-  targetNamespace: network
+  targetNamespace: &namespace network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: nginx-certificates
+      namespace: *namespace
   path: ./kubernetes/apps/network/nginx/internal
   prune: false
   sourceRef:
@@ -53,12 +55,13 @@ metadata:
   name: &app nginx-external
   namespace: flux-system
 spec:
-  targetNamespace: network
+  targetNamespace: &namespace network
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: nginx-certificates
+      namespace: *namespace
   path: ./kubernetes/apps/network/nginx/external
   prune: false
   sourceRef:

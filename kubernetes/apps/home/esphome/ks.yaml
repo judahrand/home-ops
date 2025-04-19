@@ -11,10 +11,11 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   components:
-    - ../../../components/gatus/guarded
-    - ../../../components/volsync
+    - ../../../../components/gatus/guarded
+    - ../../../../components/volsync
   dependsOn:
     - name: multus-config
+      namespace: network
   path: ./kubernetes/apps/home/esphome/app
   prune: true
   sourceRef:

@@ -21,5 +21,8 @@ spec:
   wait: false
   dependsOn:
     - name: external-secrets
+      namespace: external-secrets
     - name: external-dns-cloudflare
+      namespace: network
     - name: nginx-external
+      namespace: network

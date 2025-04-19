@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   components:
-    - ../../../components/volsync
+    - ../../../../components/volsync
   interval: 30m
   timeout: 5m
   path: ./kubernetes/apps/selfhosted/actual/app
@@ -23,8 +23,11 @@ spec:
   wait: false
   dependsOn:
     - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: volsync
+      namespace: volsync-system
     - name: external-secrets
+      namespace: external-secrets
   postBuild:
     substitute:
       APP: *appname
