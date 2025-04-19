@@ -20,6 +20,6 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
     - name: external-dns-cloudflare
     - name: nginx-external

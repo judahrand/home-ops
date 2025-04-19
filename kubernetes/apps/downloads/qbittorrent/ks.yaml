@@ -21,7 +21,7 @@ spec:
   wait: true
   dependsOn:
     - name: generic-device-plugin
-    - name: external-secrets-stores
+    - name: external-secrets
   postBuild:
     substitute:
       APP: *app

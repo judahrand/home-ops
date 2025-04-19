@@ -22,7 +22,7 @@ spec:
   dependsOn:
     - name: multus-config
     - name: cloudnative-pg-cluster
-    - name: external-secrets-stores
+    - name: external-secrets
   postBuild:
     substitute:
       APP: *app

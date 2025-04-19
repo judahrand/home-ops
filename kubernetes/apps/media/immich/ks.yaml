@@ -42,7 +42,7 @@ spec:
   path: ./kubernetes/apps/media/immich/database
   dependsOn:
     - name: cloudnative-pg
-    - name: external-secrets-stores
+    - name: external-secrets
   prune: true
   sourceRef:
     kind: GitRepository

@@ -21,7 +21,7 @@ spec:
   wait: false
   dependsOn:
     - name: openebs
-    - name: external-secrets-stores
+    - name: external-secrets
   postBuild:
     substitute:
       APP: *app

@@ -12,7 +12,7 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: multus-config
-    - name: external-secrets-stores
+    - name: external-secrets
   path: ./kubernetes/apps/home/home-assistant-matter-hub/app
   prune: true
   sourceRef:

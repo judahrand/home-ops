@@ -11,7 +11,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: external-secrets-stores
+    - name: external-secrets
   path: ./kubernetes/apps/cert-manager/certificates/import
   prune: false
   sourceRef:
@@ -37,7 +37,7 @@ spec:
   dependsOn:
     - name: certificates-import
     - name: cert-manager-issuers
-    - name: external-secrets-stores
+    - name: external-secrets
   path: ./kubernetes/apps/cert-manager/certificates/export
   prune: false
   sourceRef:
