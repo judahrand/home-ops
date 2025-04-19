@@ -5,7 +5,7 @@ kind: Gateway
 metadata:
   name: external
   annotations:
-    external-dns.alpha.kubernetes.io/target: &hostname external.devbu.io
+    external-dns.alpha.kubernetes.io/target: &hostname external.judahrand.net
 spec:
   gatewayClassName: cilium
   addresses:

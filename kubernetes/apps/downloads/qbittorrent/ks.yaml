@@ -10,6 +10,9 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../components/gatus/guarded
+    - ../../../components/volsync
   interval: 30m
   timeout: 5m
   path: ./kubernetes/apps/downloads/qbittorrent/app
