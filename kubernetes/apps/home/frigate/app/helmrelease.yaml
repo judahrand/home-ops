@@ -64,24 +64,6 @@ spec:
       runAsNonRoot: false
       seccompProfile: { type: RuntimeDefault }
 
-    # TODO: remove this when HomeAssistant can talk directly to Frigate
-    service:
-      type: LoadBalancer
-      annotations:
-        external-dns.alpha.kubernetes.io/hostname: homeassistant-frigate.judahrand.net
-        io.cilium/lb-ipam-ips: 10.0.42.127
-
-    ingress:
-      enabled: true
-      ingressClassName: internal
-      annotations:
-        external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-      hosts:
-        - host: frigate.judahrand.net
-          paths:
-            - path: '/'
-              portName: http-auth
-
     persistence:
       config:
         enabled: true
