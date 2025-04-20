@@ -48,7 +48,7 @@ spec:
               repository: ghcr.io/home-operations/home-assistant
               tag: 2025.4.2
             env:
-              TIMEZONE: "${TIMEZONE}"
+              TIMEZONE: Europe/London
               UV_NO_CACHE: "true"
             envFrom: *envFrom
             securityContext:
