@@ -102,9 +102,9 @@ spec:
         controller: home-assistant
         ports:
           http:
-            port: 8123
+            port: &hass-port 8123
           code-server:
-            port: 12321
+            port: &code-port 12321
 
     route:
       app:
@@ -118,8 +118,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
-                port: *port
+              - name: app
+                port: *hass-port
 
       code-server:
         hostnames:
@@ -130,8 +130,8 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
-                port: code-server
+              - name: app
+                port: *code-port
 
     persistence:
       config:
