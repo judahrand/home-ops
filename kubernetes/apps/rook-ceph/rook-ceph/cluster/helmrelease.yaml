@@ -72,13 +72,13 @@ spec:
         nodes:
           - name: k8s-0
             devices:
-              - name: "/dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NX1W503160N_.*"
+              - name: nvme1n1
           - name: k8s-1
             devices:
-              - name: "/dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HAJM-0E005_S2NKNCAGB00115Z"
+              - name: sda
           - name: k8s-2
             devices:
-              - name: "/dev/disk/by-id/ata-MK001920GWCFB_S3BPNX0J501671"
+              - name: sda
         config:
           osdsPerDevice: "1"
       placement:
