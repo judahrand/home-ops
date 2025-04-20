@@ -42,7 +42,7 @@ spec:
               tag: 2025.2.2
               pullPolicy: IfNotPresent
             env:
-              TZ: "${TIMEZONE}"
+              TZ: Europe/London
               ESPHOME__INSTANCE_NAME: ESPHome
               ESPHOME__PORT: &port 6052
               ESPHOME__APPLICATION_URL: &host "esphome.judahrand.net"

@@ -60,7 +60,7 @@ spec:
               - --paa-root-cert-dir=/data/credentials
               - --primary-interface=net1
             env:
-              TZ: "${TIMEZONE}"
+              TZ: Europe/London
               MATTER_SERVER__INSTANCE_NAME: Matter-Server
               MATTER_SERVER__PORT: &port 5580
               MATTER_SERVER__APPLICATION_URL: &host matter.judahrand.net

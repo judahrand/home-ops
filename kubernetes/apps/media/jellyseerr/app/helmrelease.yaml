@@ -25,7 +25,7 @@ spec:
               repository: docker.io/fallenbagel/jellyseerr
               tag: "2.5.2"
             env:
-              TZ: ${TIMEZONE}
+              TZ: Europe/London
               # LOG_LEVEL: debug
               PORT: &port 5055
             probes:

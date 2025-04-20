@@ -39,7 +39,7 @@ spec:
       tag: 0.15.1-rocm
 
     env:
-      TZ: ${TIMEZONE}
+      TZ: Europe/London
       LIBVA_DRIVER_NAME: radeonsi
       HSA_OVERRIDE_GFX_VERSION: 11.0.2
 
