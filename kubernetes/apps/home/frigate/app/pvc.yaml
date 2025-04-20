@@ -20,6 +20,7 @@ metadata:
   name: frigate-media
 spec:
   volumeName: frigate-media
+  storageClassName: ""
   accessModes:
     - ReadWriteOncePod
   resources:
