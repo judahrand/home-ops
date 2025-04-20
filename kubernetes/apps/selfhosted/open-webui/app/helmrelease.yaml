@@ -35,7 +35,7 @@ spec:
         controller: open-webui
         ports:
           http:
-            port: 8080
+            port: &port 8080
 
     route:
       app:
@@ -48,7 +48,7 @@ spec:
         rules:
           - backendRefs:
               - name: app
-                port: http
+                port: *port
 
     persistence:
      config:

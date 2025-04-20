@@ -99,7 +99,7 @@ spec:
         rules:
           - backendRefs:
               - name: app
-                port: http
+                port: *port
     persistence:
       config:
         existingClaim: radarr

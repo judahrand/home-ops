@@ -41,7 +41,7 @@ spec:
         controller: main
         ports:
           http:
-            port: 8096
+            port: &httpPort 8096
           discovery:
             port: 7359
             protocol: UDP
@@ -57,7 +57,7 @@ spec:
         rules:
           - backendRefs:
               - name: main
-                port: http
+                port: *httpPort
 
     persistence:
       tmpfs:

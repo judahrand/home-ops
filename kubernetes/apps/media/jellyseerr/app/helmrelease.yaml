@@ -74,7 +74,7 @@ spec:
         rules:
           - backendRefs:
               - name: app
-                port: http
+                port: *port
     # NOTE: postgres option available soon?
     # https://github.com/Fallenbagel/jellyseerr/discussions/651
     # https://github.com/Fallenbagel/jellyseerr/pull/628
