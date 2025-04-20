@@ -63,7 +63,7 @@ spec:
           - name: DRY_RUN
             value: "false"
     extraArgs:
-      - --gateway-name=external
+      - --gateway-name=internal
     policy: sync
     sources: ["crd", "gateway-httproute"]
     txtOwnerId: main
