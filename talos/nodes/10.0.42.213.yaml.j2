@@ -20,7 +20,8 @@ machine:
         vip:
           ip: 10.0.42.120
   install:
-    disk: /dev/nvme0n1
+    diskSelector:
+      model: HighRel 512GB SSD
     image: factory.talos.dev/installer/a30c16a32db3c99cb35f22401fad96807f80896dfc86aa4ec716ed6b4aff09de:{{ ENV.TALOS_VERSION }}
     extraKernelArgs:
       - apparmor=0                          # Less security, faster puter

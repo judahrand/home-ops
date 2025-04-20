@@ -21,7 +21,8 @@ machine:
         vip:
           ip: 10.0.42.120
   install:
-    disk: /dev/nvme1n1
+    diskSelector:
+      model: WD_BLACK SN770 1TB
     image: factory.talos.dev/installer/5b3b9c7c93b1e332700ce6dccb34f32ef4824787afa617b87391119bebe2b05b:{{ ENV.TALOS_VERSION }}
     extraKernelArgs:
       - apparmor=0                          # Less security, faster puter
