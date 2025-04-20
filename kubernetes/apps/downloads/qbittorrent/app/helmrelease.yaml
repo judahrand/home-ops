@@ -201,7 +201,7 @@ spec:
     route:
       app:
         hostnames:
-          - qbittorrent.bjw-s.dev
+          - qbittorrent.judahrand.net
         parentRefs:
           - name: internal
             namespace: kube-system
