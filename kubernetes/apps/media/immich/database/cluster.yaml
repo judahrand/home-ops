@@ -48,7 +48,7 @@ spec:
       endpointURL: http://truenas.servers:9000
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster immich-database
+      serverName: &currentCluster immich-database-v1
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -74,8 +74,8 @@ spec:
         - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
         - CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
         - CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
-  #   recovery:
-  #     source: &previousCluster immich-database
+    # recovery:
+    #   source: &previousCluster immich-database-v1
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previousCluster
