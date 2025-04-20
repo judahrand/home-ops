@@ -74,8 +74,8 @@ spec:
         - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
         - CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
         - CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
-    # recovery:
-    #   source: &previousCluster immich-database-v1
+  #   recovery:
+  #     source: &previousCluster immich-database-v1
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previousCluster
