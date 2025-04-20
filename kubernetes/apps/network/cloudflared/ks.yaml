@@ -24,5 +24,3 @@ spec:
       namespace: external-secrets
     - name: external-dns-cloudflare
       namespace: network
-    - name: nginx-external
-      namespace: network
