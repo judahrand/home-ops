@@ -62,13 +62,11 @@ spec:
             value: "0.0.0.0"
           - name: DRY_RUN
             value: "false"
-    extraArgs:
-      - --gateway-name=internal
     policy: sync
-    sources: ["crd", "gateway-httproute"]
+    sources: ["gateway-httproute", "service"]
     txtOwnerId: main
     txtPrefix: k8s.main.
-    domainFilters: ["lan", "judahrand.net"]
+    domainFilters: ["judahrand.net"]
     serviceMonitor:
       enabled: true
     podAnnotations:
