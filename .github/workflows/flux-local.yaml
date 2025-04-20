@@ -9,11 +9,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+permissions: read-all
+
 jobs:
   filter:
     name: Flux Local - Filter
-    permissions:
-      contents: read
     runs-on: ubuntu-latest
     outputs:
       changed-files: ${{ steps.changed-files.outputs.changed_files }}
