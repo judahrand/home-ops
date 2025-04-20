@@ -113,7 +113,7 @@ spec:
         rules:
           - backendRefs:
               - name: app
-                port: http
+                port: *port
     serviceAccount:
       create: true
       name: gatus
