@@ -102,6 +102,7 @@ spec:
 
       semantic_search:
         enabled: true
+        reindex: true
         model_size: small
 
       review:
