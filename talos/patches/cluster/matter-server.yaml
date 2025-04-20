@@ -1,9 +1,0 @@
-machine:
-  kubelet:
-    extraConfig:
-      allowedUnsafeSysctls:
-        - net.*
-  sysctls:
-    net.ipv6.conf.bond0/60.forwarding: "0"
-    net.ipv6.conf.bond0/60.accept_ra: "1"
-    net.ipv6.conf.bond0/60.accept_ra_rt_info_max_plen: "64"
