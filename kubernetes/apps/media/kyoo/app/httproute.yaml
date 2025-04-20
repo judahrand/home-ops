@@ -11,7 +11,13 @@ spec:
       namespace: kube-system
       sectionName: https
   rules:
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /api
+      backendRefs:
+        - name: kyoo-back
+          port: 5000
     - backendRefs:
         - name: kyoo-front
-          namespace: media
           port: 8901
