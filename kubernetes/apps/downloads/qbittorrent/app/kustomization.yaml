@@ -5,14 +5,16 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+
 configMapGenerator:
   - name: qbittorrent-scripts
     files:
       - scripts/xseed.sh
-  - name: qbittorrent-dnsdist
+  - name: qbittorrent-coredns
     files:
-      - ./config/dnsdist.conf
+      - ./config/Corefile
 generatorOptions:
-  disableNameSuffixHash: true
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
+configurations:
+  - kustomizeconfig.yaml
