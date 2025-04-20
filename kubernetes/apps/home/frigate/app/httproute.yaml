@@ -14,4 +14,4 @@ spec:
     - backendRefs:
         - name: frigate
           namespace: home
-          port: 80
+          port: 8971
