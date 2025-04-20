@@ -13,3 +13,10 @@ spec:
     - action: replace
       targetLabel: job
       replacement: *name
+  basicAuth:
+    username:
+      key: username
+      name: slzb-06m-secret
+    password:
+      key: password
+      name: slzb-06m-secret
