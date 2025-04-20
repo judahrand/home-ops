@@ -236,12 +236,14 @@ spec:
       - vonage-status-panel
     serviceMonitor:
       enabled: true
-    ingress:
-      enabled: true
-      annotations:
-        external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-      ingressClassName: internal
-      hosts: ["grafana.judahrand.net"]
+    route:
+      main:
+        enabled: true
+        hostnames: ["{{ .Release.Name }}.judahrand.net"]
+        parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
     persistence:
       enabled: false
     testFramework:

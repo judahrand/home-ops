@@ -65,12 +65,6 @@ spec:
       ui:
         enabled: true
         rollOutPods: true
-        ingress:
-          enabled: true
-          annotations:
-            external-dns.alpha.kubernetes.io/target: internal.judahrand.net
-          className: internal
-          hosts: ["hubble.judahrand.net"]
         backend:
           resources:
             requests:
