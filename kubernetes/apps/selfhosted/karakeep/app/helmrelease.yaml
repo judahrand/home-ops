@@ -166,7 +166,7 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.judahrand.net"
         parentRefs:
-          - name: internal
+          - name: external
             namespace: kube-system
             sectionName: https
         rules:
