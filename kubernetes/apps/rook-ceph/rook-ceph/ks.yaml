@@ -34,6 +34,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
@@ -46,3 +48,7 @@ spec:
   wait: false
   interval: 30m
   timeout: 15m
+  postBuild:
+    substitute:
+      APP: *app
+      GATUS_SUBDOMAIN: rook
