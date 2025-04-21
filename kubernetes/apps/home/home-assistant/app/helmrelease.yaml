@@ -113,6 +113,9 @@ spec:
           - homeassistant.judahrand.net
           - hass.judahrand.net
         parentRefs:
+          - name: internal
+            namespace: kube-system
+            sectionName: https
           - name: external
             namespace: kube-system
             sectionName: https
