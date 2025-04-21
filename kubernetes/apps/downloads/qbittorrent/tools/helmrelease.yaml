@@ -51,7 +51,7 @@ spec:
               tag: v0.19.16
             envFrom:
               - secretRef:
-                  name: qbtools-secret
+                  name: qbtools-login-secret
             args:
               - tagging
               - --added-on
@@ -149,7 +149,7 @@ spec:
     persistence:
       config-file:
         type: secret
-        name: qbtools-secret
+        name: qbtools-config-secret
         globalMounts:
           - path: /config/config.yaml
             subPath: config.yaml

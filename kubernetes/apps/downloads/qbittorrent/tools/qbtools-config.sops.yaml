@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-    name: qbtools-secret
+    name: qbtools-config-secret
 stringData:
     config.yaml: ENC[AES256_GCM,data:CE8/3UFaO9W2/+SSzYwU4Q5DotZWppWYkVuYPFSIAUqti8KJLgbgy9ZRmVYRKb3YVTGNJqWG8C4MNRLb9VN8Eyo0Bp7YN9bdker0J/vsdp2Uq3oXQ+IZwnHfNT4vkeaDYLniHapyc/h97SBpn+Y7oV8d1kKjRYdQW1j7hg+nW4jy1sAO4Tjp0J+LusNZivS4yi4OVT0rHsQ9egeL3Kj70wkaoN3hQrN13pGi1o/vvn8LR8fL9KCwpXkRMI6UHagEmBdApOM02093d5Kc8mcaQj5m1j3sKc7ApklZtv/qygz/U0fXSNeKVadrJTNdC6/1yEwKbLDBfjaUiO4PR26eGSGM/O52+xyhBwOya9g071sTkOf2yYqcbHPhn+VIxywQGQXUWFVNy1ohlrQvP0KrqXglrFOipHZ6nMmV1eYNdhY03UDYU9InJD+2bubgNJLaXW7ltqkbkVcxYA==,iv:RbiQmqRh4t2Ji7y9XPvHKX1C5lKj2PwfetsBHDp+ThM=,tag:hHr7CkOB0gvolS2t0Z0fbw==,type:str]
 sops:
