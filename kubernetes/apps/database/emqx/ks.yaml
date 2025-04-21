@@ -43,6 +43,9 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/database/emqx/cluster
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository
