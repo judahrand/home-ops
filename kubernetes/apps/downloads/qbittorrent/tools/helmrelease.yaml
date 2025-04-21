@@ -49,6 +49,9 @@ spec:
             image:
               repository: ghcr.io/buroa/qbtools
               tag: v0.19.16
+            envFrom:
+              - secretRef:
+                  name: qbtools-secret
             args:
               - tagging
               - --added-on
