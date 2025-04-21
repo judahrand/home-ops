@@ -10,6 +10,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
+  components:
+    - ../../../../components/gatus/guarded
   interval: 30m
   timeout: 5m
   path: ./kubernetes/apps/security/authentik/app
@@ -19,3 +21,6 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: true
+  postBuild:
+    substitute:
+      APP: *app
