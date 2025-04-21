@@ -29,9 +29,7 @@ servers:
       - name: autopath
         parameters: "@kubernetes"
       - name: forward
-        # TODO: workout why this is needed and how we can remove it!
-        parameters: . 10.0.1.1
-        # parameters: . /etc/resolv.conf
+        parameters: . /etc/resolv.conf
       - name: cache
         configBlock: |-
           success 9984
