@@ -10,8 +10,6 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  components:
-    - ../../../../components/gatus/guarded
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
@@ -43,9 +41,6 @@ spec:
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/database/emqx/cluster
-  postBuild:
-    substitute:
-      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository
