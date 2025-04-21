@@ -52,6 +52,11 @@ spec:
               NEXTAUTH_URL: https://karakeep.judahrand.net
               DISABLE_NEW_RELEASE_CHECK: true
               COREPACK_INTEGRITY_KEYS: 0
+              OPENAI_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-secret
+                    key: openai_api_key
             probes:
               liveness:
                 enabled: true
