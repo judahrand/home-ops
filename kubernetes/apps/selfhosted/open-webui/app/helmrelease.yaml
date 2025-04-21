@@ -27,7 +27,7 @@ spec:
               repository: ghcr.io/open-webui/open-webui
               tag: main
             env:
-              OLLAMA_BASE_URL: http://ollama:11434
+              OLLAMA_BASE_URL: http://ollama.selfhosted.svc.cluster.local:11434
               DATA_DIR: /data
 
     service:
