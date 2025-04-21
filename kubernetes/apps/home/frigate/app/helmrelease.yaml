@@ -36,12 +36,13 @@ spec:
   values:
     image:
       repository: ghcr.io/blakeblackshear/frigate
-      tag: 0.15.1-rocm
+      tag: 0.15.1
+      # tag: 0.15.1-rocm
 
     env:
       TZ: Europe/London
-      LIBVA_DRIVER_NAME: radeonsi
-      HSA_OVERRIDE_GFX_VERSION: 11.0.2
+      # LIBVA_DRIVER_NAME: radeonsi
+      # HSA_OVERRIDE_GFX_VERSION: 11.0.2
 
     envFromSecrets:
       - frigate-secret
@@ -52,8 +53,8 @@ spec:
         memory: 1Gi
       limits:
         memory: 8Gi
-        squat.ai/dri: 1
-        squat.ai/kfd: 1
+        gpu.intel.com/i915: 1
+        # amd.com/gpu: 1
 
     securityContext:
       capabilities:
