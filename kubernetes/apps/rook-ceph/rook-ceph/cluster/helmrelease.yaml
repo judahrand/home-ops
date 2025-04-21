@@ -44,8 +44,6 @@ spec:
         requests:
           cpu: 50m
           memory: 128Mi
-        limits:
-          memory: 256Mi
     configOverride: |
       [global]
       bdev_enable_discard = true
@@ -93,7 +91,7 @@ spec:
       resources:
         mgr:
           requests:
-            cpu: 50m
+            cpu: 100m
             memory: 512Mi
           limits:
             memory: 2Gi
@@ -105,10 +103,10 @@ spec:
             memory: 1Gi
         osd:
           requests:
-            cpu: 50m
-            memory: 512Mi
+            cpu: 500m
+            memory: 2Gi
           limits:
-            memory: 4Gi
+            memory: 6Gi
         mgr-sidecar:
           requests:
             cpu: 50m
@@ -119,14 +117,10 @@ spec:
           requests:
             cpu: 1m
             memory: 16Mi
-          limits:
-            memory: 60Mi
         logcollector:
           requests:
             cpu: 100m
             memory: 100Mi
-          limits:
-            memory: 1Gi
     cephBlockPools:
       - name: ceph-blockpool
         spec:
@@ -183,8 +177,6 @@ spec:
               requests:
                 cpu: 10m
                 memory: 256Mi
-              limits:
-                memory: 4Gi
         storageClass:
           enabled: true
           isDefault: false
