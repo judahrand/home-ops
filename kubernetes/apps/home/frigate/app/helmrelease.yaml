@@ -92,10 +92,10 @@ spec:
       detectors:
         onnx_0:
           type: onnx
-        onnx_1:
-          type: onnx
-        onnx_2:
-          type: onnx
+        # onnx_1:
+        #   type: onnx
+        # onnx_2:
+        #   type: onnx
 
       logger:
         default: info
@@ -186,7 +186,7 @@ spec:
           default: 90
 
       record:
-        enabled: True
+        enabled: true
         retain:
           days: 0
           mode: all
