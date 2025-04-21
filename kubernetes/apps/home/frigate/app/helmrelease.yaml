@@ -37,10 +37,12 @@ spec:
     image:
       repository: ghcr.io/blakeblackshear/frigate
       tag: 0.15.1
+      # Settings for AMD 780M GPU
       # tag: 0.15.1-rocm
 
     env:
       TZ: Europe/London
+      # Settings for AMD 780M GPU
       # LIBVA_DRIVER_NAME: radeonsi
       # HSA_OVERRIDE_GFX_VERSION: 11.0.2
 
@@ -54,6 +56,7 @@ spec:
       limits:
         memory: 8Gi
         gpu.intel.com/i915: 1
+        # Settings for AMD 780M GPU
         # amd.com/gpu: 1
 
     securityContext:
@@ -86,6 +89,10 @@ spec:
 
       tls:
         enabled: false
+
+      notifications:
+        enabled: true
+        email: judahrand+frigate@gmail.com
 
       model:
         path: plus://ac97080e9fcaf057b04ecb8447b2b140
