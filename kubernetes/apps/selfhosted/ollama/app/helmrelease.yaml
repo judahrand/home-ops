@@ -34,17 +34,17 @@ spec:
               # LIBVA_DRIVER_NAME: i965
               OLLAMA_HOST: 0.0.0.0
               OLLAMA_ORIGINS: "*"
-              OLLAMA_MODELS: /models
-              HSA_OVERRIDE_GFX_VERSION: "11.0.0"
+              OLLAMA_MODELS: &modelPath /models
+              HSA_OVERRIDE_GFX_VERSION: "11.0.2"
             # securityContext:
             #   privileged: true
             resources:
               requests:
                 cpu: 200m
                 memory: 4Gi
-                # gpu.intel.com/i915: "1"
               limits:
                 memory: 24Gi
+                amd.com/gpu: 1
                 # gpu.intel.com/i915: "1"
 
     service:
@@ -55,12 +55,13 @@ spec:
             port: &port 11434
 
     persistence:
+      config:
+        existingClaim: ollama
+        globalMounts:
+          - path: /root/.ollama
       models:
         storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
         size: 50Gi
-        advancedMounts:
-          main:
-            main:
-              - path: /models
-                subPath: models
+        globalMounts:
+          - path: *modelPath
