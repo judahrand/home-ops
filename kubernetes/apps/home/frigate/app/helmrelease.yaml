@@ -91,12 +91,15 @@ spec:
         path: plus://ac97080e9fcaf057b04ecb8447b2b140
 
       detectors:
-        onnx_0:
-          type: onnx
-        # onnx_1:
-        #   type: onnx
-        # onnx_2:
-        #   type: onnx
+        openvino_0:
+          type: openvino
+          device: GPU
+        openvino_1:
+          type: openvino
+          device: GPU
+        openvino_2:
+          type: openvino
+          device: GPU
 
       logger:
         default: info
