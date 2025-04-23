@@ -12,7 +12,7 @@ instance:
     - notification-controller
   sync:
     kind: GitRepository
-    url: ssh://git@github.com/judahrand/home-kubernetes
+    url: ssh://git@github.com/judahrand/home-ops
     ref: refs/heads/main
     path: kubernetes/flux/cluster
     interval: 1h

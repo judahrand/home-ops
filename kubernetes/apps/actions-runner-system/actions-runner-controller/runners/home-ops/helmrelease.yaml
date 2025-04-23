@@ -31,7 +31,7 @@ spec:
     remediation:
       retries: 3
   values:
-    githubConfigUrl: https://github.com/judahrand/home-kubernetes
+    githubConfigUrl: https://github.com/judahrand/home-ops
     githubConfigSecret: home-ops-runner-secret
     minRunners: 1
     maxRunners: 3
