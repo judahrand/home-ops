@@ -127,7 +127,8 @@ spec:
         server: truenas.servers
         path: /mnt/main/media
         globalMounts:
-          - path: /data/nas-media
+          - path: /media/Downloads/sabnzbd
+            subPath: Downloads/sabnzbd
       temp:
         type: emptyDir
         advancedMounts:

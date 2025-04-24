@@ -159,5 +159,5 @@ spec:
         server: truenas.servers
         path: /mnt/main/media
         globalMounts:
-          - path: /data/nas-media/Downloads/qbittorrent
+          - path: /media/Downloads/qbittorrent
             subPath: Downloads/qbittorrent
