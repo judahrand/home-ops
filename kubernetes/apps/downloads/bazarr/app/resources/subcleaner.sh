@@ -10,7 +10,7 @@ esac
 
 if [[ -n "$section" ]]; then
     printf "Refreshing Jellyfin...\n"
-    /usr/bin/curl -I -X GET -G \
+    /usr/bin/curl -I -X POST -G \
         -H "Authorization: MediaBrowser Token=${JELLYFIN_TOKEN}" \
         --no-progress-meter \
             "http://jellyfin.media.svc.cluster.local:8096/Library/Refresh"
