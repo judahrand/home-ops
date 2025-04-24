@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: radarr
+  name: &app radarr
 spec:
   interval: 1h
   chartRef:
@@ -16,9 +16,6 @@ spec:
     cleanupOnFail: true
     remediation:
       retries: 3
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   values:
     controllers:
       radarr:
@@ -29,27 +26,25 @@ spec:
             image:
               repository: ghcr.io/home-operations/postgres-init
               tag: 17.4
-            envFrom: &envFrom
+            envFrom:
               - secretRef:
-                  name: radarr-db-secret
+                  name: radarr-secret
         containers:
           app:
             image:
               repository: ghcr.io/home-operations/radarr
-              tag: 5.22.4.9896
+              tag: 5.22.4.9896@sha256:af9149d63dcae06ebccbd7ce20b0329f570d54e6632b23f007ee7a3e7e54966f
             env:
               RADARR__APP__INSTANCENAME: Radarr
               RADARR__AUTH__METHOD: External
               RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
-              RADARR__AUTH__APIKEY:
-                valueFrom:
-                  secretKeyRef:
-                    name: radarr-secret
-                    key: api_key
+              RADARR__LOG__DBENABLED: "False"
               RADARR__LOG__LEVEL: info
               RADARR__SERVER__PORT: &port 7878
               TZ: Europe/London
-            envFrom: *envFrom
+            envFrom:
+              - secretRef:
+                  name: radarr-secret
             probes:
               liveness: &probes
                 enabled: true
@@ -69,19 +64,17 @@ spec:
               capabilities: { drop: ["ALL"] }
             resources:
               requests:
-                cpu: 20m
-                memory: 384Mi
+                cpu: 10m
+                memory: 256Mi
               limits:
                 memory: 2Gi
     defaultPodOptions:
       securityContext:
         runAsNonRoot: true
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         fsGroupChangePolicy: OnRootMismatch
-        supplementalGroups: [10000]
-        seccompProfile: { type: RuntimeDefault }
     service:
       app:
         controller: radarr
@@ -98,16 +91,20 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: app
+              - name: *app
                 port: *port
     persistence:
       config:
         existingClaim: radarr
-      tmp:
-        type: emptyDir
+      config-cache:
+        existingClaim: radarr-cache
+        globalMounts:
+          - path: /config/MediaCover
       media:
         type: nfs
         server: truenas.servers
         path: /mnt/main/media
         globalMounts:
-          - path: /data/nas-media
+          - path: /media
+      tmp:
+        type: emptyDir
