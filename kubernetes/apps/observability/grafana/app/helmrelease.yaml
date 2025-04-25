@@ -141,6 +141,13 @@ spec:
         external-secrets:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
           datasource: Prometheus
+        immich:
+          # renovate: depName="Immich"
+          gnetId: 22555
+          revision: 1
+          datasource:
+            - { name: DS_PROMETHEUS, value: Prometheus }
+            - { name: DS_LOKI, value: Loki }
         kubernetes-api-server:
           # renovate: depName="Kubernetes / System / API Server"
           gnetId: 15761
