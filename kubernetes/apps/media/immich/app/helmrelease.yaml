@@ -45,9 +45,10 @@ spec:
           existingClaim: immich-library
 
     env:
-      PUBLIC_IMMICH_SERVER_URL: https://immich.judahrand.net
       LOG_LEVEL: verbose
       TZ: Europe/London
+      PUBLIC_IMMICH_SERVER_URL: https://immich.judahrand.net
+      MACHINE_LEARNING_PRELOAD__CLIP: "ViT-H-14-378-quickgelu__dfn5b"
       DB_HOSTNAME:
         valueFrom:
           secretKeyRef:
