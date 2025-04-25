@@ -29,7 +29,10 @@ spec:
             env:
               CROSS_SEED_PORT: &port 80
               TZ: Europe/London
-            args: ["daemon"]
+            args:
+              - "daemon"
+              - --link-dirs
+              - /media/Downloads/qbittorrent/complete/cross-seed
             probes:
               liveness: &probes
                 enabled: true
