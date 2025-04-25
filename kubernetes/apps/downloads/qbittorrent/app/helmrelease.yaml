@@ -85,7 +85,7 @@ spec:
               UMASK: "022"
               QBT_WEBUI_PORT: &port 8080
               XSEED_HOST: cross-seed.downloads.svc.cluster.local
-              XSEED_PORT: 2468
+              XSEED_PORT: 80
               XSEED_APIKEY:
                 valueFrom:
                   secretKeyRef:

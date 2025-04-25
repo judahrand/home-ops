@@ -239,4 +239,4 @@ spec:
         memory: 128Mi # unchangable
         cpu: 100m # unchangable
       limits:
-        memory: 256Mi
+        memory: 1Gi
