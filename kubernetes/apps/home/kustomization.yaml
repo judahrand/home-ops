@@ -11,5 +11,11 @@ resources:
   - ./home-assistant-matter-hub/ks.yaml
   - ./matter-server/ks.yaml
   - ./zigbee2mqtt/ks.yaml
-patchesStrategicMerge:
-  - ./namespace.yaml
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: not-used
+        labels:
+          pod-security.kubernetes.io/enforce: privileged
