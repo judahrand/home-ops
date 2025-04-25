@@ -9,5 +9,11 @@ resources:
   - ./cloudflared/ks.yaml
   - ./external-dns/ks.yaml
   - ./multus/ks.yaml
-patchesStrategicMerge:
-  - ./namespace.yaml
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: not-used
+        labels:
+          pod-security.kubernetes.io/enforce: privileged
