@@ -10,7 +10,7 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    path: /mnt/main/frigate/media
+    path: /mnt/main/immich
     server: truenas.servers
 ---
 apiVersion: v1
