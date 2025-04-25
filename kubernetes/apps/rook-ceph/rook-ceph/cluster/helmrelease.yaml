@@ -57,7 +57,7 @@ spec:
       mgr:
         modules:
           - name: diskprediction_local
-            enabled: true
+            enabled: false  # TODO: enable when resolved: https://www.spinics.net/lists/ceph-users/msg83399.html
           - name: insights
             enabled: true
           - name: pg_autoscaler
