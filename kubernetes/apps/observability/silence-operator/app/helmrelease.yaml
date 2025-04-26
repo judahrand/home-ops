@@ -80,3 +80,13 @@ spec:
             - name: instance
               value: truenas.servers:9100
               isRegex: false
+      - apiVersion: monitoring.giantswarm.io/v1alpha1
+        kind: Silence
+        metadata:
+          name: dockerhub-rate-limit-risk
+          namespace: observability
+        spec:
+          matchers:
+            - name: alertname
+              value: DockerhubRateLimitRisk
+              isRegex: false
