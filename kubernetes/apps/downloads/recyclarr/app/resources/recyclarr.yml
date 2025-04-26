@@ -1,20 +1,29 @@
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 sonarr:
-  web-1080p-v4:
+  sonarr_main:
     base_url: http://sonarr.downloads.svc.cluster.local
     api_key: !env_var SONARR_API_KEY
 
     include:
       # Comment out any of the following includes to disable them
       - template: sonarr-quality-definition-series
+
+      ### WEB-1080p ###
       # Choose between the standard or alternative quality profile setup (choose one only)
       - template: sonarr-v4-quality-profile-web-1080p
       # - template: sonarr-v4-quality-profile-web-1080p-alternative
       - template: sonarr-v4-custom-formats-web-1080p
 
+      ### WEB-2160p ###
+      # Choose between the standard or alternative quality profile setup (choose one only)
+      - template: sonarr-v4-quality-profile-web-2160p
+      # - template: sonarr-v4-quality-profile-web-2160p-alternative
+      - template: sonarr-v4-custom-formats-web-2160p
+
     # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
     custom_formats:
+      ### WEB-1080p ###
       # Optional
       - trash_ids:
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
@@ -36,20 +45,6 @@ sonarr:
         assign_scores_to:
           - name: WEB-1080p
 
-  web-2160p-v4:
-    base_url: http://sonarr.downloads.svc.cluster.local
-    api_key: !env_var SONARR_API_KEY
-
-    include:
-      # Comment out any of the following includes to disable them
-      - template: sonarr-quality-definition-series
-      # Choose between the standard or alternative quality profile setup (choose one only)
-      - template: sonarr-v4-quality-profile-web-2160p
-      # - template: sonarr-v4-quality-profile-web-2160p-alternative
-      - template: sonarr-v4-custom-formats-web-2160p
-
-    # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
-    custom_formats:
       # HDR Formats
       - trash_ids:
           # Comment out the next line if you and all of your users' setups are fully DV compatible
@@ -61,6 +56,7 @@ sonarr:
         assign_scores_to:
           - name: WEB-2160p
 
+      ### WEB-2160p ###
       # Optional
       - trash_ids:
           - 32b367365729d530ca1c124a0b180c64 # Bad Dual Groups
@@ -93,7 +89,7 @@ sonarr:
           - name: WEB-2160p
 
 radarr:
-  sqp-1-2160p:
+  radarr_main:
     base_url: http://radarr.downloads.svc.cluster.local
     api_key: !env_var RADARR_API_KEY
 
@@ -103,6 +99,7 @@ radarr:
         # min_format_score: 10
 
     include:
+      ### SQP-1 (2160p) ###
       # Comment out any of the following includes to disable them
       - template: radarr-quality-definition-sqp-streaming
 
@@ -114,10 +111,17 @@ radarr:
       # - template: radarr-quality-profile-sqp-1-2160p-4k-only-default
       # - template: radarr-quality-profile-sqp-1-2160p-4k-only-imax-e
 
+      ### SQP-2 ###
+      # Comment out any of the following includes to disable them
+      - template: radarr-quality-definition-sqp-uhd
+      - template: radarr-quality-profile-sqp-2
+      - template: radarr-custom-formats-sqp-2
+
       - template: radarr-custom-formats-sqp-1-2160p
 
     # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
     custom_formats:
+      ### SQP-1 (2160p) ###
       # Movie Versions
       - trash_ids:
       # Uncomment any of the next six lines to prefer these movie versions
@@ -172,18 +176,7 @@ radarr:
         assign_scores_to:
           - name: SQP-1 (2160p)
 
-  sqp-2:
-    base_url: http://radarr.downloads.svc.cluster.local
-    api_key: !env_var RADARR_API_KEY
-
-    include:
-      # Comment out any of the following includes to disable them
-      - template: radarr-quality-definition-sqp-uhd
-      - template: radarr-quality-profile-sqp-2
-      - template: radarr-custom-formats-sqp-2
-
-    # Custom Formats: https://recyclarr.dev/wiki/yaml/config-reference/custom-formats/
-    custom_formats:
+      ### SQP-2 ###
       # Movie Versions
       # Uncomment any of the following lines to prefer these movie versions
       - trash_ids:
