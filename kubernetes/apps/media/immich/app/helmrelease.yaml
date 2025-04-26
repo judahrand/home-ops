@@ -51,7 +51,8 @@ spec:
       LOG_LEVEL: verbose
       TZ: Europe/London
       PUBLIC_IMMICH_SERVER_URL: https://immich.judahrand.net
-      MACHINE_LEARNING_PRELOAD__CLIP: "ViT-H-14-378-quickgelu__dfn5b"
+      MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: ViT-SO400M-16-SigLIP2-384__webli
+      MACHINE_LEARNING_PRELOAD__CLIP__VISUAL: ViT-SO400M-16-SigLIP2-384__webli
       DB_HOSTNAME:
         valueFrom:
           secretKeyRef:
