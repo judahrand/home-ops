@@ -32,3 +32,5 @@ machine:
       - security=none                       # Less security, faster puter
       - talos.auditd.disabled=1             # Less security, faster puter
     wipe: false
+  nodeLabels:
+    amd.feature.node.kubernetes.io/gpu: "true"
