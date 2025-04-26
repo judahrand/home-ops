@@ -12,3 +12,11 @@ configMapGenerator:
     env: ./versions.env
 configurations:
   - ./kustomizeconfig.yaml
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: not-used
+        labels:
+          pod-security.kubernetes.io/enforce: privileged
