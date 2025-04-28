@@ -61,7 +61,7 @@ spec:
       endpointURL: http://truenas.servers:9000
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster immich-database-v1
+      serverName: &currentCluster immich-database-v2
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -72,23 +72,23 @@ spec:
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
   bootstrap:
-    initdb:
-      database: immich
-      owner: immich
-      secret:
-        name: immich-database-secret
-      dataChecksums: true
-      postInitApplicationSQL:
-        # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
-        - CREATE EXTENSION vectors;
-        - CREATE EXTENSION earthdistance CASCADE;
-        - ALTER DATABASE immich SET search_path TO "$user", public, vectors;
-        - ALTER SCHEMA vectors OWNER TO immich;
-  # recovery:
-  #   source: &previousCluster immich-database
+    # initdb:
+    #   database: immich
+    #   owner: immich
+    #   secret:
+    #     name: immich-database-secret
+    #   dataChecksums: true
+    #   postInitApplicationSQL:
+    #     # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+    #     - CREATE EXTENSION vectors;
+    #     - CREATE EXTENSION earthdistance CASCADE;
+    #     - ALTER DATABASE immich SET search_path TO "$user", public, vectors;
+    #     - ALTER SCHEMA vectors OWNER TO immich;
+    recovery:
+      source: &previousCluster immich-database-v1
   # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     barmanObjectStore:
-  #       <<: *barmanObjectStore
-  #       serverName: *previousCluster
+  externalClusters:
+    - name: *previousCluster
+      barmanObjectStore:
+        <<: *barmanObjectStore
+        serverName: *previousCluster
