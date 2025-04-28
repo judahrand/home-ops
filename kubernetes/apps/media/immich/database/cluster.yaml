@@ -26,6 +26,18 @@ spec:
       max_connections: "100"
       shared_buffers: 256MB
 
+  managed:
+    roles:
+      - name: app
+        ensure: absent
+      - name: immich
+        ensure: present
+        login: true
+        superuser: false
+        inRoles: []
+        passwordSecret:
+          name: immich-database-secret
+
   resources:
     requests:
       cpu: 20m
