@@ -79,13 +79,6 @@ spec:
       tag: "v1.132.1"
 
     server:
-      initContainers:
-        init-db:
-          image: ghcr.io/home-operations/postgres-init:17.4
-          envFrom:
-            - secretRef:
-                name: immich-secret
-
       resources:
         requests:
           cpu: 100m
