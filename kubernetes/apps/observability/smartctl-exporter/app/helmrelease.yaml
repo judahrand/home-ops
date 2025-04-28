@@ -32,6 +32,9 @@ spec:
       retries: 3
   values:
     fullnameOverride: *app
+    image:
+      repository: quay.io/prometheuscommunity/smartctl-exporter
+      tag: v0.14.0@sha256:a13840e6df4e3c6a3b25c46e15d5156f7c5109acad97f9b92a6955bd658b62c3
     serviceMonitor:
       enabled: true
     prometheusRules:
