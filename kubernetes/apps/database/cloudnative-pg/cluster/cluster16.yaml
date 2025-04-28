@@ -24,6 +24,39 @@ spec:
       max_connections: "400"
       shared_buffers: 256MB
 
+  managed:
+    roles:
+      - name: app
+        ensure: absent
+      - name: authentik
+        ensure: present
+        login: true
+        superuser: false
+        inRoles: []
+        passwordSecret:
+          name: cloudnative-pg-authentik-secret
+      - name: homeassistant
+        ensure: present
+        login: true
+        superuser: false
+        inRoles: []
+        passwordSecret:
+          name: cloudnative-pg-homeassistant-secret
+      - name: kyoo
+        ensure: present
+        login: true
+        superuser: false
+        inRoles: []
+        passwordSecret:
+          name: cloudnative-pg-kyoo-secret
+      - name: vikunja
+        ensure: present
+        login: true
+        superuser: false
+        inRoles: []
+        passwordSecret:
+          name: cloudnative-pg-vikunja-secret
+
   resources:
     requests:
       cpu: 20m
