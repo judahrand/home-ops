@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: home-assistant
+spec:
+  cluster:
+    name: postgres16
+  databaseReclaimPolicy: retain
+  name: homeassistant
+  owner: homeassistant
+  schemas:
+    - name: public
+      owner: homeassistant
+      ensure: present
