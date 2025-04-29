@@ -113,7 +113,9 @@ Alternative solutions to the first two of these problems would be to host a Kube
 | [GCP](https://cloud.google.com/)                | Voice interactions with Home Assistant over Google Assistant      | Free           |
 | [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
 | [Pushover](https://pushover.net/)               | Kubernetes Alerts and application notifications                    | $5 OTP         |
-|                                                 |                                                                   | Total: ~$6/mo |
+| [UptimeRobot](https://uptimerobot.com/)         | Monitoring internet connectivity and external facing applications | Free           |
+| [Healthchecks](https://healthchecks.io/)        | Monitoring internet connectivity and external facing applications | Free           |
+|                                                 |                                                                   | Total: ~$6/mo  |
 
 ---
 
