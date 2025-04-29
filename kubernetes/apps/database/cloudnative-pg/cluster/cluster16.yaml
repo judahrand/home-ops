@@ -6,7 +6,6 @@ metadata:
   name: postgres16
 spec:
   instances: 3
-  # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:17.4-13
   primaryUpdateStrategy: unsupervised
   enablePDB: true
