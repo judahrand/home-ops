@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: kyoo-back
+spec:
+  cluster:
+    name: postgres17
+  databaseReclaimPolicy: retain
+  name: kyoo_back
+  owner: kyoo
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: kyoo-transcoder
+spec:
+  cluster:
+    name: postgres17
+  databaseReclaimPolicy: retain
+  name: kyoo_transcoder
+  owner: kyoo
