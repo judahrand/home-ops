@@ -26,7 +26,7 @@ spec:
     - name: multus-config
       namespace: network
     - name: cloudnative-pg-cluster
-      namespace: database
+      namespace: cnpg-system
     - name: external-secrets
       namespace: external-secrets
   postBuild:
