@@ -13,5 +13,5 @@ spec:
   rules:
     - backendRefs:
         - name: emqx-dashboard
-          namespace: database
+          namespace: emqx-system
           port: 18083

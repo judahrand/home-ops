@@ -2,9 +2,9 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: database
+namespace: cnpg-system
 components:
   - ../../components/common
 resources:
   - ./cloudnative-pg/ks.yaml
-  - ./emqx/ks.yaml
+  - ./cluster/ks.yaml
