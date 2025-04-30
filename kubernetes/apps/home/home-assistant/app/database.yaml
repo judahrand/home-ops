@@ -4,7 +4,7 @@ metadata:
   name: home-assistant
 spec:
   cluster:
-    name: postgres16
+    name: postgres17
   databaseReclaimPolicy: retain
   name: homeassistant
   owner: homeassistant

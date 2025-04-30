@@ -4,7 +4,7 @@ metadata:
   name: authentik
 spec:
   cluster:
-    name: postgres16
+    name: postgres17
   databaseReclaimPolicy: retain
   name: authentik
   owner: authentik
