@@ -38,7 +38,7 @@ spec:
       enabled: true
       image:
         repository: bitnami/redis
-        tag: 7.4.3-debian-12-r0
+        tag: 8.0.0-debian-12-r0
 
     immich:
       metrics:
