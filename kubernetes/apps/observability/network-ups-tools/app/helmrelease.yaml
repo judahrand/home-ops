@@ -53,31 +53,6 @@ spec:
           http:
             port: 3493
             protocol: TCP
-    serviceMonitor:
-      app:
-        serviceName: network-ups-tools-metrics
-        endpoints:
-          - interval: 30s
-            metricRelabelings:
-              - action: replace
-                replacement: server
-                sourceLabels:
-                  - instance
-                targetLabel: instance
-              - action: replace
-                replacement: server
-                sourceLabels:
-                  - server
-                targetLabel: server
-              - action: labeldrop
-                regex: (pod)
-            params:
-              server:
-                - network-ups-tools.observability.svc.cluster.local
-            path: /ups_metrics
-            port: metrics
-            scheme: http
-            scrapeTimeout: 30s
     persistence:
       config:
         type: configMap
