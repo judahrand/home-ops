@@ -51,32 +51,3 @@ spec:
             enabled: true
             protocol: TCP
             port: 9199
-    serviceMonitor:
-      app:
-        enabled: true
-        serviceName: *app
-        endpoints:
-          - interval: 30s
-            path: /ups_metrics
-            port: metrics
-            scheme: http
-            scrapeTimeout: 30s
-            metricRelabelings:
-              - action: replace
-                replacement: server
-                sourceLabels:
-                  - instance
-                targetLabel: instance
-              - action: replace
-                replacement: server
-                sourceLabels:
-                  - server
-                targetLabel: server
-              - action: labeldrop
-                regex: (pod)
-            params:
-              server: [http://apc227469.lan/]
-            selector:
-              matchLabels:
-                app.kubernetes.io/instance: nut-exporter
-                app.kubernetes.io/name: nut-exporter
