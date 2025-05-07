@@ -18,7 +18,7 @@ spec:
         fsGroup: 568
       containers:
         - name: *app
-          image: ghcr.io/judahrand/zigbee2mqtt:2.2.1
+          image: ghcr.io/koenkk/zigbee2mqtt:2.3.0@sha256:42de8c55dc578a8404a18c43aeb2b7c75be7988179abe9a8195d99a9e7ebb917
           envFrom:
             - configMapRef:
                 name: zigbee2mqtt-config
@@ -50,24 +50,6 @@ spec:
             initialDelaySeconds: 10
             timeoutSeconds: 10
             periodSeconds: 30
-          # readinessProbe:
-          #   failureThreshold: 5
-          #   exec:
-          #     command:
-          #       - /bin/sh
-          #       - /healthcheck.sh
-          #   initialDelaySeconds: 5
-          #   timeoutSeconds: 10
-          #   periodSeconds: 10
-          # livenessProbe:
-          #   failureThreshold: 5
-          #   exec:
-          #     command:
-          #       - /bin/sh
-          #       - /healthcheck.sh
-          #   initialDelaySeconds: 10
-          #   timeoutSeconds: 10
-          #   periodSeconds: 30
           resources:
             requests:
               cpu: 100m
