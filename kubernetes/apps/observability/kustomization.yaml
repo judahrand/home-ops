@@ -14,6 +14,7 @@ resources:
   - ./kromgo/ks.yaml
   - ./loki/ks.yaml
   - ./network-ups-tools/ks.yaml
+  - ./nut-exporter/ks.yaml
   - ./promtail/ks.yaml
   - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
