@@ -23,8 +23,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/jr0dd/network-ups-tools
-              tag: v2.8.3@sha256:9f8e14d155c6ef05940cee6f8861e259e951eb11750aeddd02539d986dac1ca0
+              repository: ghcr.io/judahrand/network-ups-tools
+              tag: v2.8.2@sha256:d53749e75fdc0cc8b9a109d39b4bec368caff93321536361b74b8f9374ddcc23
             env:
               TZ: Europe/London
             securityContext:
@@ -37,13 +37,17 @@ spec:
         pod:
           annotations:
             configmap.reloader.stakater.com/reload: &config network-ups-tools-config
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
     service:
       app:
         controller: *app
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: nut-server.judahrand.net
-          lbipam.cilium.io/ips: 10.0.1.30, ::ffff:10.0.1.30
+          io.cilium/lb-ipam-ips: 10.0.1.30, ::ffff:10.0.1.30
         externalTrafficPolicy: Cluster
         ports:
           http:
