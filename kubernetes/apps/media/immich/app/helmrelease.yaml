@@ -116,5 +116,7 @@ spec:
       persistence:
         cache:
           enabled: true
-          storageClassName: ceph-block
+          type: pvc
+          storageClass: ceph-block
+          accessMode: ReadWriteOnce
           size: 10G
