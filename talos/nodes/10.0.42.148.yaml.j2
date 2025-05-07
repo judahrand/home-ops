@@ -22,7 +22,7 @@ machine:
   install:
     diskSelector:
       model: HighRel 512GB SSD
-    image: factory.talos.dev/installer/a30c16a32db3c99cb35f22401fad96807f80896dfc86aa4ec716ed6b4aff09de:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/installer/e0b8fa3ae9d1c34d1cca4a94deafffc6c13b293bce113a14a222b9e6e9f09738:{{ ENV.TALOS_VERSION }}
     extraKernelArgs:
       - apparmor=0                          # Less security, faster puter
       - init_on_alloc=0                     # Less security, faster puter

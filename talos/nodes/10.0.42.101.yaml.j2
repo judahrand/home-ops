@@ -23,7 +23,7 @@ machine:
   install:
     diskSelector:
       model: WD_BLACK SN770 1TB
-    image: factory.talos.dev/installer/5b3b9c7c93b1e332700ce6dccb34f32ef4824787afa617b87391119bebe2b05b:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/installer/52fe5b7031b19d5c1c5506b0398db69aca2ba51ca4104a2208cfe5368ec18ebf:{{ ENV.TALOS_VERSION }}
     extraKernelArgs:
       - apparmor=0                          # Less security, faster puter
       - init_on_alloc=0                     # Less security, faster puter
