@@ -47,7 +47,7 @@ spec:
         type: LoadBalancer
         annotations:
           external-dns.alpha.kubernetes.io/hostname: nut-server.judahrand.net
-          io.cilium/lb-ipam-ips: 10.0.1.30, ::ffff:10.0.1.30
+          io.cilium/lb-ipam-ips: 10.0.42.30, ::ffff:10.0.42.30
         externalTrafficPolicy: Cluster
         ports:
           http:
