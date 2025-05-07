@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - helmrelease.yaml
+  - servicemonitor.yaml
+configMapGenerator:
+  - name: network-ups-tools-config
+    files:
+      - nut.conf=./resources/nut.conf
+      - ups.conf=./resources/ups.conf
+      - upsd.conf=./resources/upsd.conf
+      - upsd.users=./resources/upsd.users
+      - upsmon.conf=./resources/upsmon.conf
+generatorOptions:
+  disableNameSuffixHash: true
