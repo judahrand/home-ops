@@ -2,7 +2,6 @@ version: v1alpha1
 debug: false
 persist: true
 machine:
-  type: controlplane
   token: op://kubernetes/talos/MACHINE_TOKEN
   ca:
     crt: op://kubernetes/talos/MACHINE_CA_CRT
@@ -175,3 +174,12 @@ cluster:
     advertisedSubnets:
       - 10.0.42.0/24
   allowSchedulingOnControlPlanes: true
+---
+apiVersion: v1alpha1
+kind: ExtensionServiceConfig
+name: nut-client
+configFiles:
+  - content: |-
+        MONITOR ups@nut.judarand.net 1 upsmon "bacon" secondary
+        SHUTDOWNCMD "/sbin/poweroff"
+    mountPath: /usr/local/etc/nut/upsmon.conf
