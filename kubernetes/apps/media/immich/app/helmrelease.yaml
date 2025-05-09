@@ -113,6 +113,7 @@ spec:
           memory: 256Mi
         limits:
           memory: 8196Mi
+          squat.ai/dri: 1
       persistence:
         cache:
           enabled: true
