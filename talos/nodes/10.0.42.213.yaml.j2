@@ -37,7 +37,5 @@ machine:
       - i915.enable_guc=3                   # Meteor Lake CPU / iGPU
       - sysctl.kernel.kexec_load_disabled=1 # Meteor Lake CPU / iGPU
     wipe: false
-  sysfs:
-    devices.system.cpu.intel_pstate.hwp_dynamic_boost: 1
   nodeLabels:
     intel.feature.node.kubernetes.io/gpu: "true"
