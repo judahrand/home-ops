@@ -77,7 +77,7 @@ spec:
             key: DB_DATABASE_NAME
 
     image:
-      # renovate: datasource=github-releases depName=immich-app/immich
+      # renovate: datasource=docker depName=ghcr.io/immich-app/immich
       tag: v1.132.3
 
     server:
@@ -109,7 +109,7 @@ spec:
 
     machine-learning:
       image:
-        # renovate: datasource=github-releases depName=immich-app/immich
+        # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
         tag: v1.132.3-openvino
       resources:
         requests:
