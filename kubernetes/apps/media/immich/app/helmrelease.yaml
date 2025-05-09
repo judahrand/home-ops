@@ -108,12 +108,15 @@ spec:
       #           port: 2283
 
     machine-learning:
+      image:
+        # renovate: datasource=github-releases depName=immich-app/immich
+        tag: v1.132.3-openvino
       resources:
         requests:
           cpu: 100m
           memory: 256Mi
         limits:
-          memory: 8196Mi
+          memory: 16392Mi
           squat.ai/dri: 1
       persistence:
         cache:
