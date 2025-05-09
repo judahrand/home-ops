@@ -87,6 +87,7 @@ spec:
           memory: 256Mi
         limits:
           memory: 2048Mi
+          squat.ai/dri: 1
 
       ingress:
         main:
