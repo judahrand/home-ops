@@ -18,9 +18,11 @@ spec:
       retries: 3
   values:
     controllers:
-      gatus:
+      *app :
         annotations:
           reloader.stakater.com/auto: "true"
+        serviceAccount:
+          identifier: *app
         initContainers:
           init-config:
             image:
@@ -100,11 +102,11 @@ spec:
             sectionName: https
         rules:
           - backendRefs:
-              - name: *app
+              - identifier: app
                 port: *port
     serviceAccount:
-      create: true
-      name: gatus
+      *app :
+        enabled: true
     persistence:
       config:
         existingClaim: gatus

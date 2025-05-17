@@ -49,6 +49,9 @@ spec:
         pod:
           hostNetwork: true
 
+        serviceAccount:
+          identifier: multus
+
         containers:
           uninstall:
             image:
@@ -79,6 +82,9 @@ spec:
         pod:
           hostNetwork: true
           hostPID: true
+
+        serviceAccount:
+          identifier: multus
 
         containers:
           multus-daemon:
@@ -218,4 +224,5 @@ spec:
                 mountPropagation: HostToContainer
 
     serviceAccount:
-      create: true
+      multus:
+        enabled: true
