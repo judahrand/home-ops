@@ -41,6 +41,8 @@ spec:
             env:
               TZ: Europe/London
               RUN_MODE: once
+              CRITERIA: >-
+                [{"key":"originalFileName","split":{"delimiters":["~","."],"index":0}},{"key":"localDateTime","delta":{"milliseconds":1000}}]
             envFrom:
               - secretRef:
                   name: immich-stack-secret
