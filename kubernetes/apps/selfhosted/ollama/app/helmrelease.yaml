@@ -60,6 +60,7 @@ spec:
         globalMounts:
           - path: /root/.ollama
       models:
+        suffix: models
         storageClass: openebs-hostpath
         accessMode: ReadWriteOnce
         size: 50Gi
