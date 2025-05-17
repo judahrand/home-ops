@@ -1,5 +1,5 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
@@ -20,6 +20,7 @@ spec:
   values:
     configMaps:
       daemon-config:
+        suffix: daemon-config
         data:
           daemon-config.json: |
             {
@@ -49,6 +50,9 @@ spec:
         pod:
           hostNetwork: true
 
+        serviceAccount:
+          identifier: multus
+
         containers:
           uninstall:
             image:
@@ -71,6 +75,7 @@ spec:
                   - ALL
 
       multus:
+        forceRename: multus
         type: daemonset
 
         annotations:
@@ -79,6 +84,9 @@ spec:
         pod:
           hostNetwork: true
           hostPID: true
+
+        serviceAccount:
+          identifier: multus
 
         containers:
           multus-daemon:
@@ -218,4 +226,4 @@ spec:
                 mountPropagation: HostToContainer
 
     serviceAccount:
-      create: true
+      multus: {}
