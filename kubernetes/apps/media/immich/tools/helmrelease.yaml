@@ -37,20 +37,22 @@ spec:
           main:
             image:
               repository: ghcr.io/judahrand/immich-stack
-              tag: 0.1.19@sha256:edc5a356c78900427895b97b7859d814800f46da8c481efeb2442dc42a57c634
-            args:
-              - backup
-              - --init
-              - /backup
+              tag: 0.1.19@sha256:2722b4d5e38f558e205c1fd903a2b717add1153cab8a73afc07049676c97cd6c
             env:
               TZ: Europe/London
               RUN_MODE: once
-              DRY_RUN: true
-
+              CRITERIA: >-
+                [{"key":"originalFileName","split":{"delimiters":["~","."],"index":0}},{"key":"localDateTime","delta":{"milliseconds":1000}}]
             envFrom:
               - secretRef:
                   name: immich-stack-secret
             securityContext:
+              runAsNonRoot: true
+              runAsUser: 568
+              runAsGroup: 568
+              fsGroup: 568
+              fsGroupChangePolicy: OnRootMismatch
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
+              seccompProfile: { type: RuntimeDefault }
               capabilities: { drop: ["ALL"] }
