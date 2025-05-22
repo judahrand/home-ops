@@ -7,7 +7,7 @@ metadata:
 spec:
   instances: 3
   # renovate: datasource=docker depName=ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.5-v0.3.0@sha256:be3f025d79aa1b747817f478e07e71be43236e14d00d8a9eb3914146245035ba
+  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:16.9-0.3.0@sha256:69c827b85380454b46260219a93c9fd13942453200d1d07f856a17d7af0df8b2
   primaryUpdateStrategy: unsupervised
   enablePDB: true
 
@@ -22,7 +22,7 @@ spec:
 
   postgresql:
     shared_preload_libraries:
-      - "vectors.so"
+      - "vchord.so"
     parameters:
       max_connections: "100"
       shared_buffers: 256MB
@@ -78,10 +78,9 @@ spec:
       dataChecksums: true
       postInitApplicationSQL:
         # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
-        - CREATE EXTENSION vectors;
+        - ALTER DATABASE immich OWNER TO immich;
+        - CREATE EXTENSION vchord CASCADE;
         - CREATE EXTENSION earthdistance CASCADE;
-        - ALTER DATABASE immich SET search_path TO "$user", public, vectors;
-        - ALTER SCHEMA vectors OWNER TO immich;
   #   recovery:
   #     source: &previousCluster immich-database-v1
   # # Note: externalClusters is needed when recovering from an existing cnpg cluster
