@@ -40,6 +40,8 @@ spec:
               tag: 0.1.19@sha256:2722b4d5e38f558e205c1fd903a2b717add1153cab8a73afc07049676c97cd6c
             env:
               TZ: Europe/London
+              WITH_ARCHIVED: true
+              WITH_DELETED: true
               RUN_MODE: once
               CRITERIA: >-
                 [{"key":"originalFileName","split":{"delimiters":["~","."],"index":0}},{"key":"localDateTime","delta":{"milliseconds":1000}}]
