@@ -4,10 +4,10 @@
     {
       customType: "regex",
       description: "Process annotated dependencies",
-      fileMatch: [
-        "(^|/).+\\.env$",
-        "(^|/).+\\.sh$",
-        "(^|/).+\\.ya?ml(?:\\.j2)?$",
+      managerFilePatterns: [
+        "/(^|/).+\\.env$/",
+        "/(^|/).+\\.sh$/",
+        "/(^|/).+\\.ya?ml(?:\\.j2)?$/",
       ],
       matchStrings: [
         // # renovate: datasource=github-releases depName=k3s-io/k3s
@@ -26,7 +26,7 @@
     {
       "customType": "regex",
       "description": ["Process CloudnativePG Postgresql version"],
-      "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      "managerFilePatterns": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
       "matchStrings": ["image(Name)?: (?<depName>ghcr\\.io\/cloudnative-pg\/postgresql):(?<currentValue>.*\\-[^@]*)(@(?<currentDigest>sha256:[0-9a-f]*))?"],
       "datasourceTemplate": "docker",
       "versioningTemplate": "redhat"
@@ -34,7 +34,7 @@
     {
       "customType": "regex",
       "description": ["Process CloudnativePG Postgresql pgvecto.rs version"],
-      "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
+      "managerFilePatterns": ["(^|/)kubernetes/.+\\.ya?ml(?:\\.j2)?$"],
       "matchStrings": ["image(Name)?: (?<depName>ghcr\\.io\/tensorchord\/cloudnative-pgvecto\\.rs):(?<currentValue>.*\\-[^@]*)(@(?<currentDigest>sha256:[0-9a-f]*))?"],
       "datasourceTemplate": "docker",
       "versioning": "regex:^(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?(-(?<compatibility>.*))?$",
