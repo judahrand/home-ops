@@ -74,7 +74,7 @@ spec:
         nodes:
           - name: k8s-0
             devices:
-              - name: nvme1n1
+              - name: nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NX1W503160N_1
           - name: k8s-1
             devices:
               - name: sda
