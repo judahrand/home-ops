@@ -23,7 +23,7 @@ spec:
           app:
             image:
               repository: docker.io/fallenbagel/jellyseerr
-              tag: "2.6.0"
+              tag: "2.7.3"
             env:
               TZ: Europe/London
               # LOG_LEVEL: debug
