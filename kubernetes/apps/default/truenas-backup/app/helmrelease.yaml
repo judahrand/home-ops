@@ -55,7 +55,7 @@ spec:
           backup:
             image: &rusticImage
               repository: ghcr.io/rustic-rs/rustic
-              tag: v0.9.5
+              tag: v0.10.0
             args:
               - backup
               - --init
