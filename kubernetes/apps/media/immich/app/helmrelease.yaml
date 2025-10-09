@@ -78,7 +78,7 @@ spec:
 
     image:
       # renovate: datasource=docker depName=ghcr.io/immich-app/immich
-      tag: v1.133.1
+      tag: v2.0.1
 
     server:
       resources:
@@ -110,7 +110,7 @@ spec:
     machine-learning:
       image:
         # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
-        tag: v1.144.1-openvino
+        tag: v2.0.1-openvino
       resources:
         requests:
           cpu: 100m
