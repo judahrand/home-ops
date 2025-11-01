@@ -156,7 +156,7 @@ spec:
         kubernetes-coredns:
           # renovate: depName="Kubernetes / System / CoreDNS"
           gnetId: 15762
-          revision: 22
+          revision: 21
           datasource: Prometheus
         kubernetes-global:
           # renovate: depName="Kubernetes / Views / Global"
@@ -171,7 +171,7 @@ spec:
         kubernetes-nodes:
           # renovate: depName="Kubernetes / Views / Nodes"
           gnetId: 15759
-          revision: 37
+          revision: 39
           datasource: Prometheus
         kubernetes-pods:
           # renovate: depName="Kubernetes / Views / Pods"
