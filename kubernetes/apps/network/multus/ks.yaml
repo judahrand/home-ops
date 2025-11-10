@@ -24,7 +24,7 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app multus-config
+  name: &app multus-networks
   namespace: flux-system
 spec:
   targetNamespace: &namespace network
@@ -33,7 +33,7 @@ spec:
       app.kubernetes.io/name: *app
   interval: 30m
   timeout: 5m
-  path: ./kubernetes/apps/network/multus/config
+  path: ./kubernetes/apps/network/multus/networks
   prune: true
   sourceRef:
     kind: GitRepository
