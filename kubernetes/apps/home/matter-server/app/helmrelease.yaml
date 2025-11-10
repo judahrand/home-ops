@@ -28,7 +28,7 @@ spec:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
               [{
-                "name":"iot-vlan",
+                "name":"iot",
                 "namespace": "network",
                 "ips": ["10.0.60.86/24"],
                 "mac": "a0:41:a7:15:c3:00"

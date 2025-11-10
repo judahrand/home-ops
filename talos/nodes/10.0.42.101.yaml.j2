@@ -10,12 +10,14 @@ machine:
               - enp3s0
           mode: active-backup
         vlans:
-          - routes: []
+          - vlanId: 60
             dhcp: true
-            vlanId: 60
             mtu: 1500
             dhcpOptions:
               routeMetric: 4096
+          - vlanId: 70
+            dhcp: false
+            mtu: 1420
         dhcp: true
         dhcpOptions:
           routeMetric: 1024
