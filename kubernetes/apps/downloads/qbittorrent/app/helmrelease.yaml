@@ -59,8 +59,8 @@ spec:
           [{
             "name": "vpn",
             "namespace": "network",
-            "ips": ["192.168.90.10/24"],
-            "mac": "32:0b:d8:1f:b6:e4"
+            "ips": ["10.2.0.10/24"],
+            "mac": "32:0b:d8:15:b6:e8"
           }]
       securityContext:
         runAsNonRoot: true
