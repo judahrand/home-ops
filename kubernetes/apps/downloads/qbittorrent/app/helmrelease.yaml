@@ -47,7 +47,9 @@ spec:
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
-              capabilities: {drop: ["ALL"]}
+              capabilities:
+                drop:
+                  - "ALL"
             resources:
               requests:
                 cpu: 100m
@@ -59,7 +61,7 @@ spec:
           [{
             "name": "vpn",
             "namespace": "network",
-            "ips": ["10.2.0.10/24"],
+            "ips": ["10.0.70.10/32"],
             "mac": "32:0b:d8:15:b6:e8"
           }]
       securityContext:
