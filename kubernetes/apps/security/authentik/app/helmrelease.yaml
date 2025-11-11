@@ -55,7 +55,7 @@ spec:
     server:
       initContainers:
         - name: init-db
-          image: ghcr.io/home-operations/postgres-init:17.6
+          image: ghcr.io/home-operations/postgres-init:18.0
           envFrom: *envFrom
       autoscaling:
         enabled: true
