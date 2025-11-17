@@ -52,7 +52,7 @@ spec:
           app:
             image:
               repository: ghcr.io/t0bst4r/home-assistant-matter-hub
-              tag: 3.0.0-alpha.84
+              tag: 3.0.1
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
