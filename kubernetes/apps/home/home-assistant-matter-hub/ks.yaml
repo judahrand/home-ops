@@ -14,7 +14,7 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
-    - name: multus-config
+    - name: multus-networks
       namespace: network
     - name: external-secrets
       namespace: external-secrets

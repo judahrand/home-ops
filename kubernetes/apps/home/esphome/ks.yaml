@@ -14,7 +14,7 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
-    - name: multus-config
+    - name: multus-networks
       namespace: network
   path: ./kubernetes/apps/home/esphome/app
   prune: true

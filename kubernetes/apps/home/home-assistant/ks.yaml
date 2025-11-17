@@ -23,7 +23,7 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
-    - name: multus-config
+    - name: multus-networks
       namespace: network
     - name: cloudnative-pg-cluster
       namespace: cnpg-system
