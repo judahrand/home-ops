@@ -6,7 +6,9 @@ namespace: network
 components:
   - ../../components/common
 resources:
+  - ./certificates/ks.yaml
   - ./cloudflared/ks.yaml
+  - ./envoy-gateway/ks.yaml
   - ./external-dns/ks.yaml
   - ./multus/ks.yaml
 patches:

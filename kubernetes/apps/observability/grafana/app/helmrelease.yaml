@@ -245,9 +245,8 @@ spec:
         enabled: true
         hostnames: ["{{ .Release.Name }}.judahrand.net"]
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-internal
+            namespace: network
     persistence:
       enabled: false
     testFramework:

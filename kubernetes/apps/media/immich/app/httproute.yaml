@@ -7,9 +7,8 @@ metadata:
 spec:
   hostnames: ["immich.judahrand.net"]
   parentRefs:
-    - name: external
-      namespace: kube-system
-      sectionName: https
+    - name: envoy-external
+      namespace: network
   rules:
     - backendRefs:
         - name: immich-server

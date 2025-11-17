@@ -106,9 +106,8 @@ spec:
           - homeassistant.judahrand.net
           - hass.judahrand.net
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-external
+            namespace: network
         rules:
           - backendRefs:
               - identifier: app
@@ -118,9 +117,8 @@ spec:
         hostnames:
           - hass-code.judahrand.net
         parentRefs:
-          - name: internal
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-internal
+            namespace: network
         rules:
           - backendRefs:
               - name: app

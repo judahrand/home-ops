@@ -7,9 +7,8 @@ metadata:
 spec:
   hostnames: ["flux-webhook.judahrand.net"]
   parentRefs:
-    - name: external
-      namespace: kube-system
-      sectionName: https
+    - name: envoy-external
+      namespace: network
   rules:
     - backendRefs:
         - name: webhook-receiver

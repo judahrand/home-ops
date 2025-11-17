@@ -75,9 +75,8 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.judahrand.net"
         parentRefs:
-          - name: external
-            namespace: kube-system
-            sectionName: https
+          - name: envoy-external
+            namespace: network
         rules:
           - backendRefs:
               - identifier: app
