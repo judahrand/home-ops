@@ -78,9 +78,7 @@ spec:
 
     config: |
       mqtt:
-        host: emqx-listeners.emqx-system.svc.cluster.local
-        user: "{FRIGATE_MQTT_USER}"
-        password: "{FRIGATE_MQTT_PASSWORD}"
+        host: mosquitto.default.svc.cluster.local
 
       ffmpeg:
         hwaccel_args: preset-vaapi

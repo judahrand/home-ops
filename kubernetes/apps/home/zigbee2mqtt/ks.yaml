@@ -14,8 +14,8 @@ spec:
     - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
-    - name: emqx-cluster
-      namespace: emqx-system
+    - name: mosquitto
+      namespace: home
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/home/zigbee2mqtt/app
