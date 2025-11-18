@@ -26,11 +26,11 @@ machine:
     wipe: false
   nodeLabels:
     intel.feature.node.kubernetes.io/gpu: "true"
----
-apiVersion: v1alpha1
-kind: UserVolumeConfig
-name: local-hostpath
-provisioning:
-  diskSelector:
-    match: disk.model == "HighRel 512GB SSD"
-  minSize: 384GB
+# ---
+# apiVersion: v1alpha1
+# kind: UserVolumeConfig
+# name: local-hostpath
+# provisioning:
+#   diskSelector:
+#     match: disk.model == "HighRel 512GB SSD"
+#   minSize: 384GB

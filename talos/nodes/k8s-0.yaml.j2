@@ -27,11 +27,11 @@ machine:
     wipe: false
   nodeLabels:
     amd.feature.node.kubernetes.io/gpu: "true"
----
-apiVersion: v1alpha1
-kind: UserVolumeConfig
-name: local-hostpath
-provisioning:
-  diskSelector:
-    match: disk.model == "WD_BLACK SN770 1TB"
-  minSize: 750GB
+# ---
+# apiVersion: v1alpha1
+# kind: UserVolumeConfig
+# name: local-hostpath
+# provisioning:
+#   diskSelector:
+#     match: disk.model == "WD_BLACK SN770 1TB"
+#   minSize: 750GB

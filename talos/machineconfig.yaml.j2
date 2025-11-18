@@ -61,6 +61,11 @@ machine:
       serializeImagePulls: false
       allowedUnsafeSysctls:
         - net.*
+    extraMounts:
+      - destination: /var/mnt/extra
+        type: bind
+        source: /var/mnt/extra
+        options: ["bind", "rshared", "rw"]
     image: ghcr.io/siderolabs/kubelet:v1.34.2
     nodeIP:
       validSubnets:
