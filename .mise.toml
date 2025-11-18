@@ -1,17 +1,19 @@
 [env]
-# File paths
 KUBECONFIG = "{{config_root}}/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 SOPS_AGE_KEY_FILE = "{{config_root}}/age.key"
 TALOSCONFIG = "{{config_root}}/talosconfig"
-# Included file paths
+JUST_UNSTABLE = "1"
+LEFTHOOK_OUTPUT = "false"
+
 _.file = [
-  "{{config_root}}/onepassword.env",
-  "{{config_root}}/kubernetes/apps/system-upgrade/versions.env"
+  "{{config_root}}/.secrets.env",
 ]
-# _.python.venv = { path = "{{config_root}}/.venv", create = true }
 
 [tools]
 "python" = "3.14.0"
+"aqua:helm/helm" = "3.19.2"
+"aqua:helmfile/helmfile" = "1.1.9"
 "uv" = "latest"
 "pipx:flux-local" = "latest"
+just = "latest"

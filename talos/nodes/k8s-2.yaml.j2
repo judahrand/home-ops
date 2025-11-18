@@ -1,0 +1,36 @@
+---
+machine:
+  type: controlplane
+  network:
+    hostname: k8s-2
+    interfaces:
+      - interface: bond0
+        bond:
+          interfaces:
+              - enp1s0
+          mode: active-backup
+        vlans:
+          - vlanId: 60
+            dhcp: false
+            mtu: 1500
+          - vlanId: 70
+            dhcp: false
+            mtu: 1500
+        dhcp: true
+        dhcpOptions:
+          routeMetric: 1024
+  install:
+    diskSelector:
+      model: HighRel 512GB SSD
+    image: factory.talos.dev/installer/e0b8fa3ae9d1c34d1cca4a94deafffc6c13b293bce113a14a222b9e6e9f09738:{{ ENV.TALOS_VERSION }}
+    wipe: false
+  nodeLabels:
+    intel.feature.node.kubernetes.io/gpu: "true"
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: disk.model == "HighRel 512GB SSD"
+  minSize: 384GB

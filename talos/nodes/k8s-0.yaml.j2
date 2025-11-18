@@ -1,0 +1,37 @@
+---
+machine:
+  type: controlplane
+  network:
+    hostname: k8s-0
+    interfaces:
+      - interface: bond0
+        bond:
+          interfaces:
+              - enp2s0
+              - enp3s0
+          mode: active-backup
+        vlans:
+          - vlanId: 60
+            dhcp: false
+            mtu: 1500
+          - vlanId: 70
+            dhcp: false
+            mtu: 1500
+        dhcp: true
+        dhcpOptions:
+          routeMetric: 1024
+  install:
+    diskSelector:
+      model: WD_BLACK SN770 1TB
+    image: factory.talos.dev/installer/52fe5b7031b19d5c1c5506b0398db69aca2ba51ca4104a2208cfe5368ec18ebf:{{ ENV.TALOS_VERSION }}
+    wipe: false
+  nodeLabels:
+    amd.feature.node.kubernetes.io/gpu: "true"
+---
+apiVersion: v1alpha1
+kind: UserVolumeConfig
+name: local-hostpath
+provisioning:
+  diskSelector:
+    match: disk.model == "WD_BLACK SN770 1TB"
+  minSize: 750GB
