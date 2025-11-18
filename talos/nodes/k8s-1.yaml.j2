@@ -22,7 +22,7 @@ machine:
   install:
     diskSelector:
       model: HighRel 512GB SSD
-    image: factory.talos.dev/installer/e0b8fa3ae9d1c34d1cca4a94deafffc6c13b293bce113a14a222b9e6e9f09738:{{ ENV.TALOS_VERSION }}
+    image: factory.talos.dev/metal-installer/7cd88bcfecc09f2f5f6e04d8248676d7fc5dc215e6b3b405cca8c8381d176f53:v1.11.5
     wipe: false
   nodeLabels:
     intel.feature.node.kubernetes.io/gpu: "true"
