@@ -78,7 +78,7 @@ spec:
 
     config: |
       mqtt:
-        host: mosquitto.default.svc.cluster.local
+        host: mosquitto.home.svc.cluster.local
 
       ffmpeg:
         hwaccel_args: preset-vaapi
