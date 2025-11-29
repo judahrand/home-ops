@@ -107,7 +107,7 @@ cluster:
     {% endif %}
   clusterName: main
   controlPlane:
-    endpoint: https://k8s.internal:6443
+    endpoint: https://k8s.judahrand.net:6443
   discovery:
     enabled: true
     registries:
@@ -138,7 +138,7 @@ cluster:
       rules:
         - level: Metadata
     certSANs:
-      - k8s.internal
+      - k8s.judahrand.net
     disablePodSecurityPolicy: true
     extraArgs:
       enable-aggregator-routing: "true"
