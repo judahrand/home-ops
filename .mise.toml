@@ -11,7 +11,7 @@ _.file = [
 ]
 
 [tools]
-"python" = "3.14.0"
+"python" = "3.14.2"
 "aqua:helm/helm" = "4.0.0"
 "aqua:helmfile/helmfile" = "1.2.0"
 "uv" = "latest"
