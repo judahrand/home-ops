@@ -79,7 +79,7 @@ spec:
       volumes:
         - name: media
           nfs:
-            server: truenas.servers
+            server: truenas.lan
             path: /mnt/main/media/
       volumeMounts:
         - mountPath: &path /media

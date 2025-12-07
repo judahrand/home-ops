@@ -7,7 +7,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - truenas.servers:9100
+        - truenas.lan:9100
   metricsPath: /metrics
   relabelings:
     - action: replace
@@ -22,7 +22,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - truenas.servers:9633
+        - truenas.lan:9633
   metricsPath: /metrics
   relabelings:
     - action: replace
@@ -37,7 +37,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - slzb-06m.iot
+        - slzb-06m.lan
   metricsPath: /metrics
   relabelings:
     - action: replace
@@ -59,7 +59,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - truenas.servers:7070
+        - truenas.lan:7070
   metricsPath: /metrics
   relabelings:
     - action: replace

@@ -78,7 +78,7 @@ spec:
               value: NodeMemoryHighUtilization
               isRegex: false
             - name: instance
-              value: truenas.servers:9100
+              value: truenas.lan:9100
               isRegex: false
       - apiVersion: monitoring.giantswarm.io/v1alpha1
         kind: Silence

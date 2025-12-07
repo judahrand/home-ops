@@ -11,7 +11,7 @@ spec:
     - ReadWriteMany
   nfs:
     path: /mnt/main/immich
-    server: truenas.servers
+    server: truenas.lan
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

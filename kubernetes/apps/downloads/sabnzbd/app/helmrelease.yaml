@@ -123,7 +123,7 @@ spec:
               - path: /config/scripts
       media:
         type: nfs
-        server: truenas.servers
+        server: truenas.lan
         path: /mnt/main/media
         globalMounts:
           - path: /media/Downloads/sabnzbd

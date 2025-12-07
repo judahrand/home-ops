@@ -94,7 +94,7 @@ spec:
           - path: /config/MediaCover
       media:
         type: nfs
-        server: truenas.servers
+        server: truenas.lan
         path: /mnt/main/media
         globalMounts:
           - path: /media

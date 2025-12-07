@@ -83,7 +83,7 @@ spec:
             subPath: config.yaml
       media:
         type: nfs
-        server: truenas.servers
+        server: truenas.lan
         path: /mnt/main/media
         globalMounts:
           - path: /media/Downloads/qbittorrent
