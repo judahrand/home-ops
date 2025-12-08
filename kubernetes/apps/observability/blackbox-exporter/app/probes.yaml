@@ -12,4 +12,4 @@ spec:
     staticConfig:
       static:
         - slzb-06m.lan
-        - truenas.lan
+        - truenas.servers

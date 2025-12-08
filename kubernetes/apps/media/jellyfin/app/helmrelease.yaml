@@ -66,7 +66,7 @@ spec:
 
       media:
         type: nfs
-        server: truenas.lan
+        server: truenas.servers
         path: /mnt/main/media/Library
         globalMounts:
           - path: /media/Library

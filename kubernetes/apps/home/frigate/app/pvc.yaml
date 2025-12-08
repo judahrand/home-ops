@@ -12,7 +12,7 @@ spec:
   persistentVolumeReclaimPolicy: Delete
   nfs:
     path: /mnt/main/frigate/media
-    server: truenas.lan
+    server: truenas.servers
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
