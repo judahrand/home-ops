@@ -13,7 +13,7 @@ _.file = [
 [tools]
 "python" = "3.14.0"
 "aqua:helm/helm" = "4.0.0"
-"aqua:helmfile/helmfile" = "1.2.0"
+"aqua:helmfile/helmfile" = "1.2.3"
 "uv" = "latest"
 "pipx:flux-local" = "latest"
 just = "latest"
