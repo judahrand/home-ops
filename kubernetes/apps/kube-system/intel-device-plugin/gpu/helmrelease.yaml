@@ -37,3 +37,4 @@ spec:
     name: intel-device-plugin-gpu
     sharedDevNum: 99
     nodeFeatureRule: true
+    preferredAllocationPolicy: "balanced"
