@@ -151,6 +151,8 @@ spec:
     transcoder:
       kyoo_transcoder:
         resources:
+          claims:
+            - name: gpu
           requests:
             cpu: 10m
             memory: 500Mi
@@ -166,3 +168,18 @@ spec:
       enabled: true
       auth:
         username: kyoo
+
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              - op: add
+                path: /spec/template/spec/resourceClaims
+                value:
+                  - name: gpu
+                    resourceClaimTemplateName: kyoo-gpu
+            target:
+              group: apps
+              version: v1
+              kind: Deployment
+              name: kyoo-transcoder

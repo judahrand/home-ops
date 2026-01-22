@@ -50,12 +50,13 @@ spec:
       - frigate-secret
 
     resources:
+      claims:
+        - name: gpu
       requests:
         cpu: 500m
         memory: 1Gi
       limits:
         memory: 8Gi
-        gpu.intel.com/i915: 1
         # Settings for AMD 780M GPU
         # amd.com/gpu: 1
 
@@ -290,3 +291,18 @@ spec:
           order: 1
           icon: LuCar
           cameras: doorbell_cam
+
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |-
+              - op: add
+                path: /spec/template/spec/resourceClaims
+                value:
+                  - name: gpu
+                    resourceClaimTemplateName: frigate-gpu
+            target:
+              group: apps
+              version: v1
+              kind: Deployment
+              name: frigate
