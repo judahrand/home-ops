@@ -51,7 +51,7 @@ spec:
 
     resources:
       claims:
-        - name: gpu
+        - name: i915
       requests:
         cpu: 500m
         memory: 1Gi
@@ -299,8 +299,8 @@ spec:
               - op: add
                 path: /spec/template/spec/resourceClaims
                 value:
-                  - name: gpu
-                    resourceClaimTemplateName: frigate-gpu
+                  - name: i915
+                    resourceClaimTemplateName: frigate
             target:
               group: apps
               version: v1

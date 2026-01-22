@@ -152,13 +152,12 @@ spec:
       kyoo_transcoder:
         resources:
           claims:
-            - name: gpu
+            - name: i915
           requests:
             cpu: 10m
             memory: 500Mi
           limits:
             cpu: 1
-            gpu.intel.com/i915: 1
             memory: 8Gi
 
     meilisearch:
@@ -176,8 +175,8 @@ spec:
               - op: add
                 path: /spec/template/spec/resourceClaims
                 value:
-                  - name: gpu
-                    resourceClaimTemplateName: kyoo-gpu
+                  - name: i915
+                    resourceClaimTemplateName: kyoo
             target:
               group: apps
               version: v1
