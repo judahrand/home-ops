@@ -59,7 +59,7 @@ spec:
       endpointURL: http://truenas.servers:9000
       # Note: serverName version needs to be incremented
       # when recovering from an existing cnpg cluster
-      serverName: &currentCluster immich-database-v2
+      serverName: &currentCluster immich-database-v3
       s3Credentials:
         accessKeyId:
           name: cloudnative-pg-secret
@@ -82,7 +82,7 @@ spec:
         - CREATE EXTENSION vchord CASCADE;
         - CREATE EXTENSION earthdistance CASCADE;
   #   recovery:
-  #     source: &previousCluster immich-database-v1
+  #     source: &previousCluster immich-database-v2
   # # Note: externalClusters is needed when recovering from an existing cnpg cluster
   # externalClusters:
   #   - name: *previousCluster
