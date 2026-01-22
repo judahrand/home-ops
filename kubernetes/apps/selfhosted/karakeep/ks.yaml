@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   components:
-    - ../../../../components/gatus/external
     - ../../../../components/volsync
   interval: 1h
   timeout: 5m
