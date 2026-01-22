@@ -75,8 +75,8 @@ spec:
   #             - op: add
   #               path: /spec/template/spec/resourceClaims
   #               value:
-  #                 - name: gpu
-  #                   resourceClaimTemplateName: ollama-gpu
+  #                 - name: i915
+  #                   resourceClaimTemplateName: ollama
   #           target:
   #             group: apps
   #             version: v1

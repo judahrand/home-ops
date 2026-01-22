@@ -84,8 +84,8 @@ spec:
                 - op: add
                   path: /spec/template/spec/resourceClaims
                   value:
-                    - name: gpu
-                      resourceClaimTemplateName: jellyfin-gpu
+                    - name: i915
+                      resourceClaimTemplateName: jellyfin
               target:
                 group: apps
                 version: v1
