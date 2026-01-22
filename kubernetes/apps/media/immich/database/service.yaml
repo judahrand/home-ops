@@ -2,14 +2,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres-lb
+  name: immich-database
   annotations:
-    external-dns.alpha.kubernetes.io/hostname: postgres.judahrand.net
-    io.cilium/lb-ipam-ips: 10.0.42.125
+    external-dns.alpha.kubernetes.io/hostname: immich-database.judahrand.net
+    io.cilium/lb-ipam-ips: 10.0.42.129
     gatus.home-operations.com/endpoint: |
-      name: postgres
+      name: immich-database
       group: infrastructure
-      url: tcp://postgres17-rw.cnpg-system.svc.cluster.local:5432
+      url: tcp://immich-database-rw.media.svc.cluster.local:5432
       interval: 1m
       ui:
         hide-url: true
@@ -26,5 +26,5 @@ spec:
       protocol: TCP
       targetPort: 5432
   selector:
-    cnpg.io/cluster: postgres17
+    cnpg.io/cluster: immich-database
     cnpg.io/instanceRole: primary

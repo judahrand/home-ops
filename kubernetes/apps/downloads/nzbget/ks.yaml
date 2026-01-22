@@ -6,7 +6,6 @@ metadata:
   name: nzbget
 spec:
   components:
-    - ../../../../components/gatus/guarded
     - ../../../../components/volsync
   dependsOn:
     - name: multus-networks
