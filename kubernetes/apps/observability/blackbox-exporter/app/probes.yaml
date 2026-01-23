@@ -11,5 +11,5 @@ spec:
   targets:
     staticConfig:
       static:
-        - slzb-06m.lan
+        - slzb-06m.iot
         - truenas.servers
