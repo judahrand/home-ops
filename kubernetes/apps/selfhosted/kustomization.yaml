@@ -9,6 +9,4 @@ resources:
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
   - ./karakeep/ks.yaml
-  - ./ollama/ks.yaml
-  - ./open-webui/ks.yaml
   - ./vikunja/ks.yaml
