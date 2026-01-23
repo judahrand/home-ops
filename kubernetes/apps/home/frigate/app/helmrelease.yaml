@@ -36,15 +36,15 @@ spec:
   values:
     image:
       repository: ghcr.io/blakeblackshear/frigate
-      tag: 0.16.2
+      # tag: 0.16.2
       # Settings for AMD 780M GPU
-      # tag: 0.15.1-rocm
+      tag: 0.16.2-rocm
 
     env:
       TZ: Europe/London
       # Settings for AMD 780M GPU
-      # LIBVA_DRIVER_NAME: radeonsi
-      # HSA_OVERRIDE_GFX_VERSION: 11.0.2
+      LIBVA_DRIVER_NAME: radeonsi
+      HSA_OVERRIDE_GFX_VERSION: 11.0.2
 
     envFromSecrets:
       - frigate-secret
