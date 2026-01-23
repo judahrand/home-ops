@@ -36,15 +36,16 @@ spec:
   values:
     image:
       repository: ghcr.io/blakeblackshear/frigate
-      # tag: 0.16.2
+      # tag: 0.16.3
       # Settings for AMD 780M GPU
-      tag: 0.16.2-rocm
+      # tag: 0.16.3-rocm
+      tag: 0.17.0-beta2-rocm
 
     env:
       TZ: Europe/London
       # Settings for AMD 780M GPU
       LIBVA_DRIVER_NAME: radeonsi
-      HSA_OVERRIDE_GFX_VERSION: 11.0.2
+      HSA_OVERRIDE_GFX_VERSION: 11.0.0
 
     envFromSecrets:
       - frigate-secret
@@ -94,18 +95,15 @@ spec:
         email: judahrand+frigate@gmail.com
 
       model:
-        path: plus://ac97080e9fcaf057b04ecb8447b2b140
+        path: plus://b83061512206a1c411c2f4a88358381b
 
       detectors:
-        openvino_0:
-          type: openvino
-          device: GPU
-        openvino_1:
-          type: openvino
-          device: GPU
-        openvino_2:
-          type: openvino
-          device: GPU
+        onnx_0:
+          type: onnx
+        onnx_1:
+          type: onnx
+        onnx_2:
+          type: onnx
 
       logger:
         default: info
