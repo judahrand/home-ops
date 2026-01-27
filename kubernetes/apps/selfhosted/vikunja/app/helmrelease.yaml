@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: docker.io/vikunja/vikunja
-              tag: 0.24.6
+              tag: 1.0.0
             env:
               VIKUNJA_FILES_BASEPATH: /files
               VIKUNJA_SERVICE_ENABLECALDAV: false
