@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://datreeio.github.io/CRDs-catalog/gateway.networking.k8s.io/httproute_v1.json
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: omada-controller
+spec:
+  hostnames:
+    - omada.judahrand.net
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: envoy-internal
+      namespace: network
+      sectionName: https
+  rules:
+    - backendRefs:
+        - name: omada-controller
+          port: 8043
+
+---
+# yaml-language-server: $schema=https://schemas.budimanjojo.com/gateway.networking.k8s.io/backendtlspolicy_v1alpha3.json
+apiVersion: gateway.networking.k8s.io/v1alpha3
+kind: BackendTLSPolicy
+metadata:
+  name: omada-controller
+spec:
+  targetRefs:
+    - group: ""
+      kind: Secret
+      name: omada-controller
+  validation:
+    hostname: omada.judahrand.net
+    caCertificateRefs:
+      # TODO: currently there's no way to disable cert validation on Gateway API
+      - group: ""
+        kind: ConfigMap
+        name: omada-controller-certificate-secret
