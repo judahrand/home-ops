@@ -9,4 +9,5 @@ resources:
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
   - ./karakeep/ks.yaml
+  - ./omada-controller/ks.yaml
   - ./vikunja/ks.yaml
