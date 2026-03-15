@@ -226,13 +226,13 @@ spec:
       go2rtc:
         streams:
           doorbell_cam:
-            - ffmpeg:http://reolink.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
+            - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
             - rtsp://reolink_ip/Preview_01_sub
-            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.iot:554/Preview_01_main
+            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot:554/Preview_01_main
             # - ffmpeg:doorbell_cam#video=copy#audio=copy#audio=opus
           doorbell_cam_sub:
-            - ffmpeg:http://reolink.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@reolink.iot/Preview_01_sub
+            - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
             # - ffmpeg:doorbell_cam#audio=aac
           webrtc:
             candidates:
@@ -241,7 +241,7 @@ spec:
 
       cameras:
         doorbell_cam:
-          webui_url: http://reolink.iot
+          webui_url: http://front.iot
           audio:
             enabled: true
           ffmpeg:
