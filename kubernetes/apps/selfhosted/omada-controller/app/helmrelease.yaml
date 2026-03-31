@@ -12,6 +12,10 @@ spec:
   values:
     controllers:
       omada-controller:
+        pod:
+          securityContext:
+            fsGroup: 508
+            fsGroupChangePolicy: "OnRootMismatch"
         containers:
           app:
             image:
