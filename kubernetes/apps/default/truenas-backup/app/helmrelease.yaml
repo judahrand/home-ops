@@ -47,9 +47,9 @@ spec:
         initContainers:
           export:
             image:
-              repository: docker.io/library/busybox
-              tag: 1.37.0
-            args: ["/scripts/export.sh", "/backup"]
+              repository: ghcr.io/astral-sh/uv
+              tag: python3.14-alpine
+            args: ["uv", "run", "/scripts/export.py"]
 
         containers:
           backup:
@@ -104,5 +104,5 @@ spec:
         advancedMounts:
           snapshot:
             export:
-              - path: /scripts/export.sh
-                subPath: export.sh
+              - path: /scripts/export.py
+                subPath: export.py

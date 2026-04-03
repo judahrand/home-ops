@@ -8,7 +8,7 @@ resources:
 configMapGenerator:
   - name: truenas-backup
     files:
-      - resources/export.sh
+      - resources/export.py
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
