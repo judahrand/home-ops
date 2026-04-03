@@ -49,6 +49,13 @@ spec:
             image:
               repository: ghcr.io/astral-sh/uv
               tag: python3.14-alpine
+            env:
+              - name: OUTPUT_DIR
+                value: /backup
+              - name: UV_NO_CACHE
+                value: "true"
+              - name: UV_CACHE_DIR
+                value: /tmp/.uv_cache
             args: ["uv", "run", "/scripts/export.py"]
 
         containers:
