@@ -1,32 +1,33 @@
 ---
 machine:
   type: controlplane
-  network:
-    hostname: k8s-0
-    interfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-              - enp2s0
-              - enp3s0
-          mode: active-backup
-        vlans:
-          - vlanId: 60
-            dhcp: false
-            mtu: 1500
-          - vlanId: 70
-            dhcp: false
-            mtu: 1500
-        dhcp: true
-        dhcpOptions:
-          routeMetric: 1024
   install:
     diskSelector:
       model: WD_BLACK SN770 1TB
-    image: factory.talos.dev/metal-installer/35c6e40584dc34915f6734eaa2f18d2f8ec37640c23b4b9c81baf87cda0ff87e:v1.12.2
+    image: factory.talos.dev/metal-installer/ee68aad2ce0fab58ae960bb2673215594c44aaa982a24eebeb160799f3e36d68:v1.12.6
     wipe: false
   nodeLabels:
+    topology.kubernetes.io/zone: m
     amd.feature.node.kubernetes.io/gpu: "true"
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k8s-0
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - enp2s0
+  - enp3s0
+bondMode: active-backup
+mtu: 1500
+# ---
+# apiVersion: v1alpha1
+# kind: LinkAliasConfig
+# name: net0
+# selector:
+#   match: link.driver == "r8169" && mac(link.permanent_addr).startsWith("58:47:ca:75:")
 # ---
 # apiVersion: v1alpha1
 # kind: UserVolumeConfig
