@@ -70,6 +70,9 @@ spec:
       isWALArchiver: true
       parameters:
         barmanObjectName: nas-backup
+        # Note: serverName version needs to be incremented
+        # when recovering from an existing cnpg cluster
+        serverName: &currentCluster postgres17-v1
 
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
