@@ -51,33 +51,33 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
-        barmanObjectName: nas-backup
+        barmanObjectName: immich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster immich-database-v3
+        serverName: &currentCluster immich-database-v4
 
   bootstrap:
-    initdb:
-      database: immich
-      owner: immich
-      secret:
-        name: immich-database-secret
-      dataChecksums: true
-      postInitApplicationSQL:
-        # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
-        - ALTER DATABASE immich OWNER TO immich;
-        - CREATE EXTENSION vchord CASCADE;
-        - CREATE EXTENSION earthdistance CASCADE;
+    # initdb:
+    #   database: immich
+    #   owner: immich
+    #   secret:
+    #     name: immich-database-secret
+    #   dataChecksums: true
+    #   postInitApplicationSQL:
+    #     # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+    #     - ALTER DATABASE immich OWNER TO immich;
+    #     - CREATE EXTENSION vchord CASCADE;
+    #     - CREATE EXTENSION earthdistance CASCADE;
   # Note: previousCluster needs to be set to the name of the previous
   # cluster when recovering from an existing cnpg cluster
-  #   recovery:
-  #     source: &previousCluster immich-database-v2
+    recovery:
+      source: &previousCluster immich-database-v3
   #
   # # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     plugin:
-  #       name: barman-cloud.cloudnative-pg.io
-  #       parameters:
-  #         barmanObjectName: nas-backup
-  #         serverName: *previousCluster
+  externalClusters:
+    - name: *previousCluster
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: nas-backup
+          serverName: *previousCluster

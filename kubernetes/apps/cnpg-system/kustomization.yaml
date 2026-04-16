@@ -9,4 +9,3 @@ resources:
   - ./barman-plugin/ks.yaml
   - ./cloudnative-pg/ks.yaml
   - ./cluster/ks.yaml
-  - ./objectstores/ks.yaml
