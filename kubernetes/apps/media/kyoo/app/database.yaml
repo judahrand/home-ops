@@ -9,3 +9,6 @@ spec:
   databaseReclaimPolicy: retain
   name: kyoo
   owner: kyoo
+  schemas:
+    - name: kyoo
+      owner: kyoo
