@@ -6,7 +6,7 @@ metadata:
   name: kyoo
 spec:
   cluster:
-    name: kyoo-postgres
+    name: postgres17
   databaseReclaimPolicy: retain
   name: kyoo
   owner: kyoo
