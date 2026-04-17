@@ -57,6 +57,8 @@ machine:
     disableManifestsDirectory: true
     extraConfig:
       serializeImagePulls: false
+      allowedUnsafeSysctls:
+        - net.*
     image: ghcr.io/siderolabs/kubelet:v1.35.3
     nodeIP:
       validSubnets:

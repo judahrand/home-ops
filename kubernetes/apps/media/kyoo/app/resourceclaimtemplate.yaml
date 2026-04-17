@@ -2,7 +2,7 @@
 apiVersion: resource.k8s.io/v1
 kind: ResourceClaimTemplate
 metadata:
-  name: kyoo
+  name: kyoo-gpu
 spec:
   spec:
     devices:
@@ -10,3 +10,5 @@ spec:
         - name: i915
           exactly:
             deviceClassName: gpu.intel.com
+            allocationMode: All
+            adminAccess: true
