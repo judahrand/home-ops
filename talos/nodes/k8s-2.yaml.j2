@@ -1,31 +1,32 @@
 ---
 machine:
   type: controlplane
-  network:
-    hostname: k8s-2
-    interfaces:
-      - interface: bond0
-        bond:
-          interfaces:
-              - enp1s0
-          mode: active-backup
-        vlans:
-          - vlanId: 60
-            dhcp: false
-            mtu: 1500
-          - vlanId: 70
-            dhcp: false
-            mtu: 1500
-        dhcp: true
-        dhcpOptions:
-          routeMetric: 1024
   install:
     diskSelector:
       model: HighRel 512GB SSD
-    image: factory.talos.dev/metal-installer/7cd88bcfecc09f2f5f6e04d8248676d7fc5dc215e6b3b405cca8c8381d176f53:v1.12.2
+    image: factory.talos.dev/metal-installer/c57d7db6d46b10329ac04a0d74a7a80eb7361faf2e7f4b0ea6008e2ae5067781:v1.12.6
     wipe: false
   nodeLabels:
+    topology.kubernetes.io/zone: m
     intel.feature.node.kubernetes.io/gpu: "true"
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k8s-2
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - enp1s0
+bondMode: active-backup
+mtu: 1500
+# ---
+# apiVersion: v1alpha1
+# kind: LinkAliasConfig
+# name: net%d
+# selector:
+#   match: link.driver == "igc" && mac(link.permanent_addr).startsWith("84:47:09:43:")
 # ---
 # apiVersion: v1alpha1
 # kind: UserVolumeConfig
