@@ -6,8 +6,8 @@ metadata:
   name: immich-database
 spec:
   instances: 3
-  # renovate: datasource=docker depName=ghcr.io/tensorchord/cloudnative-pgvecto.rs
-  imageName: ghcr.io/tensorchord/cloudnative-vectorchord:17.5-0.3.0@sha256:2b397c7080ae712d407e925cc087ad7061dee7fbeb7ec6f55c6bc8482ef6b4f2
+  # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.3-system-bookworm@sha256:9a2cc9f0bf9a67827e214484f83362f1829b3ac839da6d2c2cff902a720d5e5f
   primaryUpdateStrategy: unsupervised
   enablePDB: true
 
@@ -21,6 +21,15 @@ spec:
   enableSuperuserAccess: true
 
   postgresql:
+    extensions:
+      - name: vchord
+        image:
+          # renovate: datasource=docker depName=ghcr.io/tensorchord/vchord-scratch
+          reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1@sha256:bdea43bed2a414e21bbf71767bf6f0739747ac480b267b51772dc214ac28dcb3
+        dynamic_library_path:
+          - /usr/lib/postgresql/18/lib/
+        extension_control_path:
+          - /usr/share/postgresql/18/
     shared_preload_libraries:
       - "vchord.so"
     parameters:
@@ -56,28 +65,28 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster immich-database-v4
 
-  bootstrap:
-    # initdb:
-    #   database: immich
-    #   owner: immich
-    #   secret:
-    #     name: immich-database-secret
-    #   dataChecksums: true
-    #   postInitApplicationSQL:
-    #     # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
-    #     - ALTER DATABASE immich OWNER TO immich;
-    #     - CREATE EXTENSION vchord CASCADE;
-    #     - CREATE EXTENSION earthdistance CASCADE;
-  # Note: previousCluster needs to be set to the name of the previous
-  # cluster when recovering from an existing cnpg cluster
-    recovery:
-      source: &previousCluster immich-database-v3
+  # bootstrap:
+  #   initdb:
+  #     database: immich
+  #     owner: immich
+  #     secret:
+  #       name: immich-database-secret
+  #     dataChecksums: true
+  #     postInitApplicationSQL:
+  #       # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
+  #       - ALTER DATABASE immich OWNER TO immich;
+  #       - CREATE EXTENSION vchord CASCADE;
+  #       - CREATE EXTENSION earthdistance CASCADE;
+  # # Note: previousCluster needs to be set to the name of the previous
+  # # cluster when recovering from an existing cnpg cluster
+  #   recovery:
+  #     source: &previousCluster immich-database-v3
   #
   # # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  externalClusters:
-    - name: *previousCluster
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: nas-backup
-          serverName: *previousCluster
+  # externalClusters:
+  #   - name: *previousCluster
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: immich-database
+  #         serverName: *previousCluster
