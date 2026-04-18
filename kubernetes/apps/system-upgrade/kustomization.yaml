@@ -5,10 +5,15 @@ kind: Kustomization
 namespace: system-upgrade
 components:
   - ../../components/common
-  - ../../components/alerts
 resources:
-  - ./namespace.yaml
   - ./tuppr/ks.yaml
-configMapGenerator:
-  - name: versions
-    env: ./versions.env
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: not-used
+        labels:
+          pod-security.kubernetes.io/enforce: privileged
+        annotations:
+          kustomize.toolkit.fluxcd.io/prune: disabled
