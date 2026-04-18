@@ -57,6 +57,8 @@ spec:
               - name: UV_CACHE_DIR
                 value: /tmp/.uv_cache
             args: ["uv", "run", "/scripts/export.py"]
+            securityContext:
+              readOnlyRootFilesystem: false
 
         containers:
           backup:
