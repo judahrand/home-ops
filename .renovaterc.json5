@@ -5,16 +5,18 @@
     "docker:enableMajor",
     "helpers:pinGitHubActionDigests",
     "github>judahrand/home-ops//.renovate/autoMerge.json5",
+    "github>judahrand/home-ops//.renovate/changelogs.json5",
     "github>judahrand/home-ops//.renovate/customManagers.json5",
     "github>judahrand/home-ops//.renovate/grafanaDashboards.json5",
     "github>judahrand/home-ops//.renovate/groups.json5",
     "github>judahrand/home-ops//.renovate/labels.json5",
+    "github>judahrand/home-ops//.renovate/overrides.json5",
     "github>judahrand/home-ops//.renovate/semanticCommits.json5",
     ":automergeBranch",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
-    ":timezone(Europe/London)",
+    ":timezone(America/New_York)",
   ],
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
   suppressNotifications: [
@@ -22,16 +24,15 @@
     "prIgnoreNotification",
   ],
   ignorePaths: [
-    "**/*.sops.*",
     "**/resources/**",
   ],
   flux: {
-    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
   "helm-values": {
-    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
   kubernetes: {
-    managerFilePatterns: ["/(^|/)kubernetes/.+\\.ya?ml$/"]
+    managerFilePatterns: ["/\\.yaml(?:\\.j2)?$/"],
   },
 }
