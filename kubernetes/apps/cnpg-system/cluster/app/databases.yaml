@@ -13,3 +13,14 @@ spec:
   schemas:
     - name: kyoo
       owner: kyoo
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: home-assistant
+spec:
+  cluster:
+    name: postgres17
+  databaseReclaimPolicy: retain
+  name: homeassistant
+  owner: homeassistant
