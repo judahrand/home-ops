@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kaniop
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kaniop
+  interval: 1h
+  values:
+    image:
+      repository: ghcr.io/pando85/kaniop
+      tag: 0.5.9@sha256:0f743df603160837b2ca40fd9d87f4922a1b9a1e9351d4f0cf4d0f92c758b3b3
+    webhook:
+      enabled: true
+      image:
+        repository: ghcr.io/pando85/kaniop-webhook
+        tag: 0.5.9@sha256:43f7ecc20bff9927966ea76d4643b2047f366c5afb55eaf802f66d6a741193d3
+
