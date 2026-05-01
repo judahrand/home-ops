@@ -20,3 +20,4 @@ patches:
         name: not-used
         labels:
           pod-security.kubernetes.io/enforce: privileged
+          resource.kubernetes.io/admin-access: "true"

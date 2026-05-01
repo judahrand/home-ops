@@ -6,15 +6,15 @@ namespace: kube-system
 components:
   - ../../components/common
 resources:
-  - ./amd-gpu-device-plugin/ks.yaml
   - ./cilium/ks.yaml
   - ./coredns/ks.yaml
   - ./descheduler/ks.yaml
   - ./generic-device-plugin/ks.yaml
+  - ./intel-gpu-resource-driver/ks.yaml
+  - ./k8s-gpu-dra-driver/ks.yaml
   - ./metrics-server/ks.yaml
   - ./reloader/ks.yaml
   - ./kubelet-csr-approver/ks.yaml
   - ./snapshot-controller/ks.yaml
   - ./spegel/ks.yaml
   - ./node-feature-discovery/ks.yaml
-  - ./intel-gpu-resource-driver/ks.yaml

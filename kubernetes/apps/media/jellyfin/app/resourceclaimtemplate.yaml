@@ -10,3 +10,5 @@ spec:
         - name: i915
           exactly:
             deviceClassName: gpu.intel.com
+            allocationMode: All
+            adminAccess: true
