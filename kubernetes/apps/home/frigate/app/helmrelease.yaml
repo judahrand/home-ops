@@ -192,9 +192,6 @@ spec:
 
       record:
         enabled: true
-        retain:
-          days: 0
-          mode: all
         alerts:
           pre_capture: 30
           post_capture: 30
@@ -231,6 +228,15 @@ spec:
             - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
             # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
             # - ffmpeg:doorbell_cam#audio=aac
+          alleyway_cam:
+            # - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
+            # - rtsp://reolink_ip/Preview_01_sub
+            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot:554/Preview_01_main
+            - ffmpeg:alleyway_cam#video=copy#audio=copy#audio=opus
+          alleyway_cam_sub:
+            # - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_sub
+            - ffmpeg:alleyway_cam#audio=aac
           webrtc:
             candidates:
               - homeassistant.local:8555
@@ -280,6 +286,25 @@ spec:
               required_zones:
                 - driveway
                 - driveway_entrance
+        alleyway_cam:
+          webui_url: http://alleyway.iot
+          audio:
+            enabled: true
+          ffmpeg:
+            inputs:
+              - path: rtsp://127.0.0.1:8554/alleyway_cam?video=copy&audio=aac
+                input_args: preset-rtsp-restream
+                roles:
+                  - record
+              - path: rtsp://127.0.0.1:8554/alleyway_cam_sub?video=copy&audio=aac
+                input_args: preset-rtsp-restream
+                roles:
+                  - audio
+                  - detect
+          detect:
+            width: 640
+            height: 480
+            fps: 7
 
       camera_groups:
         Driveway:
