@@ -83,18 +83,3 @@ spec:
         existingClaim: jellyfin
         globalMounts:
           - path: /config
-
-    postRenderers:
-      - kustomize:
-          patches:
-            - patch: |-
-                - op: add
-                  path: /spec/template/spec/resourceClaims
-                  value:
-                    - name: i915
-                      resourceClaimTemplateName: jellyfin
-              target:
-                group: apps
-                version: v1
-                kind: Deployment
-                name: jellyfin
