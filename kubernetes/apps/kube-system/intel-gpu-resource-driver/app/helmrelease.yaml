@@ -11,6 +11,9 @@ spec:
   interval: 1h
   values:
     kubeletPlugin:
+      privileged: true
+      healthMonitoring:
+        enabled: false
       nodeSelector:
         intel.feature.node.kubernetes.io/gpu: "true"
     cdi:
