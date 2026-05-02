@@ -43,7 +43,6 @@ spec:
       TZ: Europe/London
       # Settings for AMD 780M GPU
       LIBVA_DRIVER_NAME: radeonsi
-      HSA_OVERRIDE_GFX_VERSION: 11.0.0
 
     envFromSecrets:
       - frigate-secret
@@ -92,15 +91,15 @@ spec:
         email: judahrand+frigate@gmail.com
 
       model:
-        path: plus://b83061512206a1c411c2f4a88358381b
+        path: plus://c1354d18901d272603262bd2743cc69e
 
       detectors:
         onnx_0:
           type: onnx
+          device: GPU
         onnx_1:
           type: onnx
-        onnx_2:
-          type: onnx
+          device: GPU
 
       logger:
         default: info
