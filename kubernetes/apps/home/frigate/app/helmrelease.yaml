@@ -53,7 +53,7 @@ spec:
         - name: gpu
       requests:
         cpu: 500m
-        memory: 1Gi
+        memory: 6Gi
       limits:
         memory: 8Gi
 
@@ -61,6 +61,8 @@ spec:
       capabilities:
         add:
           - PERFMON
+          - NET_ADMIN
+          - NET_RAW
       runAsUser: 0
       runAsGroup: 0
       runAsNonRoot: false
@@ -91,13 +93,10 @@ spec:
         email: judahrand+frigate@gmail.com
 
       model:
-        path: plus://c1354d18901d272603262bd2743cc69e
+        path: plus://6a7dddafe77cf3df7b3f03b1afe4b219
 
       detectors:
         onnx_0:
-          type: onnx
-          device: GPU
-        onnx_1:
           type: onnx
           device: GPU
 
@@ -108,20 +107,67 @@ spec:
         enabled: true
         model_size: small
 
+      face_recognition:
+        enabled: true
+        model_size: small
+
+      lpr:
+        enabled: true
+
+      classification:
+        bird:
+          enabled: false
+
       review:
         alerts:
+          enabled: true
           labels:
+            - amazon
             - car
-            - person
+            - dhl
+            - dpd
+            - fedex
             - motorcycle
-            - truck
+            - person
+            - royal_mail
+            - ups
+        detections:
+          enabled: true
+
+      motion:
+        enabled: true
+
+      detect:
+        enabled: true
+
+      record:
+        enabled: true
+        sync_recordings: true
+        continuous:
+          days: 0
+        motion:
+          days: 0
+        alerts:
+          pre_capture: 15
+          post_capture: 15
+          retain:
+            days: 30
+        detections:
+          pre_capture: 15
+          post_capture: 15
+          retain:
+            days: 30
+
+      snapshots:
+        enabled: true
+        retain:
+          default: 30
 
       objects:
         track:
           - amazon
           - bicycle
           - bird
-          - bus
           - car
           - cat
           - dog
@@ -134,75 +180,9 @@ spec:
           - motorcycle
           - package
           - person
-          - truck
+          - royal_mail
           - ups
-        filters:
-          amazon:
-            min_score: .75
-          bicycle:
-            min_score: .65
-          bird:
-            min_score: .7
-            threshold: .8
-          bus:
-            min_score: .65
-            threshold: .85
-          car:
-            min_score: .65
-            threshold: .85
-          cat:
-            min_score: .65
-            threshold: .8
-          dog:
-            min_score: .7
-            threshold: .8
-          dhl:
-            min_score: .75
-          dpd:
-            min_score: .75
-          face:
-            min_score: .7
-          fedex:
-            min_score: .75
-          fox:
-            min_score: .65
-            threshold: .8
-          license_plate:
-            min_score: .6
-          motorcycle:
-            min_score: .65
-            threshold: .85
-          package:
-            min_score: .65
-            threshold: .9
-          person:
-            min_score: .65
-            threshold: .85
-          truck:
-            min_score: .65
-            threshold: .85
-          ups:
-            min_score: .75
-
-      snapshots:
-        enabled: true
-        retain:
-          default: 90
-
-      record:
-        enabled: true
-        alerts:
-          pre_capture: 30
-          post_capture: 30
-          retain:
-            days: 30
-            mode: motion
-        detections:
-          pre_capture: 30
-          post_capture: 30
-          retain:
-            days: 30
-            mode: motion
+          - waste_bin
 
       audio:
         enabled: true
@@ -216,30 +196,31 @@ spec:
           - speech
           - yell
 
+      audio_transcription:
+        enabled: true
+
       go2rtc:
         streams:
           doorbell_cam:
             - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
-            - rtsp://reolink_ip/Preview_01_sub
-            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot:554/Preview_01_main
-            # - ffmpeg:doorbell_cam#video=copy#audio=copy#audio=opus
+            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
           doorbell_cam_sub:
             - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-            # - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
-            # - ffmpeg:doorbell_cam#audio=aac
+            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
           alleyway_cam:
-            # - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
-            # - rtsp://reolink_ip/Preview_01_sub
-            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot:554/Preview_01_main
-            - ffmpeg:alleyway_cam#video=copy#audio=copy#audio=opus
+            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_main
           alleyway_cam_sub:
-            # - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+            - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
             - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_sub
-            - ffmpeg:alleyway_cam#audio=aac
           webrtc:
             candidates:
               - homeassistant.local:8555
               - stun:8555
+
+      birdseye:
+        enabled: true
+        mode: continuous
+        restream: true
 
       cameras:
         doorbell_cam:
@@ -248,11 +229,11 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: rtsp://127.0.0.1:8554/doorbell_cam?video=copy&audio=aac
+              - path: rtsp://127.0.0.1:8554/doorbell_cam
                 input_args: preset-rtsp-restream
                 roles:
                   - record
-              - path: rtsp://127.0.0.1:8554/doorbell_cam_sub?video=copy&audio=aac
+              - path: rtsp://127.0.0.1:8554/doorbell_cam_sub
                 input_args: preset-rtsp-restream
                 roles:
                   - audio
@@ -263,53 +244,70 @@ spec:
             fps: 7
           zones:
             driveway:
-              coordinates: 166,303,383,339,373,480,0,480,0,329
-              objects:
-                - person
-                - cat
-                - dog
-            driveway_entrance:
-              coordinates: 213,289,365,309,369,328,198,301
-              objects:
-                - car
-                - truck
+              coordinates:
+                0.271,0.636,0.658,0.68,0.704,0.997,0.006,0.997,0.005,0.879,0.121,0.84,0.087,0.687
+              inertia: 3
+              loitering_time: 0
+              friendly_name: Driveway
           motion:
-            threshold: 25
-            mask: 0.641,0,0.636,0.06,0.345,0.06,0.347,0
+            mask: 0.698,0,0.698,0.06,0.29,0.06,0.287,0
+            contour_area: 30
           review:
             alerts:
-              required_zones:
-                - driveway
-                - driveway_entrance
+              required_zones: driveway
             detections:
-              required_zones:
-                - driveway
-                - driveway_entrance
+              required_zones: driveway
         alleyway_cam:
           webui_url: http://alleyway.iot
           audio:
             enabled: true
           ffmpeg:
             inputs:
-              - path: rtsp://127.0.0.1:8554/alleyway_cam?video=copy&audio=aac
+              - path: rtsp://127.0.0.1:8554/alleyway_cam
                 input_args: preset-rtsp-restream
                 roles:
                   - record
-              - path: rtsp://127.0.0.1:8554/alleyway_cam_sub?video=copy&audio=aac
+              - path: rtsp://127.0.0.1:8554/alleyway_cam_sub
                 input_args: preset-rtsp-restream
                 roles:
                   - audio
                   - detect
           detect:
             width: 640
-            height: 480
+            height: 360
             fps: 7
+          motion:
+            mask: 0.291,0.016,0.293,0.073,0.711,0.078,0.709,0.015
+            contour_area: 30
+          zones:
+            alleyway:
+              coordinates: 0.53,0.216,0.857,0.209,0.797,0.997,0.004,0.995,0.004,0.744
+              loitering_time: 0
+              friendly_name: Alleyway
+              inertia: 3
+          review:
+            alerts:
+              required_zones: alleyway
+            detections:
+              required_zones: alleyway
 
       camera_groups:
         Driveway:
           order: 1
           icon: LuCar
           cameras: doorbell_cam
+        Alleyway:
+          order: 2
+          icon: LuHouse
+          cameras: alleyway_cam
+        Birdseye:
+          order: 3
+          icon: LuBird
+          cameras: birdseye
+
+      telemetry:
+        stats:
+          network_bandwidth: true
 
   postRenderers:
     - kustomize:
