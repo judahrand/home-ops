@@ -36,6 +36,7 @@ spec:
           env:
             RUSTIC_NO_CACHE: "true"
             RUSTIC_REPOSITORY: opendal:s3
+            TIMEZONE: "Europe/London"
           envFrom:
             - secretRef:
                 name: openwrt-backup-secret

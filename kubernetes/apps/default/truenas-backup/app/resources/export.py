@@ -42,7 +42,6 @@ def backup_truenas():
             [{"secretseed": True, "root_authorized_keys": True}],
             "truenas_config.tar"
         )
-        print(f"Download URL received: {download_url}")
 
         # 3. Download the file using urllib
         full_url = f"https://{host}{download_url}"
