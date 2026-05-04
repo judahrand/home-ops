@@ -149,13 +149,13 @@ spec:
         motion:
           days: 0
         alerts:
-          pre_capture: 15
-          post_capture: 15
+          pre_capture: 5
+          post_capture: 5
           retain:
             days: 30
         detections:
-          pre_capture: 15
-          post_capture: 15
+          pre_capture: 5
+          post_capture: 5
           retain:
             days: 30
 
