@@ -34,7 +34,7 @@ spec:
     fullnameOverride: *app
     image:
       repository: quay.io/prometheuscommunity/smartctl-exporter
-      tag: v0.14.0@sha256:a13840e6df4e3c6a3b25c46e15d5156f7c5109acad97f9b92a6955bd658b62c3
+      tag: v0.14.0@sha256:cfe22c36d7d2fac48ebf619707305acb65eb0fb670656eb80f356e606d782bc1
     serviceMonitor:
       enabled: true
     prometheusRules:
