@@ -9,6 +9,7 @@ resources:
   - ./autobrr/ks.yaml
   - ./bazarr/ks.yaml
   - ./cross-seed/ks.yaml
+  - ./dispatcharr/ks.yaml
   - ./fusion/ks.yaml
   - ./nzbget/ks.yaml
   - ./prowlarr/ks.yaml
@@ -27,3 +28,4 @@ patches:
         name: not-used
         labels:
           pod-security.kubernetes.io/enforce: privileged
+          resource.kubernetes.io/admin-access: "true"
