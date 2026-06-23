@@ -34,17 +34,19 @@ spec:
                 "mac": "a0:41:a7:15:c3:00"
               }]
           securityContext:
-            runAsUser: 0  # Must be run as root user
+            runAsNonRoot: false # Must be run as root user
+            runAsUser: 0 # Must be run as root user
             runAsGroup: 100
-            runAsNonRoot: false  # Must be run as root user
             fsGroup: 100
             fsGroupChangePolicy: OnRootMismatch
             supplementalGroups:
               - 34
             sysctls:
               - name: net.ipv6.conf.net1.forwarding
-                value: "0"
+                value: "1"
               - name: net.ipv6.conf.net1.accept_ra
+                value: "2"
+              - name: net.ipv6.conf.net1.accept_ra_defrtr
                 value: "1"
               - name: net.ipv6.conf.net1.accept_ra_rt_info_max_plen
                 value: "64"
@@ -52,8 +54,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-assistant-libs/python-matter-server
-              tag: 8.1.0
+              repository: ghcr.io/matter-js/matterjs-server
+              tag: 1.1.1@sha256:d0549a1f702a70a0fe1677bd2a541ba8180c128a12f45855a7ede24d3c2ad36e
               pullPolicy: IfNotPresent
             args:
               - --storage-path=/data
@@ -65,6 +67,7 @@ spec:
               MATTER_SERVER__PORT: &port 5580
               MATTER_SERVER__APPLICATION_URL: &host matter.judahrand.net
               MATTER_SERVER__LOG_LEVEL: debug
+              PRODUCTION_MODE: true
             probes:
               liveness:
                 enabled: true
