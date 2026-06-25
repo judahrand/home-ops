@@ -59,13 +59,12 @@ spec:
               pullPolicy: IfNotPresent
             args:
               - --storage-path=/data
-              - --paa-root-cert-dir=/data/credentials
               - --primary-interface=net1
             env:
               TZ: Europe/London
               MATTER_SERVER__INSTANCE_NAME: Matter-Server
               MATTER_SERVER__PORT: &port 5580
-              MATTER_SERVER__APPLICATION_URL: &host matter.judahrand.net
+              MATTER_SERVER__APPLICATION_URL: &host matter-server.judahrand.net
               MATTER_SERVER__LOG_LEVEL: debug
               PRODUCTION_MODE: true
             probes:
