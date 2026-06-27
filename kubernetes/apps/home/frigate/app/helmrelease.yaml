@@ -93,7 +93,7 @@ spec:
         email: judahrand+frigate@gmail.com
 
       model:
-        path: plus://6a7dddafe77cf3df7b3f03b1afe4b219
+        path: plus://4061761a02403c121b5200c4d168b568
 
       detectors:
         onnx_0:
