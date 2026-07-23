@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: ghcr.io/matter-js/matterjs-server
-              tag: 1.1.1@sha256:d0549a1f702a70a0fe1677bd2a541ba8180c128a12f45855a7ede24d3c2ad36e
+              tag: 1.3.1@sha256:4933a93ab96f361708af785a2f8c77c6b7e8f890f0464a73c970d782e4528827
               pullPolicy: IfNotPresent
             args:
               - --storage-path=/data
