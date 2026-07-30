@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dawarich-database
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: dawarich-database.judahrand.net
+    gatus.home-operations.com/endpoint: |
+      name: dawarich-database
+      group: infrastructure
+      url: tcp://dawarich-database-rw.media.svc.cluster.local:5432
+      interval: 1m
+      ui:
+        hide-url: true
+        hide-hostname: true
+      conditions:
+        - "[CONNECTED] == true"
+      alerts:
+        - type: pushover
+spec:
+  type: LoadBalancer
+  ports:
+    - name: postgres
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+  selector:
+    cnpg.io/cluster: dawarich-database
+    cnpg.io/instanceRole: primary

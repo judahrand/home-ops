@@ -1,0 +1,86 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: dawarich-database
+spec:
+  instances: 1
+  # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.3-system-bookworm@sha256:9a2cc9f0bf9a67827e214484f83362f1829b3ac839da6d2c2cff902a720d5e5f
+  primaryUpdateStrategy: unsupervised
+  enablePDB: true
+
+  storage:
+    size: 10Gi  # this is not enforced because we're using a hostpath storage class
+    storageClass: openebs-hostpath
+
+  superuserSecret:
+    name: cloudnative-pg-secret
+
+  enableSuperuserAccess: true
+
+  postgresql:
+    extensions:
+      - name: postgis
+        image:
+          reference: ghcr.io/cloudnative-pg/postgis-extension:3.6.4-18-bookworm@sha256:c7fd324c284b67c6c5a473a33cd134e40f3dd7295e9ddc5f1904f897cb69bebe
+        ld_library_path:
+          - system
+    parameters:
+      max_connections: "100"
+      shared_buffers: 256MB
+
+  managed:
+    roles:
+      - name: dawarich
+        ensure: present
+        login: true
+        superuser: false
+        inRoles: []
+        passwordSecret:
+          name: dawarich-database-secret
+
+  resources:
+    requests:
+      cpu: 20m
+      memory: 512Mi
+    limits:
+      memory: 4Gi
+
+  monitoring:
+    enablePodMonitor: true
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: dawarich-database
+        # Note: serverName version needs to be incremented
+        # when recovering from an existing cnpg cluster
+        serverName: &currentCluster dawarich-database-v1
+
+  # bootstrap:
+  #   initdb:
+  #     database: dawarich
+  #     owner: dawarich
+  #     secret:
+  #       name: dawarich-database-secret
+  #     dataChecksums: true
+  #     postInitApplicationSQL:
+  #       - ALTER DATABASE dawarich OWNER TO dawarich;
+  #       - CREATE EXTENSION vchord CASCADE;
+  #       - CREATE EXTENSION earthdistance CASCADE;
+  # # Note: previousCluster needs to be set to the name of the previous
+  # # cluster when recovering from an existing cnpg cluster
+  #   recovery:
+  #     source: &previousCluster dawarich-database-v1
+  #
+  # # Note: externalClusters is needed when recovering from an existing cnpg cluster
+  # externalClusters:
+  #   - name: *previousCluster
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: dawarich-database
+  #         serverName: *previousCluster

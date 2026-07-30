@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: dawarich-database
+spec:
+  cluster:
+    name: dawarich-database
+  databaseReclaimPolicy: retain
+  name: dawarich
+  owner: dawarich
+  extensions:
+    - name: postgis
+      version: '3.6.4'
+    - name: postgis_topology
