@@ -20,8 +20,8 @@ spec:
       usersExistingSecret: dawarich-valkey-secret
       aclUsers:
         default:
-        permissions: "~* &* +@all"
-        passwordKey: "password"
+          permissions: "~* &* +@all"
+          passwordKey: "password"
     resources:
       requests:
         cpu: 50m
