@@ -117,8 +117,7 @@ spec:
         advancedMounts:
           snapshot:
             export:
-            - path: .ssh/id_ed25519
-              subPath: SSH_KEY
-            - path: .ssh/known_hosts
-              subPath: KNOWN_HOSTS
-
+              - path: .ssh/id_ed25519
+                subPath: SSH_KEY
+              - path: .ssh/known_hosts
+                subPath: KNOWN_HOSTS

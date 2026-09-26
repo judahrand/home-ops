@@ -91,7 +91,6 @@ spec:
               - identifier: app
                 port: *port
 
-
     configMaps:
       config:
         data:

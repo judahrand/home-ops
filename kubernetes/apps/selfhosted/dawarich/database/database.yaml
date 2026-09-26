@@ -12,5 +12,5 @@ spec:
   owner: dawarich
   extensions:
     - name: postgis
-      version: '3.6.4'
+      version: "3.6.4"
     - name: postgis_topology

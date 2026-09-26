@@ -106,16 +106,16 @@ While most of my infrastructure and workloads are self-hosted I do rely upon the
 
 Alternative solutions to the first two of these problems would be to host a Kubernetes cluster in the cloud and deploy applications like [HCVault](https://www.vaultproject.io/), [Vaultwarden](https://github.com/dani-garcia/vaultwarden), [ntfy](https://ntfy.sh/), and [Gatus](https://gatus.io/); however, maintaining another cluster and monitoring another group of workloads would be more work and probably be more or equal out to the same costs as described below.
 
-| Service                                         | Use                                                               | Cost           |
-|-------------------------------------------------|-------------------------------------------------------------------|----------------|
-| [1Password](https://1password.com/)             | Secrets with [External Secrets](https://external-secrets.io/)     | ~$36/yr        |
-| [Cloudflare](https://www.cloudflare.com/)         | Domain and S3                                                     | ~$30/yr        |
-| [GCP](https://cloud.google.com/)                | Voice interactions with Home Assistant over Google Assistant      | Free           |
-| [GitHub](https://github.com/)                   | Hosting this repository and continuous integration/deployments    | Free           |
-| [Pushover](https://pushover.net/)               | Kubernetes Alerts and application notifications                    | $5 OTP         |
-| [UptimeRobot](https://uptimerobot.com/)         | Monitoring internet connectivity and external facing applications | Free           |
-| [Healthchecks](https://healthchecks.io/)        | Monitoring internet connectivity and external facing applications | Free           |
-|                                                 |                                                                   | Total: ~$6/mo  |
+| Service                                   | Use                                                               | Cost          |
+| ----------------------------------------- | ----------------------------------------------------------------- | ------------- |
+| [1Password](https://1password.com/)       | Secrets with [External Secrets](https://external-secrets.io/)     | ~$36/yr       |
+| [Cloudflare](https://www.cloudflare.com/) | Domain and S3                                                     | ~$30/yr       |
+| [GCP](https://cloud.google.com/)          | Voice interactions with Home Assistant over Google Assistant      | Free          |
+| [GitHub](https://github.com/)             | Hosting this repository and continuous integration/deployments    | Free          |
+| [Pushover](https://pushover.net/)         | Kubernetes Alerts and application notifications                   | $5 OTP        |
+| [UptimeRobot](https://uptimerobot.com/)   | Monitoring internet connectivity and external facing applications | Free          |
+| [Healthchecks](https://healthchecks.io/)  | Monitoring internet connectivity and external facing applications | Free          |
+|                                           |                                                                   | Total: ~$6/mo |
 
 ---
 
@@ -133,15 +133,15 @@ In my cluster there are two instances of [ExternalDNS](https://github.com/kubern
   <img width="273" alt="Image" src="https://github.com/user-attachments/assets/5bd67299-a809-4e53-ba39-707cac8d3852" />
 </details>
 
-| Device                         | Num | OS Disk Size | Data Disk Size                  | Ram  | OS            | Function                |
-|--------------------------------|-----|--------------|---------------------------------|------|---------------|-------------------------|
-| Minisforum EliteMini UM780 XTX | 1   | 1TB SSD      | 2TB SSD                         | 64GB | Talos         | Kubernetes              |
-| Minisforum UN100P              | 2   | 1TB SSD      | 2TB SSD                         | 32GB | Talos         | Kubernetes              |
-| CWWK N100 NAS Motherboard      | 1   | 1TB SSD      | 2x18TB HDD ZFS (mirrored vdevs) | 64GB | TrueNAS SCALE | NFS + Backup Server     |
-| Banana Pi BPI-R4               | 1   | -            | -                               | -    | -             | Router                  |
-| Hasivo S1100WP-8GT-SE          | 1   | -            | -                               | -    | -             | 2.5Gb Core Switch       |
-| NETGEAR GS724T V3              | 1   | -            | -                               | -    | -             | 1GbGb Core Switch       |
-| APC SMT1500I                   | 1   | -            | -                               | -    | -             | UPS                     |
+| Device                         | Num | OS Disk Size | Data Disk Size                  | Ram  | OS            | Function            |
+| ------------------------------ | --- | ------------ | ------------------------------- | ---- | ------------- | ------------------- |
+| Minisforum EliteMini UM780 XTX | 1   | 1TB SSD      | 2TB SSD                         | 64GB | Talos         | Kubernetes          |
+| Minisforum UN100P              | 2   | 1TB SSD      | 2TB SSD                         | 32GB | Talos         | Kubernetes          |
+| CWWK N100 NAS Motherboard      | 1   | 1TB SSD      | 2x18TB HDD ZFS (mirrored vdevs) | 64GB | TrueNAS SCALE | NFS + Backup Server |
+| Banana Pi BPI-R4               | 1   | -            | -                               | -    | -             | Router              |
+| Hasivo S1100WP-8GT-SE          | 1   | -            | -                               | -    | -             | 2.5Gb Core Switch   |
+| NETGEAR GS724T V3              | 1   | -            | -                               | -    | -             | 1GbGb Core Switch   |
+| APC SMT1500I                   | 1   | -            | -                               | -    | -             | UPS                 |
 
 ---
 

@@ -12,7 +12,7 @@ spec:
   enablePDB: true
 
   storage:
-    size: 10Gi  # this is not enforced because we're using a hostpath storage class
+    size: 10Gi # this is not enforced because we're using a hostpath storage class
     storageClass: openebs-hostpath
 
   superuserSecret:

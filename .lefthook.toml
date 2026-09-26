@@ -11,7 +11,37 @@ glob = ["*.just", ".justfile"]
 stage_fixed = true
 
 [pre-commit.commands.format-yaml]
-run = "yamlfmt {staged_files}"
+run = "oxfmt {staged_files}"
 glob = ["*.yaml"]
 exclude = ["*.sops.yaml"]
 stage_fixed = true
+
+[pre-commit.commands.format-json]
+run = "oxfmt {staged_files}"
+glob = ["*.json", "*.json5", "*.jsonc"]
+stage_fixed = true
+
+[pre-commit.commands.format-markdown]
+run = "oxfmt {staged_files}"
+glob = ["*.md", "*.markdown", "*.mdx"]
+stage_fixed = true
+
+[pre-commit.commands.actionlint]
+glob = [".github/workflows/*.yaml"]
+run = '''
+actionlint -config-file actionlint.yaml -shellcheck= \
+  -ignore 'unexpected key "(background|cancel|parallel|wait|wait-all)" for step' \
+  -ignore 'step must run script with "run" section or run action with "uses" section' \
+  -ignore 'specifying action "\$/.*" in invalid format because ref is missing' \
+  -ignore 'reusable workflow call "\$/.*" at "uses" is not following the format' \
+  -ignore 'label "ubuntu-26\.04(-arm)?" is unknown' \
+  {staged_files}
+'''
+
+[pre-commit.commands.shellcheck]
+glob = ["*.sh"]
+run = "shellcheck {staged_files}"
+
+[pre-commit.commands.zizmor]
+glob = [".github/workflows/*.yaml", ".github/actions/**/action.yaml"]
+run = "zizmor --offline {staged_files}"

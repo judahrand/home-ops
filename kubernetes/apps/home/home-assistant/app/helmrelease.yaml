@@ -17,13 +17,13 @@ spec:
 
         pod:
           annotations:
-              k8s.v1.cni.cncf.io/networks: |
-                [{
-                  "name":"iot",
-                  "namespace": "network",
-                  "ips": ["10.0.60.87/24"],
-                  "mac": "a0:41:a7:f2:2e:fe"
-                }]
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name":"iot",
+                "namespace": "network",
+                "ips": ["10.0.60.87/24"],
+                "mac": "a0:41:a7:f2:2e:fe"
+              }]
 
         containers:
           app:
@@ -61,13 +61,16 @@ spec:
               tag: 4.122.0@sha256:dbe5b1cf5c1f0edf47da6363fdadb89c456fb14b3d7e2a1545cabe20f5d7402a
             env:
               TIMEZONE: Europe/London
-            args: [
-              "--auth", "none",
-              "--user-data-dir", "/config/.vscode",
-              "--extensions-dir", "/config/.vscode",
-              "--port", "12321",
-              "/config"
-            ]
+            args:
+              - --auth
+              - none
+              - --user-data-dir
+              - /config/.vscode
+              - --extensions-dir
+              - /config/.vscode
+              - --port
+              - "12321"
+              - /config
             resources:
               requests:
                 cpu: 10m

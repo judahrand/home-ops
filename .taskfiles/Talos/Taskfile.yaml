@@ -1,9 +1,8 @@
 ---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
-version: '3'
+version: "3"
 
 tasks:
-
   apply-node:
     desc: Apply Talos config to a node [IP=required] [MODE=auto]
     cmd: |

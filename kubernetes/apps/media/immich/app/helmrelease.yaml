@@ -17,7 +17,6 @@ spec:
     remediation:
       retries: 3
   values:
-
     controllers:
       main:
         containers:
@@ -101,8 +100,8 @@ spec:
               namespace: network
           rules:
             - backendRefs:
-              - name: immich-server
-                port: 2283
+                - name: immich-server
+                  port: 2283
 
     machine-learning:
       controllers:
