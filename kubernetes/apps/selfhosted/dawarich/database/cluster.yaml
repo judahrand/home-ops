@@ -58,7 +58,7 @@ spec:
         barmanObjectName: dawarich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster dawarich-database-v1
+        serverName: &currentCluster dawarich-database-v2
 
   # bootstrap:
   #   initdb:

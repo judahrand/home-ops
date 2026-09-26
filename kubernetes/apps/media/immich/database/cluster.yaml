@@ -63,7 +63,7 @@ spec:
         barmanObjectName: immich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster immich-database-v4
+        serverName: &currentCluster immich-database-v5
 
   # bootstrap:
   #   initdb:
