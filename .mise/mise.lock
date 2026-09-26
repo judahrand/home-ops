@@ -47,75 +47,75 @@ url_api = "https://api.github.com/repos/rhysd/actionlint/releases/assets/3849249
 provenance = "github-attestations"
 
 [[tools."aqua:helm/helm"]]
-version = "4.2.0"
+version = "4.3.0"
 backend = "aqua:helm/helm"
 
 [tools."aqua:helm/helm"."platforms.linux-arm64"]
-checksum = "sha256:1f8de130dfbd04de64978e7b852a7a547be1404956a366608276d2520b678670"
-url = "https://get.helm.sh/helm-v4.2.0-linux-arm64.tar.gz"
+checksum = "sha256:31c5794dd55c66a51e6b7d2e2ac7a114ae8b1de41ff1d9ba51748ac973b06a08"
+url = "https://get.helm.sh/helm-v4.3.0-linux-arm64.tar.gz"
 
 [tools."aqua:helm/helm"."platforms.linux-arm64-musl"]
-checksum = "sha256:1f8de130dfbd04de64978e7b852a7a547be1404956a366608276d2520b678670"
-url = "https://get.helm.sh/helm-v4.2.0-linux-arm64.tar.gz"
+checksum = "sha256:31c5794dd55c66a51e6b7d2e2ac7a114ae8b1de41ff1d9ba51748ac973b06a08"
+url = "https://get.helm.sh/helm-v4.3.0-linux-arm64.tar.gz"
 
 [tools."aqua:helm/helm"."platforms.linux-x64"]
-checksum = "sha256:97dbeb971be4ac4b27e3839976d9564c0fb35c6f3b1da89dd1e292d236af4096"
-url = "https://get.helm.sh/helm-v4.2.0-linux-amd64.tar.gz"
+checksum = "sha256:86584a54def73570558f66f5111cc53dfed56689637ae32c1201205d494f54fb"
+url = "https://get.helm.sh/helm-v4.3.0-linux-amd64.tar.gz"
 
 [tools."aqua:helm/helm"."platforms.linux-x64-musl"]
-checksum = "sha256:97dbeb971be4ac4b27e3839976d9564c0fb35c6f3b1da89dd1e292d236af4096"
-url = "https://get.helm.sh/helm-v4.2.0-linux-amd64.tar.gz"
+checksum = "sha256:86584a54def73570558f66f5111cc53dfed56689637ae32c1201205d494f54fb"
+url = "https://get.helm.sh/helm-v4.3.0-linux-amd64.tar.gz"
 
 [tools."aqua:helm/helm"."platforms.macos-arm64"]
-checksum = "sha256:f13f959015447b6bc309f9fd506509926543988a39035c088b52522ec95e2acb"
-url = "https://get.helm.sh/helm-v4.2.0-darwin-arm64.tar.gz"
+checksum = "sha256:d3870437e1e95b67f8edbde964156c84a26503f560821d40c542441658934fba"
+url = "https://get.helm.sh/helm-v4.3.0-darwin-arm64.tar.gz"
 
 [tools."aqua:helm/helm"."platforms.macos-x64"]
-checksum = "sha256:1376ea697140e4db316736e760d5a47d12afc1524dce704476ef06fd7fdeddc6"
-url = "https://get.helm.sh/helm-v4.2.0-darwin-amd64.tar.gz"
+checksum = "sha256:347a784877e0e20eac865e8d1c36a80f6bb0861d6f29abd34defb6570ef95d92"
+url = "https://get.helm.sh/helm-v4.3.0-darwin-amd64.tar.gz"
 
 [tools."aqua:helm/helm"."platforms.windows-x64"]
-checksum = "sha256:34bf9659f8f04f3841a60131183b8e2acc44e260db4c93b889ff09718cacca6f"
-url = "https://get.helm.sh/helm-v4.2.0-windows-amd64.tar.gz"
+checksum = "sha256:551b0065fdfae8ba74ddac3a213e46e0144188cacf997ae1002f508af169728e"
+url = "https://get.helm.sh/helm-v4.3.0-windows-amd64.tar.gz"
 
 [[tools."aqua:helmfile/helmfile"]]
-version = "1.5.2"
+version = "1.8.0"
 backend = "aqua:helmfile/helmfile"
 
 [tools."aqua:helmfile/helmfile"."platforms.linux-arm64"]
-checksum = "sha256:4488ca172141a2ad563ac99fffdd8f4761620b40e8e7878ab3fd0e436d4ec057"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654365"
+checksum = "sha256:01037dc187840a778ec65eae66b549b63d619a853540c8983f90d73ccbce5033"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342817"
 
 [tools."aqua:helmfile/helmfile"."platforms.linux-arm64-musl"]
-checksum = "sha256:4488ca172141a2ad563ac99fffdd8f4761620b40e8e7878ab3fd0e436d4ec057"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_linux_arm64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654365"
+checksum = "sha256:01037dc187840a778ec65eae66b549b63d619a853540c8983f90d73ccbce5033"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_linux_arm64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342817"
 
 [tools."aqua:helmfile/helmfile"."platforms.linux-x64"]
-checksum = "sha256:96e342ff19a45c2e36371f93cf6264f3ef285bbde0fc363e56cb53bdef3df1ff"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654336"
+checksum = "sha256:35d5d39fc608342b23fc7ce1dd0c3bf0c96cc07ec3796507ab6894a5d172bf20"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342815"
 
 [tools."aqua:helmfile/helmfile"."platforms.linux-x64-musl"]
-checksum = "sha256:96e342ff19a45c2e36371f93cf6264f3ef285bbde0fc363e56cb53bdef3df1ff"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_linux_amd64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654336"
+checksum = "sha256:35d5d39fc608342b23fc7ce1dd0c3bf0c96cc07ec3796507ab6894a5d172bf20"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_linux_amd64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342815"
 
 [tools."aqua:helmfile/helmfile"."platforms.macos-arm64"]
-checksum = "sha256:55e22265177e3d21fcf5a5dfed51f7deaf9c4f6bd460f3961263ebefd428579f"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_darwin_arm64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654369"
+checksum = "sha256:b377e295940018fb0e49ca9e0aabdabb00fc612af3d9e12003f01635dc87e1ef"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_darwin_arm64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342814"
 
 [tools."aqua:helmfile/helmfile"."platforms.macos-x64"]
-checksum = "sha256:1f3a84c4772ca475165b93b7da0b507808df809f41d08033627184b9e6dc75c4"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_darwin_amd64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654367"
+checksum = "sha256:d367d72d035985b69863f0e0a6e1815c23a546a1bcdae3cdbb9c17893303e6f3"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_darwin_amd64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342816"
 
 [tools."aqua:helmfile/helmfile"."platforms.windows-x64"]
-checksum = "sha256:e2d6e467bb9e1d993b3056678ec8a5ab5b9aa5d1b13855eda37959a13c176830"
-url = "https://github.com/helmfile/helmfile/releases/download/v1.5.2/helmfile_1.5.2_windows_amd64.tar.gz"
-url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/426654337"
+checksum = "sha256:cc3f1615e0f5cbd89fa4f7f5b0b70d18e211695308514d0e94997f5acaf59b36"
+url = "https://github.com/helmfile/helmfile/releases/download/v1.8.0/helmfile_1.8.0_windows_amd64.tar.gz"
+url_api = "https://api.github.com/repos/helmfile/helmfile/releases/assets/560342877"
 
 [[tools."github:home-operations/flate"]]
 version = "0.6.5"
@@ -336,42 +336,42 @@ aube = { path = "locks/oxfmt/0.70.0", digest = "sha256:6f43444e29a288a4c8eaae0fd
 backend = "npm:oxfmt"
 
 [[tools.python]]
-version = "3.14.5"
+version = "3.14.7"
 backend = "core:python"
 
 [tools.python."platforms.linux-arm64"]
-checksum = "sha256:1d3ea1b3cd9b8f3d53afb629e82e9bc8f6dab6cbb1a7d23524bd86ba5bc22570"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:d922413468a276e69a132b79fb7493faa46ef2e85b1a29844d3af1f7710ab5bd"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-aarch64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-arm64-musl"]
-checksum = "sha256:23dfd69917f1c693b7ce857f014a72da546c8132c277bb6ac98fdbe12334e221"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-aarch64-unknown-linux-musl-install_only_stripped.tar.gz"
+checksum = "sha256:db650a9719bacd8a7c43c7c0f3024eda6feb2042f596f0b3143c4d23b90df9e4"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-aarch64-unknown-linux-musl-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64"]
-checksum = "sha256:982a60fc7f11bbe405ab54afcd4eb145f1134797bbbffac9f5c49df4ec98b13e"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
+checksum = "sha256:bd0d0568ccded07bbf1c87727230dc5dd0187e706a87da23c4de78388a229b78"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-x86_64-unknown-linux-gnu-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.linux-x64-musl"]
-checksum = "sha256:09fb97b20df0ed9336d39468007619b3458489c33fa4166b43155587b382f84a"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-x86_64-unknown-linux-musl-install_only_stripped.tar.gz"
+checksum = "sha256:8ea6ca8a46e2e0b824a29ddaf208388dea7ede6808d8ceccd02b547882c92b3a"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-x86_64-unknown-linux-musl-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-arm64"]
-checksum = "sha256:3a0373cc39fefd494754ef555267f245c720cddbaaabf63a7c9a4269f1e56532"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-aarch64-apple-darwin-install_only_stripped.tar.gz"
+checksum = "sha256:f0fb6b233971672dd7add4efa90f8c209a63253e457ffabd0148b9f734638319"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-aarch64-apple-darwin-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.macos-x64"]
-checksum = "sha256:d44ff6ec301cabc91eb0c756b1948b28579fb07feba36aaf1990e535649d5ea6"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-x86_64-apple-darwin-install_only_stripped.tar.gz"
+checksum = "sha256:82745f483d2bcf39ade058ec0dbd44659d583454ea9c4562b66dae7d718ae100"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-x86_64-apple-darwin-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [tools.python."platforms.windows-x64"]
-checksum = "sha256:66b065143e538c07f069f764d831d8ffae95507907d4ca211304e6f3a056435c"
-url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260602/cpython-3.14.5+20260602-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"
+checksum = "sha256:1493fc4185edf84bbd4305c15c5fbac2d4fcd4ddd7eb6273903669a5d3106178"
+url = "https://github.com/astral-sh/python-build-standalone/releases/download/20260924/cpython-3.14.7+20260924-x86_64-pc-windows-msvc-install_only_stripped.tar.gz"
 provenance = "github-attestations"
 
 [[tools.shellcheck]]
