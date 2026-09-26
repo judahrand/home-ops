@@ -8,13 +8,22 @@ controller := `talosctl config info -o yaml | yq -e '.endpoints[0]'`
 nodes := `talosctl config info -o yaml | yq -e '.nodes | join (" ")'`
 
 [private]
-default: talos k8s (kubeconfig "node") wait namespaces resources crds apps kubeconfig
+[confirm('Bootstrap cluster? [y|N]')]
+default: talos k8s (kubeconfig "node") api-ready nodes-ready namespaces resources crds apps verify kubeconfig
 
+# Supports per-node address overrides when a freshly reset node is not reachable
+# at its DNS-resolved address, e.g. `just bootstrap talos k8s-2=10.0.42.214`.
 [doc('Install Talos')]
-talos:
+talos *overrides:
     just log info "Running stage..." "stage" "$0"
     for n in {{ nodes }}; do \
-        if ! op=$(just talos apply-node "$n" --insecure 2>&1); then \
+        addr=""; \
+        if [[ -n "{{ overrides }}" ]]; then \
+            for e in {{ overrides }}; do \
+                if [[ "$e" == "$n="* ]]; then addr="${e#$n=}"; fi; \
+            done; \
+        fi; \
+        if ! op=$(TALOS_APPLY_ADDR="$addr" just --yes talos apply-node "$n" --insecure 2>&1); then \
             if [[ "$op" == *"certificate required"* ]]; then \
                 just log info "Talos already configured, skipping apply of config" "stage" "$0" "node" "$n"; \
                 continue; \
@@ -43,8 +52,24 @@ kubeconfig lb="cilium":
         fi; \
     fi
 
-[doc('Wait for nodes to be not-ready')]
-wait:
+# Wait until the Kubernetes API server is ready. The `kubeconfig` stage points
+# kubectl at the control plane node directly (bypassing the load-balancer, which
+# is not up until bootstrap completes) and provides valid credentials, which the
+# apiserver requires even for the readiness endpoint.
+[private]
+[doc('Wait for the Kubernetes API to be ready')]
+api-ready:
+    just log info "Running stage..." "stage" "$0"
+    until [[ "$(kubectl get --raw '/readyz' 2>/dev/null)" == "ok" ]]; do \
+        just log info "Waiting for kube-apiserver. Retrying in 5 seconds..." "stage" "$0"; \
+        sleep 5; \
+    done
+
+# Nodes register as Ready=False until the CNI is deployed, so wait until every node
+# is visible to the API server before applying namespaces and CRDs.
+[private]
+[doc('Wait for every node to register with the Kubernetes API')]
+nodes-ready:
     just log info "Running stage..." "stage" "$0"
     if ! kubectl wait nodes --for=condition=Ready=True --all --timeout=10s &>/dev/null; then \
         until kubectl wait nodes --for=condition=Ready=False --all --timeout=10s &>/dev/null; do \
@@ -72,7 +97,7 @@ resources:
 [doc('Apply Helmfile CRDs')]
 crds:
     just log info "Running stage..." "stage" "$0"
-    if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/00-crds.yaml" template -q | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then \
+    if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/00-crds.yaml" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then \
         just log fatal "Failed to apply crds" "stage" "$0"; \
     fi;
 
@@ -82,3 +107,11 @@ apps:
     if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/01-apps.yaml" sync --hide-notes; then \
         just log fatal "Failed to sync helmfile" "stage" "$0"; \
     fi
+
+[doc('Verify the cluster is healthy')]
+verify:
+    just log info "Running stage..." "stage" "$0"
+    if ! kubectl wait nodes --for=condition=Ready=True --all --timeout=15m; then \
+        just log fatal "Nodes did not become Ready within 15 minutes" "stage" "$0"; \
+    fi
+    kubectl get nodes -o wide

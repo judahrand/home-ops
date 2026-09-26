@@ -9,9 +9,12 @@ controller := `talosctl config info -o yaml | yq -e '.endpoints[0]'`
 default:
     just -l talos
 
+# TALOS_APPLY_ADDR overrides the address talosctl dials (useful when a reset node
+# is not reachable at its DNS-resolved address), while the config is still
+# rendered for the named node.
 [doc('Apply Talos config to a node')]
 apply-node node *args:
-    just talos render-config "{{ node }}" | talosctl -n "{{ node }}" apply-config -f /dev/stdin {{ args }}
+    just talos render-config "{{ node }}" | talosctl -n "${TALOS_APPLY_ADDR:-{{ node }}}" apply-config -f /dev/stdin {{ args }}
 
 [doc('Download Talos machine image')]
 download-image version schematic:

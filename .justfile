@@ -3,8 +3,13 @@
 set quiet := true
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
+[group('Bootstrap')]
 mod bootstrap "bootstrap"
+
+[group('Kube')]
 mod kube "kubernetes"
+
+[group('Talos')]
 mod talos "talos"
 
 [private]
