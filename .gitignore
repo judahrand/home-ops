@@ -13,3 +13,4 @@ Thumbs.db
 kubeconfig
 talosconfig
 .mise/locks/
+age.key
