@@ -76,15 +76,15 @@ spec:
         useAllNodes: false
         useAllDevices: false
         nodes:
+          # Rook's devices[].name only matches kernel device names, so pin each
+          # node's OSD disk by its /dev/disk/by-id path instead. The nodes have
+          # different disks, hence one filter per node.
           - name: k8s-0
-            devices:
-              - name: nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NX1W503160N_1
+            devicePathFilter: /dev/disk/by-id/nvme-Samsung_SSD_970_EVO_Plus_2TB_S4J4NX1W503160N
           - name: k8s-1
-            devices:
-              - name: sda
+            devicePathFilter: /dev/disk/by-id/ata-SAMSUNG_MZ7KM1T9HAJM-0E005_S2NKNCAGB00115Z
           - name: k8s-2
-            devices:
-              - name: sda
+            devicePathFilter: /dev/disk/by-id/ata-MK001920GWCFB_S3BPNX0J501671
         config:
           osdsPerDevice: "1"
       resources:
