@@ -291,6 +291,45 @@ url = "https://github.com/evilmartians/lefthook/releases/download/v2.1.14/leftho
 url_api = "https://api.github.com/repos/evilmartians/lefthook/releases/assets/563149872"
 provenance = "github-attestations"
 
+[[tools.opencode]]
+version = "1.18.32"
+backend = "aqua:anomalyco/opencode"
+
+[tools.opencode."platforms.linux-arm64"]
+checksum = "sha256:568461b7d4d8c19865c97e9a1102e613049c6039d01fe772154de873c1865840"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-linux-arm64.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/580000055"
+
+[tools.opencode."platforms.linux-arm64-musl"]
+checksum = "sha256:abf302edbc996548e28417dcdf7f67109fd95c7344f813a312633a818986204d"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-linux-arm64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/580000150"
+
+[tools.opencode."platforms.linux-x64"]
+checksum = "sha256:3046e0404fdc60fb80307e7a47824ba07477364178a4d09baa8548496dd6d43b"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-linux-x64.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/580000044"
+
+[tools.opencode."platforms.linux-x64-musl"]
+checksum = "sha256:1ce4699c8a9470ad806fa824112cd30b5d51b4038c29231189486302ef394d94"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-linux-x64-musl.tar.gz"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/580000043"
+
+[tools.opencode."platforms.macos-arm64"]
+checksum = "sha256:fa643f93401c13508d8d513780e54ce9cc01203d501114be9b88d62408b8101f"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-darwin-arm64.zip"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/579999982"
+
+[tools.opencode."platforms.macos-x64"]
+checksum = "sha256:a24bf10499382f8855e19d2a081b8683e4ab99c7c2affb32dc89b17c8a00ccd6"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-darwin-x64.zip"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/579999983"
+
+[tools.opencode."platforms.windows-x64"]
+checksum = "sha256:1483c72d5adced825590a0ecf8cc18b3e87e535960a125dbf539d33bce135d0f"
+url = "https://github.com/anomalyco/opencode/releases/download/v1.18.32/opencode-windows-x64.zip"
+url_api = "https://api.github.com/repos/anomalyco/opencode/releases/assets/580003748"
+
 [[tools.oxfmt]]
 version = "0.70.0"
 aube = { path = "locks/oxfmt/0.70.0", digest = "sha256:6f43444e29a288a4c8eaae0fd4842397419f6bde12beb04d2be2216a275f96e2" }
