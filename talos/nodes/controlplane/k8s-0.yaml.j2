@@ -1,0 +1,46 @@
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: k8s-0
+---
+# Replaces machine.install. The install disk differs per node, so this document
+# lives with the node instead of in cluster.yaml.j2.
+apiVersion: v1alpha1
+kind: UnattendedInstallConfig
+installer:
+  image: factory.talos.dev/metal-installer/{{ schematic }}:v1.14.1
+provisioning:
+  diskSelector:
+    match: disk.model == "WD_BLACK SN770 1TB"
+  wipe: false
+---
+apiVersion: v1alpha1
+kind: BondConfig
+name: bond0
+links:
+  - enp2s0
+  - enp3s0
+bondMode: active-backup
+mtu: 1500
+---
+# Deep-merges with the KubeNodeConfig documents in cluster.yaml.j2 and
+# controlplane.yaml.j2.
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  topology.kubernetes.io/zone: m
+  amd.feature.node.kubernetes.io/gpu: "true"
+# ---
+# apiVersion: v1alpha1
+# kind: LinkAliasConfig
+# name: net%d
+# selector:
+#   match: link.driver == "r8169" && mac(link.permanent_addr).startsWith("58:47:ca:75:")
+# ---
+# apiVersion: v1alpha1
+# kind: UserVolumeConfig
+# name: local-hostpath
+# provisioning:
+#   diskSelector:
+#     match: disk.model == "WD_BLACK SN770 1TB"
+#   minSize: 750GB

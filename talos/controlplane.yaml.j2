@@ -1,0 +1,149 @@
+---
+machine:
+  type: controlplane
+  # machine.ca merges as a cert+key unit, so crt must be repeated alongside key.
+  ca:
+    crt: op://kubernetes/talos/MACHINE_CA_CRT
+    key: op://kubernetes/talos/MACHINE_CA_KEY
+cluster:
+  # cluster.ca merges as a cert+key unit, so crt must be repeated alongside key.
+  ca:
+    crt: op://kubernetes/talos/CLUSTER_CA_CRT
+    key: op://kubernetes/talos/CLUSTER_CA_KEY
+  aggregatorCA:
+    crt: op://kubernetes/talos/CLUSTER_AGGREGATORCA_CRT
+    key: op://kubernetes/talos/CLUSTER_AGGREGATORCA_KEY
+  etcd:
+    advertisedSubnets:
+      - 10.0.42.0/24
+    ca:
+      crt: op://kubernetes/talos/CLUSTER_ETCD_CA_CRT
+      key: op://kubernetes/talos/CLUSTER_ETCD_CA_KEY
+    extraArgs:
+      # Customised, so etcd's HTTP endpoints stay here rather than moving to
+      # 2383 in Talos 1.14.
+      listen-metrics-urls: http://0.0.0.0:2381
+  serviceAccount:
+    key: op://kubernetes/talos/CLUSTER_SERVICEACCOUNT_KEY
+---
+# Replaces cluster.allowSchedulingOnControlPlanes: the control-plane NoSchedule
+# taint is no longer implicit, so simply not listing it makes control planes
+# schedulable.
+apiVersion: v1alpha1
+kind: KubeNodeConfig
+labels:
+  node-role.kubernetes.io/control-plane: ""
+---
+# Replaces machine.features.kubernetesTalosAPIAccess.
+apiVersion: v1alpha1
+kind: KubeTalosAPIAccessConfig
+allowedRoles:
+  - os:admin
+allowedKubernetesNamespaces:
+  - actions-runner-system
+  - system-upgrade
+---
+# Replaces cluster.apiServer (certSANs became certExtraSANs).
+apiVersion: v1alpha1
+kind: KubeAPIServerConfig
+certExtraSANs:
+  - k8s.judahrand.net
+extraArgs:
+  enable-aggregator-routing: "true"
+  feature-gates: HPAScaleToZero=true
+image: registry.k8s.io/kube-apiserver:v1.37.1
+---
+# Replaces cluster.apiServer.auditPolicy.
+apiVersion: v1alpha1
+kind: KubeAuditPolicyConfig
+configuration:
+  apiVersion: audit.k8s.io/v1
+  kind: Policy
+  rules:
+    - level: Metadata
+---
+# Replaces cluster.apiServer's authorization mode. The v1alpha1 field defaulted
+# to Node,RBAC, but multi-document configuration requires the authorizers to be
+# declared: without them the apiserver refuses to start with
+# "authorizers: Required value: at least one authorization mode must be defined".
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: node
+type: Node
+---
+apiVersion: v1alpha1
+kind: KubeAuthorizerConfig
+name: rbac
+type: RBAC
+---
+# Replaces cluster.apiServer's authentication. Also required: without it Talos
+# writes an empty authentication-config.yaml and the apiserver exits with
+# "Object 'Kind' is missing in '{}'". This mirrors the previous default of
+# anonymous access to the health endpoints only.
+apiVersion: v1alpha1
+kind: KubeAuthenticationConfig
+configuration:
+  anonymous:
+    conditions:
+      - path: /livez
+      - path: /readyz
+      - path: /healthz
+    enabled: true
+  jwt: []
+---
+# Replaces cluster.controllerManager.
+apiVersion: v1alpha1
+kind: KubeControllerManagerConfig
+extraArgs:
+  bind-address: 0.0.0.0
+image: registry.k8s.io/kube-controller-manager:v1.37.1
+---
+# Replaces cluster.scheduler.
+apiVersion: v1alpha1
+kind: KubeSchedulerConfig
+config:
+  apiVersion: kubescheduler.config.k8s.io/v1
+  kind: KubeSchedulerConfiguration
+  profiles:
+    - schedulerName: default-scheduler
+      plugins:
+        score:
+          disabled:
+            - name: ImageLocality
+      pluginConfig:
+        - name: PodTopologySpread
+          args:
+            defaultingType: List
+            defaultConstraints:
+              - maxSkew: 1
+                topologyKey: kubernetes.io/hostname
+                whenUnsatisfiable: ScheduleAnyway
+extraArgs:
+  bind-address: 0.0.0.0
+image: registry.k8s.io/kube-scheduler:v1.37.1
+---
+# Replaces cluster.coreDNS.
+apiVersion: v1alpha1
+kind: KubeCoreDNSConfig
+enabled: false
+---
+# Replaces cluster.proxy.
+apiVersion: v1alpha1
+kind: KubeProxyConfig
+enabled: false
+image: registry.k8s.io/kube-proxy:v1.37.1
+---
+# Replaces cluster.secretboxEncryptionSecret. Note the secret value is stored
+# under an explicit key name so the provider list can grow later.
+apiVersion: v1alpha1
+kind: KubeEtcdEncryptionConfig
+config:
+  resources:
+    - providers:
+        - secretbox:
+            keys:
+              - name: key2
+                secret: op://kubernetes/talos/CLUSTER_SECRETBOXENCRYPTIONSECRET
+        - identity: {}
+      resources:
+        - secrets
