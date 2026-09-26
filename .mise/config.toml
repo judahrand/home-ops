@@ -19,7 +19,7 @@ postinstall = "lefthook install"
 [tools]
 "python" = "3.14.5"
 "aqua:helm/helm" = "4.2.0"
-"aqua:helmfile/helmfile" = "1.5.2"
+"aqua:helmfile/helmfile" = "1.8.0"
 "github:home-operations/flate" = "v0.6.5"
 "github:mitsuhiko/minijinja" = "2.24.0"
 actionlint = "1.7.12"
