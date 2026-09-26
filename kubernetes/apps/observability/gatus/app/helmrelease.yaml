@@ -69,6 +69,9 @@ spec:
               accessMode: ReadWriteOnce
               size: 5Gi
     defaultPodOptions:
+      # gatus-sidecar talks to the Kubernetes API (it creates HTTPRoutes and
+      # Services), and the app-template mounts no service account token by default.
+      automountServiceAccountToken: true
       securityContext:
         runAsNonRoot: true
         runAsUser: 1000
