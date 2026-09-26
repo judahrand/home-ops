@@ -1,4 +1,6 @@
+set default-script
 set quiet
+set script-interpreter := ['bash', '-euo', 'pipefail']
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
 [private]
@@ -24,20 +26,20 @@ node-shell node:
 
 [doc('Prune pods in Failed, Pending, or Succeeded state')]
 prune-pods:
-    for phase in Failed Pending Succeeded; do \
-        kubectl delete pods -A --field-selector status.phase="$phase" --ignore-not-found=true; \
+    for phase in Failed Pending Succeeded; do
+        kubectl delete pods -A --field-selector status.phase="$phase" --ignore-not-found=true
     done
 
 [doc('Snapshot VolSync PVCs')]
 snapshot:
-    kubectl get replicationsources --no-headers -A | while read -r ns name _; do \
-        kubectl -n "$ns" patch replicationsources "$name" --type merge -p '{"spec":{"trigger":{"manual":"$(date +%s)"}}}'; \
+    kubectl get replicationsources --no-headers -A | while read -r ns name _; do
+        kubectl -n "$ns" patch replicationsources "$name" --type merge -p '{"spec":{"trigger":{"manual":"$(date +%s)"}}}'
     done
 
 [doc('Suspend or resume Keda ScaledObjects')]
 keda state:
-    kubectl get scaledobjects --no-headers -A | while read -r ns name _; do \
-        kubectl -n "$ns" annotate --field-manager flux-client-side-apply --overwrite so "$name" autoscaling.keda.sh/paused{{ if state != "suspend" { "-" } else { "=true" } }}; \
+    kubectl get scaledobjects --no-headers -A | while read -r ns name _; do
+        kubectl -n "$ns" annotate --field-manager flux-client-side-apply --overwrite so "$name" autoscaling.keda.sh/paused{{ if state != "suspend" { "-" } else { "=true" } }}
     done
 
 [doc('Suspend or resume VolSync')]
@@ -49,11 +51,11 @@ volsync state:
 [arg('resource', pattern='hr|ks|gitrepo|ocirepo|es')]
 [doc('Sync a resource')]
 sync resource:
-    kubectl get {{ resource }} --no-headers -A | while read -r ns name _; do \
+    kubectl get {{ resource }} --no-headers -A | while read -r ns name _; do
         kubectl -n "$ns" annotate --field-manager flux-client-side-apply --overwrite {{ resource }} "$name" \
             "force-sync=$(date +%s)" \
             "reconcile.fluxcd.io/requestedAt=$(date +%s)" \
-            "reconcile.fluxcd.io/forceAt=$(date +%s)"; \
+            "reconcile.fluxcd.io/forceAt=$(date +%s)"
     done
 
 [doc('View a secret')]
