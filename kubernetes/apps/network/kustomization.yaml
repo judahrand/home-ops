@@ -4,8 +4,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: network
 components:
-  - ../../components/common
+  - ../../components/alerts
+  - ../../components/repos
 resources:
+  - ./namespace.yaml
   - ./certificates/ks.yaml
   - ./cloudflared/ks.yaml
   - ./envoy-gateway/ks.yaml
@@ -16,6 +18,6 @@ patches:
       apiVersion: v1
       kind: Namespace
       metadata:
-        name: not-used
+        name: _
         labels:
           pod-security.kubernetes.io/enforce: privileged
