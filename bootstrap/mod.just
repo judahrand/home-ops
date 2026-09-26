@@ -47,7 +47,15 @@ kubeconfig lb="cilium":
     if ! talosctl kubeconfig -n "{{ controller }}" -f --force-context-name main {{ justfile_dir() }}; then
         just log fatal "Failed to fetch kubeconfig" "stage" "{{ recipe_name() }}"
     fi
-    if [[ "{{ lb }}" != "cilium" ]]; then
+    if [[ "{{ lb }}" == "cilium" ]]; then
+        # Credentials come from {{ controller }}, but the server address is the
+        # cluster's control plane endpoint so kubectl does not depend on any one
+        # node being up. (Read from the Talos config, not duplicated here.)
+        endpoint="$(just template "{{ justfile_dir() }}/talos/cluster.yaml.j2" | yq -e 'select(.cluster) | .cluster.controlPlane.endpoint')"
+        if ! kubectl config set-cluster main --server "${endpoint}"; then
+            just log fatal "Failed to set kubectl cluster server address" "stage" "{{ recipe_name() }}"
+        fi
+    else
         if ! kubectl config set-cluster main --server "https://{{ controller }}:6443"; then
             just log fatal "Failed to set kubectl cluster server address" "stage" "{{ recipe_name() }}"
         fi
