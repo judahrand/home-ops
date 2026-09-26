@@ -80,6 +80,7 @@ spec:
       app:
         annotations:
           gatus.home-operations.com/endpoint: |-
+            url: http://qbittorrent.downloads.svc.cluster.local
             conditions: ["[STATUS] == 200"]
         hostnames:
           - "{{ .Release.Name }}.judahrand.net"
