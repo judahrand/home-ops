@@ -10,6 +10,11 @@ spec:
     version: v1.13.10
   policy:
     rebootMode: powercycle
+    # talosctl's own drain defaults to 5m. CNPG *replica* PDBs only block while a
+    # peer replica from the previously upgraded node is still recovering, so give
+    # the drain room to outlast that. CNPG *primary* PDBs can never be satisfied
+    # and still need a manual nudge.
+    drainTimeout: 15m
   healthChecks:
     - apiVersion: volsync.backube/v1alpha1
       kind: ReplicationSource
