@@ -375,7 +375,7 @@ url = "https://github.com/koalaman/shellcheck/releases/download/v0.11.0/shellche
 url_api = "https://api.github.com/repos/koalaman/shellcheck/releases/assets/279056944"
 
 [[tools.talosctl]]
-version = "1.13.3"
+version = "1.14.1"
 backend = "ubi:siderolabs/talos"
 
 [[tools.uv]]
