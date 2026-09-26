@@ -81,8 +81,6 @@ spec:
         annotations:
           gatus.home-operations.com/endpoint: |-
             url: https://qbittorrent.judahrand.net
-            client:
-              insecure: true
             conditions: ["[STATUS] == 200"]
         hostnames:
           - "{{ .Release.Name }}.judahrand.net"
