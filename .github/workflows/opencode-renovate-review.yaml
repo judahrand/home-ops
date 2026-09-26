@@ -29,7 +29,7 @@ jobs:
       }}
     name: OpenCode Renovate Review
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Load Secrets
         id: load-secrets
@@ -50,18 +50,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           persist-credentials: false
 
-      - name: Run OpenCode Review
-        uses: anomalyco/opencode/github@545f51d26cc39a907d2867492d498d9607ea5fa4 # v1.18.32
+      - name: Setup OpenCode
+        run: npm install --global opencode-ai@1.18.32 # zizmor: ignore[adhoc-packages]
+
+      - name: Review Pull Request
         env:
           OPENCODE_API_KEY: ${{ steps.load-secrets.outputs.OPENCODE_API_KEY }}
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-        with:
-          model: opencode-go/deepseek-v4.1-flash
-          use_github_token: true
-          share: false
-          prompt: |-
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          OPENCODE_DISABLE_AUTOUPDATE: "true"
+          # Read-only reviewer: keep file modifications blocked, auto-approve the rest.
+          OPENCODE_PERMISSION: '{"edit":"deny"}'
+          PROMPT: |-
             You review this Renovate dependency update pull request and report
             problems. You do not change files.
 
@@ -132,3 +134,4 @@ jobs:
             When citing github.com URLs, rewrite the host to
             `https://redirect.github.com` so the linked issues, PRs and
             releases do not receive a backlink notification.
+        run: opencode run --auto --model opencode-go/deepseek-v4.1-flash "$PROMPT"
