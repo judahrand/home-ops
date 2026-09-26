@@ -79,38 +79,28 @@ nodes-ready:
         done
     fi
 
-[doc('Apply Kubernetes namespaces')]
-namespaces:
+# Apply the bootstrap base once the API is ready: app namespaces, the personal
+# (op-injected) secret manifests, and CRDs extracted from Helm charts.
+[doc('Apply the base Kubernetes resources')]
+[private]
+base: api-ready nodes-ready
     just log info "Running stage..." "stage" "{{ recipe_name() }}"
     find "{{ kubernetes_dir }}/apps" -mindepth 1 -maxdepth 1 -type d | while IFS= read -r dir; do
         if ! kustomize build "$dir" | yq ea -e 'select(.kind == "Namespace")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
             just log fatal "Failed to apply namespace" "stage" "{{ recipe_name() }}" "namespace" "$(basename "$dir")"
         fi
     done
-
-[doc('Apply personal manifests')]
-resources:
-    just log info "Running stage..." "stage" "{{ recipe_name() }}"
     if ! kustomize build "{{ bootstrap_dir }}/kustomize/personal" | just template - | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
         just log fatal "Failed to apply personal manifests" "stage" "{{ recipe_name() }}"
     fi
-
-[doc('Apply Helmfile CRDs')]
-crds:
-    just log info "Running stage..." "stage" "{{ recipe_name() }}"
-    if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/00-crds.yaml" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
+    if ! helmfile -f "{{ bootstrap_dir }}/helmfile/crds.yaml" template -q | yq ea -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
         just log fatal "Failed to apply crds" "stage" "{{ recipe_name() }}"
     fi
-
-# Apply the bootstrap base (namespaces, secrets and CRDs) once the API is ready.
-[doc('Apply the base Kubernetes resources')]
-[private]
-base: api-ready nodes-ready namespaces resources crds
 
 [doc('Apply Helmfile Apps')]
 apps:
     just log info "Running stage..." "stage" "{{ recipe_name() }}"
-    if ! helmfile -f "{{ bootstrap_dir }}/helmfile.d/01-apps.yaml" sync --hide-notes; then
+    if ! helmfile -f "{{ bootstrap_dir }}/helmfile/apps.yaml" sync --hide-notes; then
         just log fatal "Failed to sync helmfile" "stage" "{{ recipe_name() }}"
     fi
 
