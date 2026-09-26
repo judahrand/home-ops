@@ -4,6 +4,23 @@ connectivity:
     target: 1.1.1.1:53
     interval: 1m
 
+# Pushover alerts, mirroring onedr0p/home-ops. The tokens come from the gatus
+# 1Password item via the ExternalSecret: gatus_pushover_token exists today,
+# gatus_pushover_user_key still needs adding to that item.
+alerting:
+  pushover:
+    application-token: ${gatus_pushover_token}
+    user-key: ${gatus_pushover_user_key}
+    default-alert:
+      description: health-check failed
+      failure-threshold: 3
+      minimum-reminder-interval: 1h
+      send-on-resolved: true
+      success-threshold: 2
+    priority: 1
+    resolved-priority: 0
+    title: Gatus
+
 endpoints:
   - name: Cloudflare
     group: connectivity
