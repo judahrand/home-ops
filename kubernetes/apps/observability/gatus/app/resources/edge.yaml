@@ -1,0 +1,38 @@
+---
+# Public-edge checks, adapting onedr0p/home-ops' "buddy" group to our setup.
+#
+# He pings a DDNS hostname that resolves to his WAN IP and checks his public
+# status page, then Alertmanager heartbeats gatus. We front the cluster with a
+# Cloudflare Tunnel and in-cluster DNS resolves *.judahrand.net to the internal
+# LB IP, so a name-based ICMP probe never reaches the edge (the LB drops ICMP).
+# Instead "Home Internet" resolves through a public resolver, exercising the
+# real path: egress -> Cloudflare -> tunnel -> cluster.
+#
+# Keeping both endpoints distinguishes an edge/ISP failure (Home Internet red,
+# Status Page green) from the status page itself being down (both red).
+endpoints:
+  - name: Home Internet
+    group: edge
+    url: https://status.judahrand.net
+    interval: 1m
+    client:
+      dns-resolver: tcp://1.1.1.1:53
+    ui:
+      hide-hostname: true
+      hide-url: true
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover
+
+  - name: Status Page
+    group: edge
+    url: https://status.judahrand.net
+    interval: 1m
+    ui:
+      hide-hostname: true
+      hide-url: true
+    conditions:
+      - "[STATUS] == 200"
+    alerts:
+      - type: pushover

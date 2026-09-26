@@ -33,6 +33,8 @@ spec:
       items:
         - key: config.yaml
           path: config.yaml
+        - key: edge.yaml
+          path: edge.yaml
     persistence:
       enabled: true
       storageClass: ceph-block
