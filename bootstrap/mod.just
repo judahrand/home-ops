@@ -88,11 +88,11 @@ namespaces:
         fi
     done
 
-[doc('Apply Kubernetes resources')]
+[doc('Apply personal manifests')]
 resources:
     just log info "Running stage..." "stage" "{{ recipe_name() }}"
-    if ! just template "{{ bootstrap_dir }}/resources.yaml.j2" | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
-        just log fatal "Failed to apply resources" "stage" "{{ recipe_name() }}"
+    if ! kustomize build "{{ bootstrap_dir }}/kustomize/personal" | just template - | kubectl apply --server-side --field-manager bootstrap --force-conflicts -f -; then
+        just log fatal "Failed to apply personal manifests" "stage" "{{ recipe_name() }}"
     fi
 
 [doc('Apply Helmfile CRDs')]
