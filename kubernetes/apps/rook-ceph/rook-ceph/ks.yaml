@@ -50,3 +50,8 @@ spec:
     substitute:
       APP: *app
       GATUS_SUBDOMAIN: rook
+  healthCheckExprs:
+    - apiVersion: ceph.rook.io/v1
+      kind: CephCluster
+      failed: status.ceph.health == 'HEALTH_ERR'
+      current: status.ceph.health in ['HEALTH_OK', 'HEALTH_WARN']
