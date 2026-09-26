@@ -22,25 +22,38 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/home-operations/atuin-server-sqlite
-              tag: 18.4.0@sha256:ba9807985d6d8f601f6887894b01ae65dee2280c0a0bb8b2f7bba50e7376f39a
+              repository: ghcr.io/atuinsh/atuin
+              tag: 18.23.0@sha256:f232feeead54a0a13132b9cd477e312c3380e9dc90f1db24c4f79ce6c8e034ea
             env:
+              ATUIN_HOST: "0.0.0.0"
               ATUIN_PORT: &port 80
               ATUIN_OPEN_REGISTRATION: "true"
+              ATUIN_DB_URI: sqlite:///config/atuin.db
               TZ: Europe/London
+            args:
+              - start
             probes:
-              liveness: &probes
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
                 enabled: true
                 custom: true
                 spec:
                   httpGet:
-                    path: /
+                    path: /healthz
                     port: *port
-                  initialDelaySeconds: 0
                   periodSeconds: 10
-                  timeoutSeconds: 1
-                  failureThreshold: 3
-              readiness: *probes
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
             securityContext:
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
