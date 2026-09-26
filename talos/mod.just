@@ -1,4 +1,4 @@
-set quiet := true
+set quiet
 set shell := ['bash', '-euo', 'pipefail', '-c']
 
 scripts_dir := justfile_dir() + '/scripts'
@@ -12,6 +12,7 @@ default:
 # TALOS_APPLY_ADDR overrides the address talosctl dials (useful when a reset node
 # is not reachable at its DNS-resolved address), while the config is still
 # rendered for the named node.
+[confirm('Apply Talos config to ' + node + ' [y|N] ?')]
 [doc('Apply Talos config to a node')]
 apply-node node *args:
     just talos render-config "{{ node }}" | talosctl -n "${TALOS_APPLY_ADDR:-{{ node }}}" apply-config -f /dev/stdin {{ args }}
@@ -28,10 +29,10 @@ download-image version schematic:
 gen-schematic-id node:
     curl -sX POST --data-binary @<(just template "{{ talos_dir }}/schematics/{{ node }}.yaml.j2") "https://factory.talos.dev/schematics" | jq -r '.id'
 
+[confirm('Reboot node ' + node + ' [y|N] ?')]
 [doc('Reboot a node')]
 reboot-node node:
-    gum confirm "Reboot node {{ node }}?" --default="No" && \
-        talosctl -n {{ node }} reboot -m powercycle || exit 0
+    talosctl -n {{ node }} reboot -m powercycle
 
 [doc('Render Talos config for a node')]
 render-config node:
@@ -39,20 +40,22 @@ render-config node:
     talosctl machineconfig patch <(just template "{{ talos_dir }}/machineconfig.yaml.j2") \
         -p @<(just template "{{ talos_dir }}/nodes/{{ node }}.yaml.j2")
 
+[confirm('Reset node ' + node + ' [y|N] ?')]
 [doc('Reset a node')]
 reset-node node *args:
-    gum confirm "Reset node {{ node }}?" --default="No" && \
-        talosctl -n "{{ node }}" reset --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --system-labels-to-wipe u-local-hostpath --graceful=false {{ args }} || exit 0
+    talosctl -n "{{ node }}" reset --system-labels-to-wipe STATE --system-labels-to-wipe EPHEMERAL --system-labels-to-wipe u-local-hostpath --graceful=false {{ args }}
 
+[confirm('Shutdown node ' + node + ' [y|N] ?')]
 [doc('Shutdown a node')]
 shutdown-node node *args:
-    gum confirm "Shutdown node {{ node }}?" --default="No" && \
-        talosctl -n "{{ node }}" shutdown --force {{ args }} || exit 0
+    talosctl -n "{{ node }}" shutdown --force {{ args }}
 
+[confirm('Upgrade Kubernetes to ' + version + ' [y|N] ?')]
 [doc('Upgrade Kubernetes version on the cluster')]
 upgrade-k8s version:
     talosctl -n "{{ controller }}" upgrade-k8s --to {{ version }}
 
+[confirm('Upgrade node ' + node + ' [y|N] ?')]
 [doc('Upgrade Talos version on a node')]
 upgrade-node node *args:
     talosctl -n "{{ node }}" upgrade -i "$(just talos machine-image {{ node }})" -m powercycle --timeout=10m {{ args }}
