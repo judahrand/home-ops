@@ -24,3 +24,14 @@ spec:
   databaseReclaimPolicy: retain
   name: homeassistant
   owner: homeassistant
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: vikunja
+spec:
+  cluster:
+    name: postgres17
+  databaseReclaimPolicy: retain
+  name: vikunja
+  owner: vikunja
