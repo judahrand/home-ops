@@ -8,7 +8,7 @@ metadata:
     gatus.home-operations.com/endpoint: |
       name: dawarich-database
       group: infrastructure
-      url: tcp://dawarich-database-rw.media.svc.cluster.local:5432
+      url: tcp://dawarich-database-rw.selfhosted.svc.cluster.local:5432
       interval: 1m
       ui:
         hide-url: true

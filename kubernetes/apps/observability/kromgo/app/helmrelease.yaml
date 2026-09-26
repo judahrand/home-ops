@@ -72,7 +72,7 @@ spec:
       app:
         annotations:
           gatus.home-operations.com/endpoint: |-
-            conditions: ["[STATUS] == 404"]
+            conditions: ["[STATUS] == 200"]
         hostnames: ["{{ .Release.Name }}.judahrand.net"]
         parentRefs:
           - name: envoy-external
