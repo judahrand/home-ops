@@ -198,7 +198,8 @@ spec:
 
       record:
         enabled: true
-        sync_recordings: true
+        # sync_recordings was removed in Frigate 0.18.0; use the on-demand
+        # Media Sync pane / POST /api/media/sync instead.
         continuous:
           days: 0
         motion:
