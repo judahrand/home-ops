@@ -78,10 +78,6 @@ spec:
             port: *port
     route:
       app:
-        annotations:
-          gatus.home-operations.com/endpoint: |-
-            url: https://qbittorrent.judahrand.net
-            conditions: ["[STATUS] == 200"]
         hostnames:
           - "{{ .Release.Name }}.judahrand.net"
         parentRefs:
