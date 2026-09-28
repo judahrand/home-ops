@@ -14,13 +14,12 @@ resources:
   - ./graphite-exporter/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./kromgo/ks.yaml
-  - ./loki/ks.yaml
   - ./network-ups-tools/ks.yaml
   - ./nut-exporter/ks.yaml
   - ./prometheus-adapter/ks.yaml
-  - ./promtail/ks.yaml
   - ./silence-operator/ks.yaml
   - ./smartctl-exporter/ks.yaml
+  - ./victoria-logs/ks.yaml
 patches:
   - patch: |-
       apiVersion: v1
