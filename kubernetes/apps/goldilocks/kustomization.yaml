@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: goldilocks
 components:
   - ../../components/alerts
-  - ../../components/repos
 resources:
   - ./namespace.yaml
   - ./goldilocks/ks.yaml
