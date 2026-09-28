@@ -63,6 +63,10 @@ config:
   serializeImagePulls: false
   allowedUnsafeSysctls:
     - net.*
+  crashLoopBackOff:
+    maxContainerRestartPeriod: 60s
+  imageMaximumGCAge: 168h
+  maxParallelImagePulls: 3
   # Miroir/DRBD: kubelet graceful node shutdown lets the miroir agent release
   # DRBD backings before the backend pool exports on reboot. Window must cover
   # the agent's terminationGracePeriodSeconds (default 60s).
@@ -115,7 +119,7 @@ contents: |
   [ NFSMount_Global_Options ]
   nfsvers=4.2
   hard=True
-  nconnect=8
+  nconnect=16
   noatime=True
   rsize=1048576
   wsize=1048576
