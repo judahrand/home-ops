@@ -11,7 +11,6 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   components:
-    - ../../../../components/volsync
     - ../../../../components/kopiur/backup
   interval: 1h
   timeout: 5m
@@ -22,10 +21,6 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  dependsOn:
-    - name: volsync
-      namespace: volsync-system
   postBuild:
     substitute:
       APP: *appname
-      VOLSYNC_CLAIM: karakeep-data
