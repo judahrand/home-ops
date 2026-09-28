@@ -4,7 +4,6 @@ kind: Kustomization
 namespace: home
 components:
   - ../../components/alerts
-  - ../../components/repos
   - ../../components/kopiur/secret
 resources:
   - ./namespace.yaml

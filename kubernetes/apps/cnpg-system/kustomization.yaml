@@ -5,7 +5,6 @@ kind: Kustomization
 namespace: cnpg-system
 components:
   - ../../components/alerts
-  - ../../components/repos
 resources:
   - ./namespace.yaml
   - ./barman-plugin/ks.yaml
