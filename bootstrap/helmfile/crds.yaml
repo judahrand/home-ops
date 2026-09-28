@@ -15,9 +15,6 @@ bases:
 defaultInherit: default
 
 releases:
-  - name: external-dns
-    namespace: network
-
   - name: envoy-gateway
     namespace: network
 

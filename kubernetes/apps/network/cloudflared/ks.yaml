@@ -22,5 +22,5 @@ spec:
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
-    - name: external-dns-cloudflare
+    - name: cloudflare-dns
       namespace: network

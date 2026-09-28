@@ -1,30 +1,15 @@
 ---
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
-apiVersion: source.toolkit.fluxcd.io/v1
-kind: OCIRepository
-metadata:
-  name: external-dns-technitium
-  namespace: &namespace network
-spec:
-  interval: 5m
-  layerSelector:
-    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
-    operation: copy
-  ref:
-    tag: 1.21.1
-  url: oci://ghcr.io/home-operations/charts-mirror/external-dns
----
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app external-dns-technitium
+  name: &app technitium-dns
   namespace: &namespace network
 spec:
   interval: 1h
   chartRef:
     kind: OCIRepository
-    name: external-dns-technitium
+    name: technitium-dns
   install:
     remediation:
       retries: -1
@@ -42,7 +27,7 @@ spec:
       - name: "EXTERNAL_DNS_RFC2136_TSIG_SECRET"
         valueFrom:
           secretKeyRef:
-            name: &secret external-dns-technitium-secret
+            name: &secret technitium-dns-secret
             key: rfc2136-tsig-secret
       - name: "EXTERNAL_DNS_RFC2136_TSIG_KEYNAME"
         valueFrom:
