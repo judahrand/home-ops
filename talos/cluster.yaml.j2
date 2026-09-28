@@ -63,6 +63,11 @@ config:
   serializeImagePulls: false
   allowedUnsafeSysctls:
     - net.*
+  # Miroir/DRBD: kubelet graceful node shutdown lets the miroir agent release
+  # DRBD backings before the backend pool exports on reboot. Window must cover
+  # the agent's terminationGracePeriodSeconds (default 60s).
+  shutdownGracePeriod: 120s
+  shutdownGracePeriodCriticalPods: 60s
 ---
 # Replaces machine.kubelet.nodeIP + machine.nodeLabels. The controlplane and
 # per-node KubeNodeConfig documents deep-merge into this one.
@@ -133,6 +138,18 @@ name: nbd
 apiVersion: v1alpha1
 kind: KernelModuleConfig
 name: thunderbolt
+---
+# Miroir DRBD9 replication. usermode_helper is disabled because /sbin/drbdadm
+# does not exist on the host; the driver ships in the miroir agent image.
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: drbd
+parameters:
+  - usermode_helper=disabled
+---
+apiVersion: v1alpha1
+kind: KernelModuleConfig
+name: drbd_transport_tcp
 ---
 # Not present on upgraded clusters: enable it explicitly.
 apiVersion: v1alpha1
