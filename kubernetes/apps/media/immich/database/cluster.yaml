@@ -12,8 +12,8 @@ spec:
   enablePDB: true
 
   storage:
-    size: 10Gi # this is not enforced because we're using a hostpath storage class
-    storageClass: openebs-hostpath
+    size: 10Gi
+    storageClass: miroir-slow-local
 
   superuserSecret:
     name: cloudnative-pg-secret
@@ -63,30 +63,17 @@ spec:
         barmanObjectName: immich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster immich-database-v6
+        serverName: &currentCluster immich-database-v7
 
-  # bootstrap:
-  #   initdb:
-  #     database: immich
-  #     owner: immich
-  #     secret:
-  #       name: immich-database-secret
-  #     dataChecksums: true
-  #     postInitApplicationSQL:
-  #       # Commands based on: https://immich.app/docs/administration/postgres-standalone/#without-superuser-permission
-  #       - ALTER DATABASE immich OWNER TO immich;
-  #       - CREATE EXTENSION vchord CASCADE;
-  #       - CREATE EXTENSION earthdistance CASCADE;
-  # # Note: previousCluster needs to be set to the name of the previous
-  # # cluster when recovering from an existing cnpg cluster
-  #   recovery:
-  #     source: &previousCluster immich-database-v3
-  #
-  # # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     plugin:
-  #       name: barman-cloud.cloudnative-pg.io
-  #       parameters:
-  #         barmanObjectName: immich-database
-  #         serverName: *previousCluster
+  # Recovery onto miroir-slow-local. Delete the Cluster and its openebs PVCs so
+  # the operator recreates them and restores from this backup.
+  bootstrap:
+    recovery:
+      source: &previousCluster immich-database-v6
+  externalClusters:
+    - name: *previousCluster
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: immich-database
+          serverName: *previousCluster

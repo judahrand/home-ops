@@ -12,8 +12,8 @@ spec:
   enablePDB: true
 
   storage:
-    size: 10Gi # this is not enforced because we're using a hostpath storage class
-    storageClass: openebs-hostpath
+    size: 10Gi
+    storageClass: miroir-slow-local
 
   superuserSecret:
     name: cloudnative-pg-secret
@@ -58,29 +58,17 @@ spec:
         barmanObjectName: dawarich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster dawarich-database-v2
+        serverName: &currentCluster dawarich-database-v3
 
-  # bootstrap:
-  #   initdb:
-  #     database: dawarich
-  #     owner: dawarich
-  #     secret:
-  #       name: dawarich-database-secret
-  #     dataChecksums: true
-  #     postInitApplicationSQL:
-  #       - ALTER DATABASE dawarich OWNER TO dawarich;
-  #       - CREATE EXTENSION vchord CASCADE;
-  #       - CREATE EXTENSION earthdistance CASCADE;
-  # # Note: previousCluster needs to be set to the name of the previous
-  # # cluster when recovering from an existing cnpg cluster
-  #   recovery:
-  #     source: &previousCluster dawarich-database-v1
-  #
-  # # Note: externalClusters is needed when recovering from an existing cnpg cluster
-  # externalClusters:
-  #   - name: *previousCluster
-  #     plugin:
-  #       name: barman-cloud.cloudnative-pg.io
-  #       parameters:
-  #         barmanObjectName: dawarich-database
-  #         serverName: *previousCluster
+  # Recovery onto miroir-slow-local. Delete the Cluster and its openebs PVCs so
+  # the operator recreates them and restores from this backup.
+  bootstrap:
+    recovery:
+      source: &previousCluster dawarich-database-v2
+  externalClusters:
+    - name: *previousCluster
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: dawarich-database
+          serverName: *previousCluster
