@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: miroir-system
+components:
+  - ../../components/alerts
+resources:
+  - ./namespace.yaml
+  - ./miroir/ks.yaml
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: _
+        labels:
+          pod-security.kubernetes.io/enforce: privileged

@@ -1,0 +1,31 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: miroir
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: miroir
+  interval: 1h
+  values:
+    agent:
+      # Loopfile backend: sparse files on a reflink-capable filesystem (Talos
+      # /var is XFS with reflink=1). Must list every loopfile.baseDir used by
+      # the MiroirNode specs.
+      loopfileBaseDirs:
+        - /var/lib/miroir
+    autoEvictAfter: 1h
+    replicaCount: 2
+    monitoring:
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+      podMonitor:
+        enabled: true
+      prometheusRule:
+        enabled: true
