@@ -6,6 +6,7 @@ namespace: selfhosted
 components:
   - ../../components/alerts
   - ../../components/repos
+  - ../../components/kopiur/secret
 resources:
   - ./namespace.yaml
   - ./actual/ks.yaml

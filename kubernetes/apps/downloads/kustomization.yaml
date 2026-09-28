@@ -6,6 +6,7 @@ namespace: downloads
 components:
   - ../../components/alerts
   - ../../components/repos
+  - ../../components/kopiur/secret
 resources:
   - ./namespace.yaml
   - ./autobrr/ks.yaml

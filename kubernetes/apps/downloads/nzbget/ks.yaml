@@ -7,6 +7,7 @@ metadata:
 spec:
   components:
     - ../../../../components/volsync
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: multus-networks
       namespace: network
@@ -18,6 +19,7 @@ spec:
     substitute:
       APP: nzbget
       VOLSYNC_CAPACITY: 10Gi
+      KOPIUR_CAPACITY: 10Gi
   prune: true
   sourceRef:
     kind: GitRepository
