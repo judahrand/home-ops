@@ -10,3 +10,4 @@ resources:
   - ./prometheusrule.yaml
   - ./scheduledbackup.yaml
   - ./service.yaml
+  - ./podmonitor.yaml
