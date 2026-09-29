@@ -75,24 +75,8 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster postgres17-v5
 
-  # Recovery onto miroir-slow-local. The recent v3 archive only has a small
-  # `vikunja` DB, so restore the last full backup (postgres17-v1, 2026-08-30).
-  # barman-cloud-restore can't stream the bzip2 base backup from MinIO (it dies
-  # mid-download, barman#1100 / charts#788), so the backup is re-published
-  # uncompressed under the `postgres17-plain` serverName (`nas-backup-plain`).
-  # targetImmediate stops at the backup's consistency point, so only the WAL
-  # segments for 2026-08-30 are needed (`postgres17-plain` holds those).
-  # Delete the Cluster and its openebs PVCs so the operator recreates them.
-  bootstrap:
-    recovery:
-      source: &previousCluster postgres17-plain
-      recoveryTarget:
-        backupID: 20260830T000002
-        targetImmediate: true
-  externalClusters:
-    - name: *previousCluster
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: nas-backup-plain
-          serverName: *previousCluster
+  # No `bootstrap`/`externalClusters`: this cluster was bootstrapped on
+  # 2026-09-29 by recovering the last full backup of postgres17-v1 (2026-08-30)
+  # from a re-published uncompressed copy, and the recovery block was removed
+  # once it was healthy. Future restores should use the backups archived under
+  # the `postgres17-v5` serverName above.
