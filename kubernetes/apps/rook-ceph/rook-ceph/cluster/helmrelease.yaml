@@ -73,9 +73,8 @@ spec:
         connections:
           requireMsgr2: true
       # CVE-2025-30156 key rotation. Talos 1.14 backports the kernel 7.0 AES256K
-      # support, so CSI and mirror-peer keys can use aes256k too.
-      # keepPriorKeyCountMax keeps the previous CSI key generation active for
-      # in-use PVCs; lower it to 0 after the nodes have been drained.
+      # support, so CSI and mirror-peer keys can use aes256k too. Nodes have been
+      # drained/rolled, so the prior CSI key generation is no longer needed.
       security:
         cephx:
           daemon:
@@ -84,7 +83,7 @@ spec:
           csi:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
-            keepPriorKeyCountMax: 1
+            keepPriorKeyCountMax: 0
             keyType: aes256k
           rbdMirrorPeer:
             keyRotationPolicy: KeyGeneration
