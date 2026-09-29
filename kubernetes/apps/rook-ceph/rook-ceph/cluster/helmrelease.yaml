@@ -69,7 +69,6 @@ spec:
           - name: rook
             enabled: true
       network:
-        provider: host
         connections:
           requireMsgr2: true
       # CVE-2025-30156 key rotation. Talos 1.14 backports the kernel 7.0 AES256K
