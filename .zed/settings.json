@@ -1,0 +1,48 @@
+// Zed project settings — the project-scoped subset of `.vscode/settings.json`.
+//
+// Only settings that are valid in a project settings file can live here.
+// Editor/UI-wide settings (fonts, icon theme, terminal font, hover delay,
+// auto-install extensions) are user-scoped in Zed and must go in your user
+// settings file: run `zed: open settings file` from the command palette.
+// See the notes at the bottom of this file.
+{
+  // .vscode: editor.bracketPairColorization.enabled
+  "colorize_brackets": true,
+
+  // .vscode: editor.guides.bracketPairs (+ bracketPairsHorizontal)
+  "indent_guides": {
+    "enabled": true
+  },
+
+  // .vscode: editor.rulers: [100]
+  "wrap_guides": [100],
+
+  // .vscode: files.trimTrailingWhitespace
+  "remove_trailing_whitespace_on_save": true,
+
+  // .vscode: files.associations { "**/*.json5": "json5" }
+  "file_types": {
+    "JSON5": ["**/*.json5"]
+  },
+
+  // .vscode: "[yaml]"/"[json]"/"[jsonc]"/"[json5]"/"[markdown]" default formatter = oxc.
+  // The Oxc extension ships `oxfmt` as a language server; `.oxfmtrc.json` is
+  // auto-discovered from the project root.
+  "languages": {
+    "YAML": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "JSON": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "JSONC": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "JSON5": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "Markdown": {
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    }
+  }
+}
