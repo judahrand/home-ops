@@ -30,5 +30,8 @@ releases:
   - name: kube-prometheus-stack
     namespace: observability
 
+  - name: snapshot-controller
+    namespace: kube-system
+
   # - name: keda
   #   namespace: observability
