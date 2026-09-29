@@ -60,7 +60,21 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster dawarich-database-v3
 
-  # No `bootstrap`/`externalClusters`: bootstrapped 2026-09-29 by restoring
-  # dawarich-database-v2 onto miroir-slow-local; the recovery config was removed
-  # once the cluster was healthy. Restore from the `dawarich-database-v3`
-  # archive above.
+  # Active `bootstrap`/`externalClusters` removed once this cluster was healthy:
+  # it was bootstrapped 2026-09-29 by restoring dawarich-database-v2 onto
+  # miroir-slow-local.
+  #
+  # To restore: uncomment the block below, bump the archiver `serverName` above
+  # to the next version, and delete the Cluster together with its PVCs so the
+  # operator recreates them and runs the recovery.
+  #
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster dawarich-database-v2
+  # externalClusters:
+  #   - name: *previousCluster
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: dawarich-database
+  #         serverName: *previousCluster

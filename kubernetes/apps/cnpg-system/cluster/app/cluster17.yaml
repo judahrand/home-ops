@@ -75,7 +75,30 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster postgres17-v5
 
-  # No `bootstrap`/`externalClusters`: bootstrapped 2026-09-29 by restoring
-  # postgres17-v1's last full backup (2026-08-30); the recovery config was
-  # removed once the cluster was healthy. Restore from the `postgres17-v5`
-  # archive above.
+  # Active `bootstrap`/`externalClusters` removed once this cluster was healthy:
+  # it was bootstrapped 2026-09-29 by restoring postgres17-v1's last full backup
+  # (2026-08-30).
+  #
+  # To restore: uncomment the block below, bump the archiver `serverName` above
+  # to the next version, and delete the Cluster together with its PVCs so the
+  # operator recreates them and runs the recovery.
+  #
+  # bootstrap:
+  #   recovery:
+  #     source: &previousCluster postgres17-plain
+  #     recoveryTarget:
+  #       backupID: 20260830T000002
+  #       targetImmediate: true
+  # externalClusters:
+  #   - name: *previousCluster
+  #     plugin:
+  #       name: barman-cloud.cloudnative-pg.io
+  #       parameters:
+  #         barmanObjectName: nas-backup-plain
+  #         serverName: *previousCluster
+  #
+  # The `postgres17-plain` copy has to be re-published first (see commit
+  # fd1b19bb), because barman-cloud-restore cannot stream the bzip2 originals
+  # from MinIO (barman#1100 / cnpg/charts#788). Restoring from the current
+  # `postgres17-v5` archive above with `nas-backup` needs no such dance: since
+  # 2026-09-29 base backups are gzip.
