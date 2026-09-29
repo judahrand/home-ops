@@ -9,7 +9,6 @@ spec:
   chartRef:
     kind: OCIRepository
     name: karakeep
-    namespace: flux-system
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
