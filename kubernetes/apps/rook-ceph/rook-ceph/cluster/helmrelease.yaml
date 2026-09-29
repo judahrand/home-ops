@@ -72,13 +72,24 @@ spec:
         provider: host
         connections:
           requireMsgr2: true
-      # CVE-2025-30156: rotate the core daemon CephX keys to the AES256K type.
-      # CSI keys deliberately stay `aes` (chart default) - AES256K needs Linux 7.0+.
+      # CVE-2025-30156 key rotation. Talos 1.14 backports the kernel 7.0 AES256K
+      # support, so CSI and mirror-peer keys can use aes256k too.
+      # keepPriorKeyCountMax keeps the previous CSI key generation active for
+      # in-use PVCs; lower it to 0 after the nodes have been drained.
       security:
         cephx:
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2
+          csi:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            keepPriorKeyCountMax: 1
+            keyType: aes256k
+          rbdMirrorPeer:
+            keyRotationPolicy: KeyGeneration
+            keyGeneration: 2
+            keyType: aes256k
       storage:
         useAllNodes: false
         useAllDevices: false
