@@ -53,10 +53,7 @@ spec:
     limits:
       memory: 4Gi
 
-  # PodMonitor is managed explicitly in ./podmonitor.yaml; the operator's
-  # automatic creation is deprecated.
-  monitoring:
-    enablePodMonitor: false
+  # PodMonitor is managed explicitly in ./podmonitor.yaml.
 
   plugins:
     - name: barman-cloud.cloudnative-pg.io
