@@ -27,3 +27,7 @@ spec:
     staticConfig:
       static:
         - truenas.servers:2049
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter
+      action: replace
