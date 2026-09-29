@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: o11y
+components:
+  - ../../components/alerts
+resources:
+  - ./namespace.yaml
+  - ./blackbox-exporter/ks.yaml
+  - ./gatus/ks.yaml
+  - ./grafana-operator/ks.yaml
+  - ./graphite-exporter/ks.yaml
+  - ./kube-prometheus-stack/ks.yaml
+  - ./kromgo/ks.yaml
+  - ./network-ups-tools/ks.yaml
+  - ./nut-exporter/ks.yaml
+  - ./prometheus-adapter/ks.yaml
+  - ./silence-operator/ks.yaml
+  - ./smartctl-exporter/ks.yaml
+  - ./victoria-logs/ks.yaml
+patches:
+  - patch: |-
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: _
+        labels:
+          pod-security.kubernetes.io/enforce: privileged

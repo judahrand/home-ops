@@ -1,0 +1,23 @@
+---
+apiVersion: kaniop.rs/v1beta1
+kind: Kanidm
+metadata:
+  name: kanidm
+spec:
+  domain: auth.judahrand.net
+  origin: https://auth.judahrand.net
+  replicaGroups:
+    - name: default
+      replicas: 1
+      primaryNode: true
+  logLevel: info
+  tlsSecretName: kanidm-tls
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: ceph-block

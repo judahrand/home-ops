@@ -22,16 +22,16 @@ releases:
     namespace: network
 
   - name: grafana-operator
-    namespace: observability
+    namespace: o11y
 
   - name: kopiur
     namespace: kopiur-system
 
   - name: kube-prometheus-stack
-    namespace: observability
+    namespace: o11y
 
   - name: snapshot-controller
     namespace: kube-system
 
   # - name: keda
-  #   namespace: observability
+  #   namespace: o11y
