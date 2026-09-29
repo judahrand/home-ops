@@ -65,22 +65,7 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster immich-database-v8
 
-  # Recovery onto miroir-slow-local. The recent archives (v5/v6) only contain an
-  # empty `app` DB (no `immich`), so restore the last archive that has the
-  # `immich` data: immich-database-v4, latest complete backup 2026-08-30.
-  # targetImmediate stops at the backup's consistency point (v4's timeline
-  # history has gaps, so a full replay would fail). Delete the Cluster and its
-  # openebs PVCs so the operator recreates them and restores.
-  bootstrap:
-    recovery:
-      source: &previousCluster immich-database-v4
-      recoveryTarget:
-        backupID: 20260830T000003
-        targetImmediate: true
-  externalClusters:
-    - name: *previousCluster
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: immich-database
-          serverName: *previousCluster
+  # No `bootstrap`/`externalClusters`: bootstrapped 2026-09-29 by restoring the
+  # last immich-database-v4 backup that contained the `immich` DB (2026-08-30);
+  # the recovery config was removed once the cluster was healthy. Restore from
+  # the `immich-database-v8` archive above.

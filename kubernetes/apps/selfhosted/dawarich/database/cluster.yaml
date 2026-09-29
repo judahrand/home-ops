@@ -60,15 +60,7 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster dawarich-database-v3
 
-  # Recovery onto miroir-slow-local. Delete the Cluster and its openebs PVCs so
-  # the operator recreates them and restores from this backup.
-  bootstrap:
-    recovery:
-      source: &previousCluster dawarich-database-v2
-  externalClusters:
-    - name: *previousCluster
-      plugin:
-        name: barman-cloud.cloudnative-pg.io
-        parameters:
-          barmanObjectName: dawarich-database
-          serverName: *previousCluster
+  # No `bootstrap`/`externalClusters`: bootstrapped 2026-09-29 by restoring
+  # dawarich-database-v2 onto miroir-slow-local; the recovery config was removed
+  # once the cluster was healthy. Restore from the `dawarich-database-v3`
+  # archive above.
