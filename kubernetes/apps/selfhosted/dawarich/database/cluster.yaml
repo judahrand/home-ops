@@ -60,10 +60,6 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster dawarich-database-v3
 
-  # Active `bootstrap`/`externalClusters` removed once this cluster was healthy:
-  # it was bootstrapped 2026-09-29 by restoring dawarich-database-v2 onto
-  # miroir-slow-local.
-  #
   # To restore: uncomment the block below, bump the archiver `serverName` above
   # to the next version, and delete the Cluster together with its PVCs so the
   # operator recreates them and runs the recovery.
