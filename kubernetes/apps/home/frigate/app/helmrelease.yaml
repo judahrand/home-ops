@@ -76,6 +76,14 @@ spec:
         enabled: true
         existingClaim: frigate-media
 
+    extraVolumes:
+      - name: model-cache
+        persistentVolumeClaim:
+          claimName: frigate-model-cache
+    extraVolumeMounts:
+      - name: model-cache
+        mountPath: /config/model_cache
+
     config: |
       mqtt:
         host: mosquitto.home.svc.cluster.local
