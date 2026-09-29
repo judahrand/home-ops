@@ -17,6 +17,8 @@ spec:
       loopfileBaseDirs:
         - /var/lib/miroir
     autoEvictAfter: 1h
+    groupSnapshots:
+      enabled: true
     replicaCount: 2
     monitoring:
       dashboards:
