@@ -75,8 +75,7 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster postgres17-v5
 
-  # No `bootstrap`/`externalClusters`: this cluster was bootstrapped on
-  # 2026-09-29 by recovering the last full backup of postgres17-v1 (2026-08-30)
-  # from a re-published uncompressed copy, and the recovery block was removed
-  # once it was healthy. Future restores should use the backups archived under
-  # the `postgres17-v5` serverName above.
+  # No `bootstrap`/`externalClusters`: bootstrapped 2026-09-29 by restoring
+  # postgres17-v1's last full backup (2026-08-30); the recovery config was
+  # removed once the cluster was healthy. Restore from the `postgres17-v5`
+  # archive above.

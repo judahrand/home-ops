@@ -10,4 +10,3 @@ resources:
   - ./prometheusrule.yaml
   - ./service.yaml
   - ./objectstore.yaml
-  - ./objectstore-plain.yaml
