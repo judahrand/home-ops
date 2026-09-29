@@ -31,3 +31,5 @@ spec:
       APP: *appname
       VOLSYNC_CAPACITY: "10Gi"
       KOPIUR_CAPACITY: "10Gi"
+      KOPIUR_PUID: "508"
+      KOPIUR_PGID: "508"
