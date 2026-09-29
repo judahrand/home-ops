@@ -5,10 +5,11 @@ metadata:
 spec:
   retentionPolicy: 30d
 
-  # barman-cloud-restore (boto3 >= 1.36) mis-streams large base backups from
-  # MinIO and dies mid-download with "IncompleteRead" (see barman#1100,
-  # cnpg/charts#788). Disable the boto3>=1.36 default checksum behaviour so the
-  # restore path matches a plain `aws s3 cp` download.
+  # MinIO compatibility: boto3 >= 1.36 enables checksum calculation/validation
+  # by default, which trips some S3-compatible providers (cloudnative-pg#7715).
+  # NB: this does NOT fix the IncompleteRead restore problem
+  # (barman#1100 / cnpg/charts#788) - that is what `data.compression` below is
+  # about.
   instanceSidecarConfiguration:
     env:
       - name: AWS_REQUEST_CHECKSUM_CALCULATION
@@ -26,8 +27,12 @@ spec:
       secretAccessKey:
         name: cloudnative-pg-secret
         key: aws-secret-access-key
+    # gzip, not bzip2: barman-cloud-restore streams and decompresses inside the
+    # socket read path, and bzip2 is slow enough that large base backups die
+    # mid-download with "IncompleteRead" (barman#1100, cnpg/charts#788).
     data:
-      compression: bzip2
+      compression: gzip
     wal:
       compression: bzip2
-      maxParallel: 8
+      # restore breaks when raised to 8 (plugin-barman-cloud#516)
+      maxParallel: 1
