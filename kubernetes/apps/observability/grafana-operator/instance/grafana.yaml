@@ -6,6 +6,7 @@ metadata:
   name: grafana
   labels:
     dashboards: grafana
+    app.kubernetes.io/managed-by: grafana-operator
 spec:
   config:
     analytics:
