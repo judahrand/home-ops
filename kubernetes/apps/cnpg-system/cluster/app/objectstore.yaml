@@ -4,6 +4,18 @@ metadata:
   name: nas-backup
 spec:
   retentionPolicy: 30d
+
+  # barman-cloud-restore (boto3 >= 1.36) mis-streams large base backups from
+  # MinIO and dies mid-download with "IncompleteRead" (see barman#1100,
+  # cnpg/charts#788). Disable the boto3>=1.36 default checksum behaviour so the
+  # restore path matches a plain `aws s3 cp` download.
+  instanceSidecarConfiguration:
+    env:
+      - name: AWS_REQUEST_CHECKSUM_CALCULATION
+        value: when_required
+      - name: AWS_RESPONSE_CHECKSUM_VALIDATION
+        value: when_required
+
   configuration:
     destinationPath: s3://cloudnative-pg/
     endpointURL: http://truenas.servers:9000
