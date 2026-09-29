@@ -1,0 +1,25 @@
+---
+# Uncompressed twin of `nas-backup`, used only to restore the postgres17-v1
+# base backup. barman-cloud-restore can't stream large bzip2 backups from MinIO
+# (it dies mid-download with "IncompleteRead", see barman#1100 / charts#788), so
+# the base backup is re-published uncompressed under the `postgres17-plain`
+# serverName and recovered from here. No `data.compression` => `data.tar`.
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: nas-backup-plain
+spec:
+  retentionPolicy: 30d
+  configuration:
+    destinationPath: s3://cloudnative-pg/
+    endpointURL: http://truenas.servers:9000
+    s3Credentials:
+      accessKeyId:
+        name: cloudnative-pg-secret
+        key: aws-access-key-id
+      secretAccessKey:
+        name: cloudnative-pg-secret
+        key: aws-secret-access-key
+    wal:
+      compression: bzip2
+      maxParallel: 8
