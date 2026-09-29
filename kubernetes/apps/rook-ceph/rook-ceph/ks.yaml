@@ -36,9 +36,9 @@ spec:
       app.kubernetes.io/name: *app
   dependsOn:
     - name: ceph-csi-drivers
-      namespace: flux-system
+      namespace: rook-ceph
     - name: rook-ceph
-      namespace: flux-system
+      namespace: rook-ceph
     - name: external-secrets
       namespace: external-secrets
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
