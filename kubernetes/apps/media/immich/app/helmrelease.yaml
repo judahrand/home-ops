@@ -44,7 +44,6 @@ spec:
       persistence:
         data:
           enabled: true
-          # bjw-s common v5 requires an explicit type; the chart default is emptyDir
           type: persistentVolumeClaim
           size: 1Gi
           accessMode: ReadWriteOnce
@@ -130,7 +129,6 @@ spec:
       persistence:
         cache:
           enabled: true
-          # bjw-s common v5 requires an explicit type; the chart default is emptyDir
           type: persistentVolumeClaim
           storageClass: ceph-block
           accessMode: ReadWriteOnce
