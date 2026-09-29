@@ -65,11 +65,17 @@ spec:
         # when recovering from an existing cnpg cluster
         serverName: &currentCluster immich-database-v7
 
-  # Recovery onto miroir-slow-local. Delete the Cluster and its openebs PVCs so
-  # the operator recreates them and restores from this backup.
+  # Recovery onto miroir-slow-local. The latest (09-29, timeline-10) backup is
+  # unrecoverable: its WAL 0000000A0000000000000016 was archived with timeline-9
+  # content. So pin the 09-28 timeline-9 backup and stop just before the
+  # 2026-09-28 ~14:29 timeline switch. Delete the Cluster and its openebs PVCs so
+  # the operator recreates them and restores.
   bootstrap:
     recovery:
+      backupID: backup-20260928000000
       source: &previousCluster immich-database-v6
+      recoveryTarget:
+        targetTime: "2026-09-28 14:29:00+00"
   externalClusters:
     - name: *previousCluster
       plugin:
