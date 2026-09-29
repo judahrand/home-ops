@@ -63,18 +63,20 @@ spec:
         barmanObjectName: immich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster immich-database-v7
+        serverName: &currentCluster immich-database-v8
 
-  # Recovery onto miroir-slow-local. The latest (09-29, timeline-10) backup is
-  # unrecoverable: its WAL 0000000A0000000000000016 was archived with timeline-9
-  # content. So pin the 09-28 timeline-9 backup and stop just before the
-  # 2026-09-28 ~14:29 timeline switch. Delete the Cluster and its openebs PVCs so
-  # the operator recreates them and restores.
+  # Recovery onto miroir-slow-local. The recent archives (v5/v6) only contain an
+  # empty `app` DB (no `immich`), so restore the last archive that has the
+  # `immich` data: immich-database-v4, latest complete backup 2026-08-30.
+  # targetImmediate stops at the backup's consistency point (v4's timeline
+  # history has gaps, so a full replay would fail). Delete the Cluster and its
+  # openebs PVCs so the operator recreates them and restores.
   bootstrap:
     recovery:
-      source: &previousCluster immich-database-v6
+      source: &previousCluster immich-database-v4
       recoveryTarget:
-        backupID: 20260928T000000
+        backupID: 20260830T000003
+        targetImmediate: true
   externalClusters:
     - name: *previousCluster
       plugin:
