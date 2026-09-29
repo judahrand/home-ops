@@ -74,7 +74,7 @@ spec:
     recovery:
       source: &previousCluster immich-database-v6
       recoveryTarget:
-        targetTime: "2026-09-28 14:29:00+00"
+        backupID: 20260928T000000
   externalClusters:
     - name: *previousCluster
       plugin:
