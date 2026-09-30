@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kopiur.home-operations.com/repositoryreplication_v1alpha1.json
+apiVersion: kopiur.home-operations.com/v1alpha1
+kind: RepositoryReplication
+metadata:
+  name: truenas-r2
+spec:
+  sourceRef:
+    kind: ClusterRepository
+    name: truenas
+  destination:
+    s3:
+      bucket: kopiur
+      endpoint: 8cfccb72019532fc04a1b2af37998c1a.r2.cloudflarestorage.com
+      region: auto
+      auth:
+        secretRef:
+          name: kopiur-replication-secret
+  schedule:
+    cron: 0 5 * * *
+    jitter: 30m
+    timezone: Europe/London
+  sync:
+    parallel: 8
+  suspend: false
