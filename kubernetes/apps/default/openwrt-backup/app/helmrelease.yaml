@@ -4,6 +4,8 @@ apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: openwrt-backup
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   interval: 1h
   chartRef:
@@ -34,8 +36,7 @@ spec:
 
         defaultContainerOptions: &defaultContainerOptions
           env:
-            RUSTIC_NO_CACHE: "true"
-            RUSTIC_REPOSITORY: opendal:s3
+            TMPDIR: /kopia
             TIMEZONE: "Europe/London"
           envFrom:
             - secretRef:
@@ -57,37 +58,27 @@ spec:
 
         containers:
           backup:
-            image: &rusticImage
-              repository: ghcr.io/rustic-rs/rustic
-              tag: v0.11.2
+            image:
+              repository: ghcr.io/home-operations/kopia
+              tag: 0.22.0
+            command: ["/bin/sh", "-c"]
             args:
-              - backup
-              - --init
-              - /backup
-          forget:
-            image: *rusticImage
-            args:
-              - forget
-              - --keep-daily=7
-              - --keep-weekly=4
-
-      prune:
-        type: cronjob
-
-        annotations:
-          reloader.stakater.com/auto: "true"
-
-        cronjob:
-          <<: *cronJobSpec
-          schedule: "@weekly"
-
-        defaultContainerOptions: *defaultContainerOptions
-
-        containers:
-          prune:
-            image: *rusticImage
-            args:
-              - prune
+              - |
+                set -euo pipefail
+                cd /kopia
+                repo() {
+                  kopia repository "$1" s3 \
+                    --bucket=kopia-openwrt \
+                    --endpoint="$AWS_ENDPOINT" \
+                    --region="$AWS_REGION" \
+                    --cache-directory=/kopia/cache
+                }
+                repo connect || repo create
+                kopia snapshot create /backup \
+                  --override-source=default@openwrt-backup:/backup
+                kopia policy set default@openwrt-backup:/backup \
+                  --keep-daily=7 --keep-weekly=4
+                kopia snapshot expire --delete default@openwrt-backup:/backup
 
     defaultPodOptions:
       securityContext:
@@ -101,6 +92,10 @@ spec:
     persistence:
       backup:
         type: emptyDir
+      kopia:
+        type: emptyDir
+        globalMounts:
+          - path: /kopia
       scripts:
         type: configMap
         name: openwrt-backup
