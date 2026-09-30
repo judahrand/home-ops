@@ -36,7 +36,9 @@ spec:
 
         defaultContainerOptions: &defaultContainerOptions
           env:
+            HOME: /kopia
             TMPDIR: /kopia
+            USER: backup
             TIMEZONE: "Europe/London"
           envFrom:
             - secretRef:
