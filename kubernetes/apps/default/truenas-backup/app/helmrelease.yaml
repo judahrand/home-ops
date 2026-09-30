@@ -37,6 +37,9 @@ spec:
         defaultContainerOptions: &defaultContainerOptions
           env:
             HOME: /kopia
+            KOPIA_CACHE_DIRECTORY: /kopia/cache
+            KOPIA_CONFIG_PATH: /kopia/repository.config
+            KOPIA_LOG_DIR: /kopia/logs
             TMPDIR: /kopia
             USER: backup
             TIMEZONE: "Europe/London"
