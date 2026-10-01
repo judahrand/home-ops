@@ -10,19 +10,18 @@ spec:
     name: multus
   interval: 1h
   values:
-    cni-plugins:
+    image:
+      repository: ghcr.io/k8snetworkplumbingwg/multus-cni
+      tag: v4.2.4
+    cniPlugins:
       image:
         repository: ghcr.io/home-operations/cni-plugins
         tag: 1.9.1
-    multus:
-      image:
-        repository: ghcr.io/k8snetworkplumbingwg/multus-cni
-        tag: v4.2.4
-      resources:
-        requests:
-          cpu: 10m
-        limits:
-          memory: 32Mi
     cni:
-      netPath: /etc/cni/net.d
-      binPath: /opt/cni/bin
+      netDir: /etc/cni/net.d
+      binDir: /opt/cni/bin
+    resources:
+      requests:
+        cpu: 10m
+      limits:
+        memory: 32Mi
