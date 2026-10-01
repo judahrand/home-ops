@@ -11,4 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 1.0.5
-  url: oci://ghcr.io/home-operations/charts-mirror/ceph-csi-drivers
+  url: oci://ocharted.judahrand.net/ceph.github.io/ceph-csi-operator/ceph-csi-drivers
