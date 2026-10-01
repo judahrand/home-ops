@@ -25,5 +25,4 @@ spec:
   postBuild:
     substitute:
       APP: qbittorrent
-      GATUS_SUBDOMAIN: qb
       KOPIUR_CAPACITY: 2Gi

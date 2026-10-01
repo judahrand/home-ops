@@ -22,5 +22,4 @@ spec:
   postBuild:
     substitute:
       APP: matter-server
-      GATUS_SUBDOMAIN: matter
       KOPIUR_CAPACITY: 512Mi

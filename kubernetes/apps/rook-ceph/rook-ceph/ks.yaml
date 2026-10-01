@@ -43,7 +43,6 @@ spec:
   postBuild:
     substitute:
       APP: rook-ceph-cluster
-      GATUS_SUBDOMAIN: rook
   healthCheckExprs:
     - apiVersion: ceph.rook.io/v1
       kind: CephCluster

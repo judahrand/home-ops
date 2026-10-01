@@ -23,4 +23,3 @@ spec:
   postBuild:
     substitute:
       APP: frigate
-      KOPIUR_CAPACITY: 5Gi

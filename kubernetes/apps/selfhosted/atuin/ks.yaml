@@ -15,8 +15,6 @@ spec:
   postBuild:
     substitute:
       APP: atuin
-      GATUS_SUBDOMAIN: sh
-      KOPIUR_CAPACITY: 5Gi
   prune: true
   sourceRef:
     kind: GitRepository

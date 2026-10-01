@@ -25,5 +25,4 @@ spec:
   postBuild:
     substitute:
       APP: sabnzbd
-      GATUS_SUBDOMAIN: sab
       KOPIUR_CAPACITY: 1Gi

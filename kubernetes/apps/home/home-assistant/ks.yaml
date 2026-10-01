@@ -26,7 +26,5 @@ spec:
   postBuild:
     substitute:
       APP: home-assistant
-      GATUS_SUBDOMAIN: homeassistant
-      KOPIUR_CAPACITY: 5Gi
       KOPIUR_PUID: "568"
       KOPIUR_PGID: "568"
