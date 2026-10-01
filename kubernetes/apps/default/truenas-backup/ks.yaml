@@ -6,9 +6,6 @@ metadata:
   name: truenas-backup
 spec:
   targetNamespace: default
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/default/truenas-backup/app
   prune: true
   sourceRef:

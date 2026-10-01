@@ -9,9 +9,6 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/zeroscaler
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/home/frigate/app
   prune: true
   sourceRef:

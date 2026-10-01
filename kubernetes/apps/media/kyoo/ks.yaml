@@ -8,9 +8,6 @@ spec:
   targetNamespace: media
   components:
     - ../../../../components/kopiur/backup
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/media/kyoo/app
   prune: true
   sourceRef:

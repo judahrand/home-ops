@@ -21,8 +21,6 @@ spec:
       namespace: network
     - name: cloudnative-pg-cluster
       namespace: cnpg-system
-    - name: external-secrets
-      namespace: external-secrets
   postBuild:
     substitute:
       APP: home-assistant

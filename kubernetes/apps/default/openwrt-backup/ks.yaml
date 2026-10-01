@@ -6,9 +6,6 @@ metadata:
   name: openwrt-backup
 spec:
   targetNamespace: default
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/default/openwrt-backup/app
   prune: true
   sourceRef:

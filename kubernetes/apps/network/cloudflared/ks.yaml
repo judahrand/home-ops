@@ -15,7 +15,5 @@ spec:
     namespace: flux-system
   wait: false
   dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
     - name: external-dns-cloudflare
       namespace: network

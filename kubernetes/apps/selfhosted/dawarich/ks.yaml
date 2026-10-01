@@ -21,8 +21,6 @@ spec:
       namespace: selfhosted
     - name: onepassword-connect
       namespace: external-secrets
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   postBuild:
     substitute:
       APP: dawarich
@@ -35,11 +33,6 @@ metadata:
   name: dawarich-database
 spec:
   targetNamespace: selfhosted
-  dependsOn:
-    - name: cloudnative-pg
-      namespace: cnpg-system
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/selfhosted/dawarich/database
   prune: true
   sourceRef:
@@ -59,9 +52,6 @@ metadata:
   name: dawarich-valkey
 spec:
   targetNamespace: selfhosted
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/selfhosted/dawarich/valkey
   prune: true
   sourceRef:

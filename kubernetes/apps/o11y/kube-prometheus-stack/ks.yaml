@@ -6,9 +6,6 @@ metadata:
   name: kube-prometheus-stack
 spec:
   targetNamespace: o11y
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/o11y/kube-prometheus-stack/app
   postBuild:
     substitute:

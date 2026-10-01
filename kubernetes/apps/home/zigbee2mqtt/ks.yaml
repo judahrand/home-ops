@@ -11,8 +11,6 @@ spec:
   dependsOn:
     - name: mosquitto
       namespace: home
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/home/zigbee2mqtt/app
   prune: true
   sourceRef:

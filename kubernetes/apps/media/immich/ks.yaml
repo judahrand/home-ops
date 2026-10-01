@@ -30,11 +30,6 @@ metadata:
 spec:
   targetNamespace: media
   path: ./kubernetes/apps/media/immich/database
-  dependsOn:
-    - name: cloudnative-pg
-      namespace: cnpg-system
-    - name: external-secrets
-      namespace: external-secrets
   prune: true
   sourceRef:
     kind: GitRepository

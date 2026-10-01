@@ -17,9 +17,6 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   postBuild:
     substitute:
       APP: omada-controller

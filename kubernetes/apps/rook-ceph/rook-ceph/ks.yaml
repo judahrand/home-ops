@@ -6,9 +6,6 @@ metadata:
   name: rook-ceph
 spec:
   targetNamespace: rook-ceph
-  dependsOn:
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/rook-ceph/rook-ceph/app
   prune: false # never should be deleted
   sourceRef:
@@ -30,8 +27,6 @@ spec:
       namespace: rook-ceph
     - name: rook-ceph
       namespace: rook-ceph
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
   prune: false # never should be deleted
   sourceRef:

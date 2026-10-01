@@ -20,8 +20,6 @@ spec:
   dependsOn:
     - name: miroir
       namespace: miroir-system
-    - name: external-secrets
-      namespace: external-secrets
   postBuild:
     substitute:
       APP: sabnzbd

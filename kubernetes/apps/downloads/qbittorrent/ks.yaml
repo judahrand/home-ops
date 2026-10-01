@@ -20,8 +20,6 @@ spec:
   dependsOn:
     - name: multus-networks
       namespace: network
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   postBuild:
     substitute:
       APP: qbittorrent

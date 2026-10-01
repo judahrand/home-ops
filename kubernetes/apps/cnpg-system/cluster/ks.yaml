@@ -6,11 +6,6 @@ metadata:
   name: cloudnative-pg-cluster
 spec:
   targetNamespace: cnpg-system
-  dependsOn:
-    - name: cloudnative-pg
-      namespace: cnpg-system
-    - name: external-secrets
-      namespace: external-secrets
   path: ./kubernetes/apps/cnpg-system/cluster/app
   prune: true
   sourceRef:
