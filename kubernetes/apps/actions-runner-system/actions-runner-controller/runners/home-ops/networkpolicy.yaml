@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: &name home-ops-runner
+spec:
+  endpointSelector:
+    matchLabels:
+      runner: *name
+  enableDefaultDeny:
+    egress: false
+  egressDeny:
+    - toCIDRSet:
+        - cidr: 10.0.0.0/8
+          except:
+            - 10.244.0.0/16 # pod CIDR (talos/cluster.yaml.j2)
+            - 10.96.0.0/16 # service CIDR (talos/cluster.yaml.j2)
+            - 10.0.42.0/24 # node/LAN + LB subnet (talosctl image pull targets)
+    - toCIDR:
+        - 172.16.0.0/12
+    - toCIDRSet:
+        - cidr: 192.168.0.0/16
