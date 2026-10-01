@@ -16,6 +16,11 @@ spec:
       api:
         httpPort: 80
         imageRepository: ghcr.io/1password/connect-api
+        resources:
+          requests:
+            cpu: 50m
+          limits:
+            memory: 128Mi
         serviceMonitor:
           enabled: true
       credentialsName: onepassword-connect-credentials-secret
