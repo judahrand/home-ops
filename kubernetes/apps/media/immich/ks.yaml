@@ -6,7 +6,6 @@ metadata:
   name: immich
 spec:
   targetNamespace: media
-  components:
   path: ./kubernetes/apps/media/immich/app
   dependsOn:
     - name: immich-database

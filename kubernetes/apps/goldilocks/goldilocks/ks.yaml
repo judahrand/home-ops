@@ -6,7 +6,6 @@ metadata:
   name: goldilocks
 spec:
   targetNamespace: goldilocks
-  components:
   path: ./kubernetes/apps/goldilocks/goldilocks/app
   prune: true
   sourceRef:
