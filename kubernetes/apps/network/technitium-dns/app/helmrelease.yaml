@@ -3,12 +3,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: &app external-dns-technitium
-  namespace: &namespace network
+  name: &app technitium-dns
 spec:
   chartRef:
     kind: OCIRepository
-    name: external-dns-technitium
+    name: technitium-dns
   interval: 1h
   values:
     fullnameOverride: *app
@@ -20,7 +19,7 @@ spec:
       - name: "EXTERNAL_DNS_RFC2136_TSIG_SECRET"
         valueFrom:
           secretKeyRef:
-            name: &secret external-dns-technitium-secret
+            name: &secret technitium-dns-secret
             key: rfc2136-tsig-secret
       - name: "EXTERNAL_DNS_RFC2136_TSIG_KEYNAME"
         valueFrom:

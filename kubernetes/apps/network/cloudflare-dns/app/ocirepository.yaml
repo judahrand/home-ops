@@ -3,8 +3,7 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: external-dns-technitium
-  namespace: &namespace network
+  name: cloudflare-dns
 spec:
   interval: 15m
   layerSelector:
