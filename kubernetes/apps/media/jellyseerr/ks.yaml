@@ -8,6 +8,7 @@ spec:
   targetNamespace: media
   components:
     - ../../../../components/kopiur/backup
+    - ../../../../components/zeroscaler
   path: ./kubernetes/apps/media/jellyseerr/app
   prune: true
   sourceRef:
