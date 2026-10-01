@@ -20,9 +20,15 @@ spec:
           requests:
             cpu: 50m
           limits:
+            cpu: 200m
             memory: 128Mi
         serviceMonitor:
           enabled: true
       credentialsName: onepassword-connect-credentials-secret
       sync:
         imageRepository: ghcr.io/1password/connect-sync
+        resources:
+          requests:
+            cpu: 10m
+          limits:
+            cpu: 200m
