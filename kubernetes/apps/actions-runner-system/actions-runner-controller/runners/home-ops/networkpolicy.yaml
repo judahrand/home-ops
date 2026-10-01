@@ -21,3 +21,31 @@ spec:
         - 172.16.0.0/12
     - toCIDRSet:
         - cidr: 192.168.0.0/16
+---
+# Companion policy for the workflow job pods the k8s container hook creates when
+# a job defines a `container:`. Those carry `runner-pod=<runner-pod-name>` (set
+# by the hook) instead of `runner: home-ops-runner`, and can't be OR'd into one
+# endpointSelector, so they need their own policy. No-op until such a job runs.
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-ops-runner-jobs
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: runner-pod
+        operator: Exists
+  enableDefaultDeny:
+    egress: false
+  egressDeny:
+    - toCIDRSet:
+        - cidr: 10.0.0.0/8
+          except:
+            - 10.244.0.0/16 # pod CIDR (talos/cluster.yaml.j2)
+            - 10.96.0.0/16 # service CIDR (talos/cluster.yaml.j2)
+            - 10.0.42.0/24 # node/LAN + LB subnet (talosctl image pull targets)
+    - toCIDR:
+        - 172.16.0.0/12
+    - toCIDRSet:
+        - cidr: 192.168.0.0/16
