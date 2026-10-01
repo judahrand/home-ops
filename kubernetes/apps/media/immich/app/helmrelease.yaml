@@ -125,4 +125,4 @@ spec:
           type: persistentVolumeClaim
           storageClass: ceph-block
           accessMode: ReadWriteOnce
-          size: 10G
+          size: 20G
