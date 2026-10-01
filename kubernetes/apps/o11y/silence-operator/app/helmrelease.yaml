@@ -10,62 +10,6 @@ spec:
     name: silence-operator
   interval: 1h
   values:
-    image:
-      name: quay.io/giantswarm/silence-operator
-    operator:
-      config:
-        alertmanager:
-          service:
-            address: http://kube-prometheus-stack-alertmanager:9093
-    rbac:
-      create: true
-    extraDeploy:
-      - apiVersion: monitoring.giantswarm.io/v1alpha1
-        kind: Silence
-        metadata:
-          name: ceph-node-nfsmount-diskspace-warning
-          namespace: o11y
-        spec:
-          matchers:
-            - name: alertname
-              value: CephNodeDiskspaceWarning
-              isRegex: false
-            - name: mountpoint
-              value: /etc/nfsmount.conf
-              isRegex: false
-      - apiVersion: monitoring.giantswarm.io/v1alpha1
-        kind: Silence
-        metadata:
-          name: ceph-node-local-diskspace-warning
-          namespace: o11y
-        spec:
-          matchers:
-            - name: alertname
-              value: CephNodeDiskspaceWarning
-              isRegex: false
-            - name: device
-              value: /dev/.*
-              isRegex: true
-      - apiVersion: monitoring.giantswarm.io/v1alpha1
-        kind: Silence
-        metadata:
-          name: truenas-memory-high-utilization
-          namespace: o11y
-        spec:
-          matchers:
-            - name: alertname
-              value: NodeMemoryHighUtilization
-              isRegex: false
-            - name: instance
-              value: truenas.servers:9100
-              isRegex: false
-      - apiVersion: monitoring.giantswarm.io/v1alpha1
-        kind: Silence
-        metadata:
-          name: dockerhub-rate-limit-risk
-          namespace: o11y
-        spec:
-          matchers:
-            - name: alertname
-              value: DockerhubRateLimitRisk
-              isRegex: false
+    alertmanagerAddress: http://alertmanager-operated.o11y.svc.cluster.local:9093
+    networkPolicy:
+      enabled: false
