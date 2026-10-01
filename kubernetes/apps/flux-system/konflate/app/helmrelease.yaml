@@ -9,9 +9,6 @@ spec:
     kind: OCIRepository
     name: konflate
   interval: 1h
-  install:
-    remediation:
-      retries: -1
   values:
     config:
       repo: github://judahrand/home-ops
