@@ -71,7 +71,7 @@ spec:
           backup:
             image:
               repository: ghcr.io/home-operations/kopia
-              tag: 0.22.0
+              tag: 0.23.1
             command: ["/bin/sh", "-c"]
             args:
               - |
