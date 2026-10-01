@@ -10,11 +10,3 @@ resources:
   # Flux-Kustomizations
   - ./ceph-csi-drivers/ks.yaml
   - ./rook-ceph/ks.yaml
-patches:
-  - patch: |-
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-        name: _
-        labels:
-          pod-security.kubernetes.io/enforce: privileged

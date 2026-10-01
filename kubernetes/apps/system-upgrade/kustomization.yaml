@@ -8,13 +8,3 @@ components:
 resources:
   - ./namespace.yaml
   - ./tuppr/ks.yaml
-patches:
-  - patch: |-
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-        name: _
-        labels:
-          pod-security.kubernetes.io/enforce: privileged
-        annotations:
-          kustomize.toolkit.fluxcd.io/prune: disabled

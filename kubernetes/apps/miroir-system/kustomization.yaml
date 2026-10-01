@@ -8,11 +8,3 @@ components:
 resources:
   - ./namespace.yaml
   - ./miroir/ks.yaml
-patches:
-  - patch: |-
-      apiVersion: v1
-      kind: Namespace
-      metadata:
-        name: _
-        labels:
-          pod-security.kubernetes.io/enforce: privileged
