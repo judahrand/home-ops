@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app openwrt-backup
-  namespace: flux-system
+  name: openwrt-backup
 spec:
   targetNamespace: default
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
@@ -21,5 +17,3 @@ spec:
     namespace: flux-system
   wait: true
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m

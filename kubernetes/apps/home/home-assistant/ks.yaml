@@ -1,19 +1,14 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app home-assistant
-  namespace: flux-system
+  name: home-assistant
 spec:
   targetNamespace: home
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
   components:
     - ../../../../components/kopiur/backup
   interval: 30m
-  timeout: 5m
   path: ./kubernetes/apps/home/home-assistant/app
   prune: true
   sourceRef:
@@ -30,7 +25,7 @@ spec:
       namespace: external-secrets
   postBuild:
     substitute:
-      APP: *app
+      APP: home-assistant
       GATUS_SUBDOMAIN: homeassistant
       KOPIUR_CAPACITY: 5Gi
       KOPIUR_PUID: "568"

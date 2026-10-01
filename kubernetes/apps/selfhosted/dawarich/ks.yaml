@@ -1,19 +1,14 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fluxcd-community/flux2-schemas/main/kustomization-kustomize-v1.json
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &appname dawarich
-  namespace: &namespace selfhosted
+  name: dawarich
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *appname
+  targetNamespace: selfhosted
   components:
     - ../../../../components/kopiur/backup
   interval: 1h
-  timeout: 5m
   path: ./kubernetes/apps/selfhosted/dawarich/app
   prune: true
   sourceRef:
@@ -23,26 +18,23 @@ spec:
   wait: false
   dependsOn:
     - name: dawarich-database
-      namespace: *namespace
+      namespace: selfhosted
     - name: onepassword-connect
       namespace: external-secrets
     - name: rook-ceph-cluster
       namespace: rook-ceph
   postBuild:
     substitute:
-      APP: *appname
+      APP: dawarich
       KOPIUR_CAPACITY: 10Gi
 ---
+yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app dawarich-database
-  namespace: &namespace selfhosted
+  name: dawarich-database
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: selfhosted
   dependsOn:
     - name: cloudnative-pg
       namespace: cnpg-system
@@ -56,22 +48,17 @@ spec:
     namespace: flux-system
   wait: false
   interval: 1h
-  retryInterval: 2m
-  timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: dawarich-database
 ---
+yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app dawarich-valkey
-  namespace: &namespace selfhosted
+  name: dawarich-valkey
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: selfhosted
   dependsOn:
     - name: external-secrets
       namespace: external-secrets
@@ -83,8 +70,6 @@ spec:
     namespace: flux-system
   wait: false
   interval: 1h
-  retryInterval: 2m
-  timeout: 5m
   postBuild:
     substitute:
-      APP: *app
+      APP: dawarich-valkey

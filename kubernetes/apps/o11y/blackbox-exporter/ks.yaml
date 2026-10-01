@@ -4,12 +4,8 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: blackbox-exporter-lan
-  namespace: flux-system
 spec:
   targetNamespace: o11y
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: blackbox-exporter-lan
   path: ./kubernetes/apps/o11y/blackbox-exporter/lan
   prune: true
   sourceRef:
@@ -18,19 +14,14 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  timeout: 15m
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kustomize.toolkit.fluxcd.io/kustomization_v1.json
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: blackbox-exporter-vpn
-  namespace: flux-system
 spec:
   targetNamespace: o11y
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: blackbox-exporter-vpn
   dependsOn:
     - name: multus-networks
       namespace: network
@@ -42,4 +33,3 @@ spec:
     namespace: flux-system
   wait: false
   interval: 30m
-  timeout: 15m

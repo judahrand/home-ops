@@ -3,13 +3,9 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: &app barman-plugin
-  namespace: &namespace cnpg-system
+  name: barman-plugin
 spec:
-  targetNamespace: *namespace
-  commonMetadata:
-    labels:
-      app.kubernetes.io/name: *app
+  targetNamespace: cnpg-system
   path: ./kubernetes/apps/cnpg-system/barman-plugin/app
   prune: true
   sourceRef:
@@ -18,5 +14,3 @@ spec:
     namespace: flux-system
   wait: true
   interval: 30m
-  retryInterval: 1m
-  timeout: 5m
