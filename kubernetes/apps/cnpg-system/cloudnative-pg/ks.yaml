@@ -10,7 +10,7 @@ spec:
       kind: HelmRelease
       name: cloudnative-pg
       namespace: cnpg-system
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/cnpg-system/cloudnative-pg/app
   prune: true
   sourceRef:

@@ -16,7 +16,7 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  interval: 30m
+  interval: 1h
   postBuild:
     substitute:
       APP: immich
@@ -35,7 +35,7 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  interval: 30m
+  interval: 1h
   postBuild:
     substitute:
       APP: immich-database
@@ -57,7 +57,7 @@ spec:
     name: flux-system
     namespace: flux-system
   wait: false
-  interval: 30m
+  interval: 1h
   postBuild:
     substitute:
       APP: immich-tools

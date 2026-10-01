@@ -9,7 +9,7 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/zeroscaler
-  interval: 30m
+  interval: 1h
   path: ./kubernetes/apps/selfhosted/omada-controller/app
   prune: true
   sourceRef:
