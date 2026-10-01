@@ -6,10 +6,10 @@ metadata:
   name: node-feature-discovery
   namespace: kube-system
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: node-feature-discovery
+  interval: 1h
   values:
     nodeFeatureRule.createCRD: true
 

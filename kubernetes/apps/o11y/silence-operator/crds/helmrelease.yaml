@@ -5,7 +5,7 @@ kind: HelmRelease
 metadata:
   name: silence-operator-crds
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: silence-operator-crds
+  interval: 1h

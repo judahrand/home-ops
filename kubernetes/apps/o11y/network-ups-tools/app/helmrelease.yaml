@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app network-ups-tools
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: network-ups-tools
+  interval: 1h
   values:
     controllers:
       network-ups-tools:

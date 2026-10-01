@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: immich-tools
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: immich-tools
+  interval: 1h
   values:
     defaultPodOptions:
       securityContext:

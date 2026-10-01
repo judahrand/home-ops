@@ -7,10 +7,10 @@ metadata:
   annotations:
     kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: openwrt-backup
+  interval: 1h
   values:
     controllers:
       snapshot:

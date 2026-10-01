@@ -16,7 +16,6 @@ metadata:
   name: frigate
   namespace: &namespace home
 spec:
-  interval: 30m
   chart:
     spec:
       chart: frigate
@@ -25,6 +24,7 @@ spec:
         kind: HelmRepository
         name: blakeshome
         namespace: *namespace
+  interval: 1h
   values:
     image:
       repository: ghcr.io/blakeblackshear/frigate

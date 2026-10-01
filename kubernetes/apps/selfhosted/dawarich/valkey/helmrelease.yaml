@@ -4,10 +4,10 @@ kind: HelmRelease
 metadata:
   name: dawarich-valkey
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: dawarich-valkey
+  interval: 1h
   values:
     image:
       registry: ghcr.io

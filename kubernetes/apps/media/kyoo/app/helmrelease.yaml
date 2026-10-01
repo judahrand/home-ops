@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: &app kyoo
 spec:
-  interval: 15m
   chartRef:
     kind: OCIRepository
     name: kyoo
+  interval: 1h
   values:
     global:
       podAnnotations:

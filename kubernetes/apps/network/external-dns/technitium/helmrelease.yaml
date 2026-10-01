@@ -6,10 +6,10 @@ metadata:
   name: &app external-dns-technitium
   namespace: &namespace network
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: external-dns-technitium
+  interval: 1h
   values:
     fullnameOverride: *app
     provider:

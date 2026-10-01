@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: dawarich
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: dawarich
+  interval: 1h
   values:
     controllers:
       dawarich:

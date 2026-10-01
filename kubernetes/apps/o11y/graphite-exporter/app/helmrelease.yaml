@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: graphite-exporter
 spec:
-  interval: 1h
   chartRef:
     kind: OCIRepository
     name: graphite-exporter
+  interval: 1h
   dependsOn:
     - name: kube-prometheus-stack
       namespace: o11y

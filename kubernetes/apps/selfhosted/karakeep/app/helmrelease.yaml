@@ -5,10 +5,10 @@ kind: HelmRelease
 metadata:
   name: karakeep
 spec:
-  interval: 30m
   chartRef:
     kind: OCIRepository
     name: karakeep
+  interval: 1h
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
