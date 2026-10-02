@@ -97,4 +97,7 @@ spec:
         enabled: true
     networkPolicy:
       enabled: true
-      type: cilium
+      # The cilium flavor allows DNS to kube-dns endpoints alone, so a runner
+      # scheduled onto a node without a local CoreDNS replica cannot resolve
+      # anything. The default flavor allows port 53 to any peer.
+      type: default
