@@ -1,34 +1,24 @@
 [env]
+FLATE_PATH = '{{config_root}}/kubernetes/flux/cluster'
 KUBECONFIG = "{{config_root}}/kubeconfig"
 MINIJINJA_CONFIG_FILE = "{{config_root}}/.minijinja.toml"
 TALOSCONFIG = "{{config_root}}/talosconfig"
-FLATE_PATH = "{{config_root}}/kubernetes/flux/cluster"
 JUST_UNSTABLE = "1"
-LEFTHOOK_OUTPUT = "false"
-
-_.file = ["{{config_root}}/.secrets.env"]
-
-[settings]
-experimental = true
-lockfile = true
 
 [hooks]
 postinstall = "lefthook install"
 
 [tools]
-"python" = "3.14.8"
-"aqua:helm/helm" = "4.3.0"
-"aqua:helmfile/helmfile" = "1.8.1"
+"1password-cli" = "2.35.0"
+actionlint = "1.7.12"
 "github:home-operations/flate" = "v0.6.5"
 "github:mitsuhiko/minijinja" = "2.24.0"
-actionlint = "1.7.12"
 jq = "1.8.2"
 just = "1.58.0"
 lefthook = "2.1.16"
-opencode = "1.18.34"
-oxfmt = "0.70.0"
+node = "26.10.0"
+oxfmt = "0.71.0"
 shellcheck = "0.11.0"
 talos = "1.14.2"
-uv = "0.11.18"
 yq = "4.54.1"
 zizmor = "1.30.1"
