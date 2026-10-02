@@ -16,12 +16,6 @@ spec:
   values:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
-    image:
-      # Same as runner.image: the chart's released digest wins over any tag, so
-      # pin the main build that carries the session header (kritika#322). main
-      # at 914bb3b, 2026-10-02.
-      digest: "sha256:855b4bc53229bf1d4a0ebdd018d9b67288864b0cf307bb09731704bdb217180d"
-      tag: ""
     config:
       webUrl: https://{{ .Release.Name }}.judahrand.net
       # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
@@ -67,13 +61,6 @@ spec:
       runner:
         existingSecret: kritika-postgres-runner
     runner:
-      image:
-        # The chart defaults `runner.image.digest` to the released -tools
-        # digest, which no tag overrides. Clear it and pin the main -tools
-        # build that has the session header (kritika#322). main-tools at
-        # 914bb3b, 2026-10-02.
-        digest: "sha256:dcbf410cbf4902069b6da8c4d2860e0a06e5d842af2ccda9e336190bace09107"
-        tag: ""
       resources:
         requests:
           cpu: 10m
