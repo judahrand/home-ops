@@ -16,26 +16,19 @@ spec:
   values:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
+    image:
+      # Same as runner.image: the chart's released digest wins over any tag, so
+      # pin the main build that carries the session header (kritika#322). main
+      # at 914bb3b, 2026-10-02.
+      digest: "sha256:855b4bc53229bf1d4a0ebdd018d9b67288864b0cf307bb09731704bdb217180d"
+      tag: ""
     config:
       webUrl: https://{{ .Release.Name }}.judahrand.net
       # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
       # repository content and run what the model asks.
       runnerRuntimeClass: gvisor
-      # Reviews and the embedder both go through OpenRouter for now. OpenCode
-      # Go rejects kritika's requests for a missing `x-opencode-session` header,
-      # which kritika 0.0.4 cannot send:
-      #   400 MissingSessionID: Request is missing x-opencode-session
-      # Switch back to `opencode` (type openai, baseUrl
-      # https://opencode.ai/zen/go/v1, model opencode/deepseek-v4.1-flash) once
-      # kritika can send a per-conversation session header.
-      providersName: openrouter
-      providersType: openrouter
-      providersApiKey:
-        valueFrom:
-          secretKeyRef:
-            name: kritika-secret
-            key: KRITIKA_PROVIDERS_API_KEY
-      defaultsModelsReview: openrouter/deepseek/deepseek-v4.1-flash
+      defaultsModelsReview: opencode/deepseek-v4.1-flash
+      defaultsModelsFallback: openrouter/deepseek/deepseek-v4.1-flash
       embeddingModel: openrouter/voyageai/voyage-code-4
       embeddingDims: 1024
     configFile:
@@ -45,6 +38,13 @@ spec:
           clientId: { env: KRITIKA_GITHUB_CLIENT_ID }
           privateKey: { env: KRITIKA_GITHUB_PRIVATE_KEY }
           webhookSecret: { env: KRITIKA_GITHUB_WEBHOOK_SECRET }
+      providers:
+        opencode:
+          type: opencode
+          apiKey: { env: OPENCODE_API_KEY }
+        openrouter:
+          type: openrouter
+          apiKey: { env: OPENROUTER_API_KEY }
       egress:
         allowHosts: [raw.githubusercontent.com]
       defaults:
@@ -68,7 +68,12 @@ spec:
         existingSecret: kritika-postgres-runner
     runner:
       image:
-        tag: 0.0.4-tools
+        # The chart defaults `runner.image.digest` to the released -tools
+        # digest, which no tag overrides. Clear it and pin the main -tools
+        # build that has the session header (kritika#322). main-tools at
+        # 914bb3b, 2026-10-02.
+        digest: "sha256:dcbf410cbf4902069b6da8c4d2860e0a06e5d842af2ccda9e336190bace09107"
+        tag: ""
       resources:
         requests:
           cpu: 10m
