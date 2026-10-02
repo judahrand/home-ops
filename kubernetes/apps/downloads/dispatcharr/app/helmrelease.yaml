@@ -31,7 +31,7 @@ spec:
           app:
             image:
               repository: ghcr.io/dispatcharr/dispatcharr
-              tag: 0.25.1@sha256:2bdcfd9dc113e743ccb3ea424e75e19b2281309b05a7d649c3717471b9f70f03
+              tag: 0.31.0@sha256:f81924fa3dbfeb463b3908be7e086bf58aacbd2ba56062bfb555ee3a471acf8f
             env:
               TZ: Europe/London
               CELERY_BROKER_URL: redis://localhost:6379/0
