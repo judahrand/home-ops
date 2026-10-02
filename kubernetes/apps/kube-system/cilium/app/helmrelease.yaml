@@ -15,7 +15,11 @@ spec:
       enabled: true
       bbr: true
     bpf:
-      datapathMode: netkit
+      # netkit is not supported by sandboxed runtimes: gVisor (runsc) and Kata
+      # emit frames the netkit datapath drops as Unsupported L3 protocol, so a
+      # sandboxed pod cannot resolve DNS or reach anything else. Same reason
+      # and value as onedr0p/home-ops.
+      datapathMode: veth
       masquerade: true
       preallocateMaps: true
       tproxy: true
