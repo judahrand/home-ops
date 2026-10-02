@@ -3,16 +3,18 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres17
+  name: kritika-postgres
 spec:
-  instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.5-1@sha256:a584c18aa3d292b5bec7d0bce76b26edcd0a53555adbf607d14b145191a7b7fd
+  instances: 2
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.3-system-bookworm@sha256:9a2cc9f0bf9a67827e214484f83362f1829b3ac839da6d2c2cff902a720d5e5f
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
-  enablePDB: true
+
+  affinity:
+    podAntiAffinityType: required
 
   storage:
-    size: 20Gi
+    size: 10Gi
     storageClass: miroir-slow-local
 
   superuserSecret:
@@ -20,52 +22,61 @@ spec:
 
   enableSuperuserAccess: true
 
+  # kritika needs VectorChord (`vchord`) and pgvector (`vector`); VectorChord is
+  # mounted from TensorChord's scratch image and preloaded. The `vector` and
+  # `vchord` extensions are created by ./database.yaml.
   postgresql:
+    extensions:
+      - name: vchord
+        image:
+          reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1@sha256:bdea43bed2a414e21bbf71767bf6f0739747ac480b267b51772dc214ac28dcb3
+        dynamic_library_path:
+          - /usr/lib/postgresql/18/lib/
+        extension_control_path:
+          - /usr/share/postgresql/18/
+    shared_preload_libraries:
+      - "vchord.so"
     parameters:
-      max_connections: "400"
+      max_connections: "100"
       shared_buffers: 256MB
     synchronous:
       method: any
       number: 1
       dataDurability: preferred
 
+  # kritika wants three roles: `kritika` owns the database and runs migrations,
+  # `kritika_app` is the row-level-security application role (must not own the
+  # tables), `kritika_runner` is what review Jobs get.
   managed:
     roles:
-      - name: authentik
+      - name: kritika
         ensure: present
         login: true
         superuser: false
         inRoles: []
         passwordSecret:
-          name: cloudnative-pg-authentik-secret
-      - name: homeassistant
+          name: kritika-postgres-credentials
+      - name: kritika_app
         ensure: present
         login: true
         superuser: false
         inRoles: []
         passwordSecret:
-          name: cloudnative-pg-homeassistant-secret
-      - name: kyoo
+          name: kritika-postgres-app
+      - name: kritika_runner
         ensure: present
         login: true
         superuser: false
         inRoles: []
         passwordSecret:
-          name: cloudnative-pg-kyoo-secret
-      - name: vikunja
-        ensure: present
-        login: true
-        superuser: false
-        inRoles: []
-        passwordSecret:
-          name: cloudnative-pg-vikunja-secret
+          name: kritika-postgres-runner
 
   resources:
     requests:
       cpu: 20m
       memory: 512Mi
     limits:
-      memory: 4Gi
+      memory: 2Gi
 
   # PodMonitor is managed explicitly in ./podmonitor.yaml.
 
@@ -73,10 +84,10 @@ spec:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
-        barmanObjectName: nas-backup
+        barmanObjectName: kritika-postgres
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster postgres17-v5
+        serverName: &currentCluster kritika-postgres-v1
 
   # To restore: uncomment the block below, bump the archiver `serverName` above
   # to the next version, and delete the Cluster together with its PVCs so the
@@ -84,20 +95,14 @@ spec:
   #
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster postgres17-plain
+  #     source: &previousCluster kritika-postgres-v0
   #     recoveryTarget:
-  #       backupID: 20260830T000002
+  #       backupID: 20260101T000000
   #       targetImmediate: true
   # externalClusters:
   #   - name: *previousCluster
   #     plugin:
   #       name: barman-cloud.cloudnative-pg.io
   #       parameters:
-  #         barmanObjectName: nas-backup-plain
+  #         barmanObjectName: kritika-postgres
   #         serverName: *previousCluster
-  #
-  # The `postgres17-plain` copy has to be re-published first (see commit
-  # fd1b19bb), because barman-cloud-restore cannot stream the bzip2 originals
-  # from MinIO (barman#1100 / cnpg/charts#788). Restoring from the current
-  # `postgres17-v5` archive above with `nas-backup` needs no such dance: since
-  # 2026-09-29 base backups are gzip.

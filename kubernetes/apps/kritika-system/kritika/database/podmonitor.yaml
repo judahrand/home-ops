@@ -1,0 +1,16 @@
+---
+# Explicit PodMonitor, manually managed (the operator's
+# `.spec.monitoring.enablePodMonitor` is deprecated). Unique name so the
+# operator does not manage or overwrite it.
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: kritika-postgres-podmonitor
+spec:
+  namespaceSelector: {}
+  selector:
+    matchLabels:
+      cnpg.io/cluster: kritika-postgres
+      cnpg.io/podRole: instance
+  podMetricsEndpoints:
+    - port: metrics

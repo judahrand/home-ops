@@ -1,0 +1,100 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kritika
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kritika
+  interval: 1h
+  install:
+    # The first install can race the ExternalSecret; retry until it exists.
+    remediation:
+      retries: -1
+  values:
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    config:
+      webUrl: https://{{ .Release.Name }}.judahrand.net
+      # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
+      # repository content and run what the model asks.
+      runnerRuntimeClass: gvisor
+      # OpenCode Go serves an OpenAI-compatible chat-completions API, so the
+      # provider is `openai` with its base URL; a model is `<provider>/<model>`.
+      providersName: opencode
+      providersType: openai
+      providersBaseUrl: https://opencode.ai/zen/go/v1
+      providersApiKey:
+        valueFrom:
+          secretKeyRef:
+            name: kritika-secret
+            key: KRITIKA_PROVIDERS_API_KEY
+      defaultsModelsReview: opencode/deepseek-v4.1-flash
+      # Embedding: OpenCode Go serves no embedder, so an OpenRouter provider
+      # (declared in configFile) supplies voyage-code-4 for the similar-code index.
+      embeddingModel: openrouter/voyageai/voyage-code-4
+      embeddingDims: 1024
+    configFile:
+      apps:
+        github:
+          accounts: [judahrand]
+          clientId: { env: KRITIKA_GITHUB_CLIENT_ID }
+          privateKey: { env: KRITIKA_GITHUB_PRIVATE_KEY }
+          webhookSecret: { env: KRITIKA_GITHUB_WEBHOOK_SECRET }
+      # The review model's provider is the chart's `config` (OpenCode Go); the
+      # embedder needs a second provider, which the config file declares.
+      providers:
+        openrouter:
+          type: openrouter
+          apiKey: { env: OPENROUTER_API_KEY }
+      embedding:
+        model: openrouter/voyageai/voyage-code-4
+        dims: 1024
+      egress:
+        allowHosts: [raw.githubusercontent.com]
+      defaults:
+        agent: { commands: [gh, curl, jq, yq, rg, fd] }
+    envFrom:
+      - secretRef:
+          name: kritika-secret
+    database:
+      app:
+        existingSecret: kritika-postgres-app
+      owner:
+        existingSecret: kritika-postgres-credentials
+      runner:
+        existingSecret: kritika-postgres-runner
+    runner:
+      image:
+        tag: 0.0.4-tools
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 1Gi
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 512Mi
+    httpRoute:
+      enabled: true
+      annotations:
+        gatus.home-operations.com/endpoint: |-
+          conditions: ["[STATUS] == 200"]
+          path: /api/v1/meta
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+      hostnames:
+        - "{{ .Release.Name }}.judahrand.net"
+    monitoring:
+      serviceMonitor:
+        enabled: true
+    networkPolicy:
+      enabled: true
+      type: cilium
