@@ -6,9 +6,9 @@ metadata:
   name: immich-database
 spec:
   instances: 3
-  # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:18.3-system-bookworm@sha256:9a2cc9f0bf9a67827e214484f83362f1829b3ac839da6d2c2cff902a720d5e5f
   primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
   enablePDB: true
 
   storage:
@@ -24,7 +24,6 @@ spec:
     extensions:
       - name: vchord
         image:
-          # renovate: datasource=docker depName=ghcr.io/tensorchord/vchord-scratch
           reference: ghcr.io/tensorchord/vchord-scratch:pg18-v1.1.1@sha256:bdea43bed2a414e21bbf71767bf6f0739747ac480b267b51772dc214ac28dcb3
         dynamic_library_path:
           - /usr/lib/postgresql/18/lib/
@@ -35,6 +34,10 @@ spec:
     parameters:
       max_connections: "100"
       shared_buffers: 256MB
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: preferred
 
   managed:
     roles:

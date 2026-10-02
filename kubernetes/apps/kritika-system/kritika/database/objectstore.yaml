@@ -1,0 +1,25 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: kritika-postgres
+spec:
+  retentionPolicy: 30d
+  configuration:
+    destinationPath: s3://cloudnative-pg/
+    endpointURL: http://truenas.servers:9000
+    s3Credentials:
+      accessKeyId:
+        name: cloudnative-pg-secret
+        key: aws-access-key-id
+      secretAccessKey:
+        name: cloudnative-pg-secret
+        key: aws-secret-access-key
+    # gzip, not bzip2: barman-cloud-restore streams and decompresses inside the
+    # socket read path, and bzip2 is slow enough that large base backups die
+    # mid-download with "IncompleteRead" (barman#1100, cnpg/charts#788).
+    data:
+      compression: gzip
+    wal:
+      compression: bzip2
+      # restore breaks when raised to 8 (plugin-barman-cloud#516)
+      maxParallel: 1
