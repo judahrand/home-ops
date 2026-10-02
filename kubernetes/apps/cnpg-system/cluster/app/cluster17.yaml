@@ -6,7 +6,7 @@ metadata:
   name: postgres17
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.11-202609281634-standard-bookworm@sha256:61207ab4e051645dcb9901e1ec9358b01e4adb45624cb4425be1eab27eac6508
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-202609281634-standard-bookworm@sha256:2257decb7de100886c14262e646a6dc10b70057005dbc7cae4b6693282727e2b
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
   enablePDB: true
@@ -76,7 +76,7 @@ spec:
         barmanObjectName: nas-backup
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster postgres17-v5
+        serverName: &currentCluster postgres17-v6
 
   # To restore: uncomment the block below, bump the archiver `serverName` above
   # to the next version, and delete the Cluster together with its PVCs so the
@@ -96,8 +96,3 @@ spec:
   #         barmanObjectName: nas-backup-plain
   #         serverName: *previousCluster
   #
-  # The `postgres17-plain` copy has to be re-published first (see commit
-  # fd1b19bb), because barman-cloud-restore cannot stream the bzip2 originals
-  # from MinIO (barman#1100 / cnpg/charts#788). Restoring from the current
-  # `postgres17-v5` archive above with `nas-backup` needs no such dance: since
-  # 2026-09-29 base backups are gzip.
