@@ -21,19 +21,21 @@ spec:
       # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
       # repository content and run what the model asks.
       runnerRuntimeClass: gvisor
-      # OpenCode Go serves an OpenAI-compatible chat-completions API, so the
-      # provider is `openai` with its base URL; a model is `<provider>/<model>`.
-      providersName: opencode
-      providersType: openai
-      providersBaseUrl: https://opencode.ai/zen/go/v1
+      # Reviews and the embedder both go through OpenRouter for now. OpenCode
+      # Go rejects kritika's requests for a missing `x-opencode-session` header,
+      # which kritika 0.0.4 cannot send:
+      #   400 MissingSessionID: Request is missing x-opencode-session
+      # Switch back to `opencode` (type openai, baseUrl
+      # https://opencode.ai/zen/go/v1, model opencode/deepseek-v4.1-flash) once
+      # kritika can send a per-conversation session header.
+      providersName: openrouter
+      providersType: openrouter
       providersApiKey:
         valueFrom:
           secretKeyRef:
             name: kritika-secret
             key: KRITIKA_PROVIDERS_API_KEY
-      defaultsModelsReview: opencode/deepseek-v4.1-flash
-      # Embedding: OpenCode Go serves no embedder, so an OpenRouter provider
-      # (declared in configFile) supplies voyage-code-4 for the similar-code index.
+      defaultsModelsReview: openrouter/deepseek/deepseek-v4.1-flash
       embeddingModel: openrouter/voyageai/voyage-code-4
       embeddingDims: 1024
     configFile:
@@ -43,15 +45,6 @@ spec:
           clientId: { env: KRITIKA_GITHUB_CLIENT_ID }
           privateKey: { env: KRITIKA_GITHUB_PRIVATE_KEY }
           webhookSecret: { env: KRITIKA_GITHUB_WEBHOOK_SECRET }
-      # The review model's provider is the chart's `config` (OpenCode Go); the
-      # embedder needs a second provider, which the config file declares.
-      providers:
-        openrouter:
-          type: openrouter
-          apiKey: { env: OPENROUTER_API_KEY }
-      embedding:
-        model: openrouter/voyageai/voyage-code-4
-        dims: 1024
       egress:
         allowHosts: [raw.githubusercontent.com]
       defaults:
