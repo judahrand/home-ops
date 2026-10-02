@@ -5,11 +5,17 @@ kind: Cluster
 metadata:
   name: dawarich-database
 spec:
-  instances: 1
+  instances: 2
   # renovate: datasource=docker depName=ghcr.io/cloudnative-pg/postgresql
   imageName: ghcr.io/cloudnative-pg/postgresql:18.3-system-bookworm@sha256:9a2cc9f0bf9a67827e214484f83362f1829b3ac839da6d2c2cff902a720d5e5f
   primaryUpdateStrategy: unsupervised
+  primaryUpdateMethod: switchover
   enablePDB: true
+
+  # Keep the primary and standby on separate nodes so a node restart can fail
+  # over to the replica instead of taking the database down entirely.
+  affinity:
+    podAntiAffinityType: required
 
   storage:
     size: 10Gi
@@ -30,6 +36,10 @@ spec:
     parameters:
       max_connections: "100"
       shared_buffers: 256MB
+    synchronous:
+      method: any
+      number: 1
+      dataDurability: preferred
 
   managed:
     roles:
