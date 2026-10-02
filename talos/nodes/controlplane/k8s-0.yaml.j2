@@ -8,7 +8,7 @@ hostname: k8s-0
 apiVersion: v1alpha1
 kind: UnattendedInstallConfig
 installer:
-  image: factory.talos.dev/metal-installer/{{ schematic }}:v1.14.1
+  image: factory.talos.dev/metal-installer/{{ schematic }}:v1.14.2
 provisioning:
   diskSelector:
     match: disk.model == "WD_BLACK SN770 1TB"
