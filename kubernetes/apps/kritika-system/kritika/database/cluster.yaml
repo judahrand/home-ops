@@ -6,7 +6,7 @@ metadata:
   name: kritika-postgres
 spec:
   instances: 2
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.3-system-bookworm@sha256:9a2cc9f0bf9a67827e214484f83362f1829b3ac839da6d2c2cff902a720d5e5f
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-202609281634-standard-bookworm@sha256:2257decb7de100886c14262e646a6dc10b70057005dbc7cae4b6693282727e2b
   primaryUpdateStrategy: unsupervised
   primaryUpdateMethod: switchover
 
