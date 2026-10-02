@@ -85,6 +85,14 @@ spec:
       hostnames:
         - "{{ .Release.Name }}.judahrand.net"
     monitoring:
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+      prometheusRule:
+        enabled: true
       serviceMonitor:
         enabled: true
     networkPolicy:
