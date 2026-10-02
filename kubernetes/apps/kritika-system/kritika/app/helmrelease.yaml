@@ -48,7 +48,14 @@ spec:
       egress:
         allowHosts: [raw.githubusercontent.com]
       defaults:
-        agent: { commands: [gh, curl, jq, yq, rg, fd] }
+        agent:
+          # Kritika's fleet default is 60 steps. On a small diff the agent can
+          # spend minutes exploring, overrun the 15m runner deadline, get
+          # cancelled, and be reviewed again on the next poll. On the last step
+          # kritika appends "submit now", so a lower cap still produces a
+          # review, just a less exhaustive one. Raise it if reviews feel thin.
+          maxSteps: 20
+          commands: [gh, curl, jq, yq, rg, fd]
     envFrom:
       - secretRef:
           name: kritika-secret
