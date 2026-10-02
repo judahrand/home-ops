@@ -18,7 +18,7 @@ spec:
         fsGroup: 568
       containers:
         - name: main
-          image: ghcr.io/koenkk/zigbee2mqtt:2.3.0@sha256:42de8c55dc578a8404a18c43aeb2b7c75be7988179abe9a8195d99a9e7ebb917
+          image: ghcr.io/koenkk/zigbee2mqtt:2.14.2@sha256:addbfb08fcef2e4477de1535636118241e10d13e898fbe4d9faba8a4d7396311
           envFrom:
             - configMapRef:
                 name: zigbee2mqtt-config

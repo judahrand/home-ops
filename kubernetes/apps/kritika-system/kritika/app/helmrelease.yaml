@@ -21,19 +21,8 @@ spec:
       # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
       # repository content and run what the model asks.
       runnerRuntimeClass: gvisor
-      # OpenCode Go serves an OpenAI-compatible chat-completions API, so the
-      # provider is `openai` with its base URL; a model is `<provider>/<model>`.
-      providersName: opencode
-      providersType: openai
-      providersBaseUrl: https://opencode.ai/zen/go/v1
-      providersApiKey:
-        valueFrom:
-          secretKeyRef:
-            name: kritika-secret
-            key: KRITIKA_PROVIDERS_API_KEY
       defaultsModelsReview: opencode/deepseek-v4.1-flash
-      # Embedding: OpenCode Go serves no embedder, so an OpenRouter provider
-      # (declared in configFile) supplies voyage-code-4 for the similar-code index.
+      defaultsModelsFallback: openrouter/deepseek/deepseek-v4.1-flash
       embeddingModel: openrouter/voyageai/voyage-code-4
       embeddingDims: 1024
     configFile:
@@ -43,19 +32,24 @@ spec:
           clientId: { env: KRITIKA_GITHUB_CLIENT_ID }
           privateKey: { env: KRITIKA_GITHUB_PRIVATE_KEY }
           webhookSecret: { env: KRITIKA_GITHUB_WEBHOOK_SECRET }
-      # The review model's provider is the chart's `config` (OpenCode Go); the
-      # embedder needs a second provider, which the config file declares.
       providers:
+        opencode:
+          type: opencode
+          apiKey: { env: OPENCODE_API_KEY }
         openrouter:
           type: openrouter
           apiKey: { env: OPENROUTER_API_KEY }
-      embedding:
-        model: openrouter/voyageai/voyage-code-4
-        dims: 1024
       egress:
         allowHosts: [raw.githubusercontent.com]
       defaults:
-        agent: { commands: [gh, curl, jq, yq, rg, fd] }
+        agent:
+          # Kritika's fleet default is 60 steps. On a small diff the agent can
+          # spend minutes exploring, overrun the 15m runner deadline, get
+          # cancelled, and be reviewed again on the next poll. On the last step
+          # kritika appends "submit now", so a lower cap still produces a
+          # review, just a less exhaustive one. Raise it if reviews feel thin.
+          maxSteps: 20
+          commands: [gh, curl, jq, yq, rg, fd]
     envFrom:
       - secretRef:
           name: kritika-secret
@@ -67,8 +61,6 @@ spec:
       runner:
         existingSecret: kritika-postgres-runner
     runner:
-      image:
-        tag: 0.0.4-tools
       resources:
         requests:
           cpu: 10m
@@ -93,8 +85,15 @@ spec:
       hostnames:
         - "{{ .Release.Name }}.judahrand.net"
     monitoring:
+      dashboards:
+        enabled: true
+        grafanaOperator:
+          enabled: true
+          matchLabels:
+            dashboards: grafana
+      prometheusRule:
+        enabled: true
       serviceMonitor:
         enabled: true
     networkPolicy:
       enabled: true
-      type: cilium

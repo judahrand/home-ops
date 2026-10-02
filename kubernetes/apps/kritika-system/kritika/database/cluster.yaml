@@ -36,9 +36,6 @@ spec:
           - /usr/share/postgresql/18/
     shared_preload_libraries:
       - "vchord.so"
-    parameters:
-      max_connections: "100"
-      shared_buffers: 256MB
     synchronous:
       method: any
       number: 1

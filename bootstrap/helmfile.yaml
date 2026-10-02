@@ -16,21 +16,21 @@ releases:
   - name: coredns
     namespace: kube-system
     chart: oci://ghcr.io/coredns/charts/coredns
-    version: 1.46.0
+    version: 1.48.2
     values: ["../kubernetes/apps/kube-system/coredns/app/helm/values.yaml"]
     needs: ["kube-system/cilium"]
 
   - name: spegel
     namespace: kube-system
     chart: oci://ghcr.io/spegel-org/helm-charts/spegel
-    version: 0.7.1
+    version: 0.7.4
     values: ["../kubernetes/apps/kube-system/spegel/app/helm/values.yaml"]
     needs: ["kube-system/coredns"]
 
   - name: cert-manager
     namespace: cert-manager
     chart: oci://quay.io/jetstack/charts/cert-manager
-    version: v1.20.2
+    version: v1.21.2
     values: ["../kubernetes/apps/cert-manager/cert-manager/app/helm/values.yaml"]
     needs: ["kube-system/spegel"]
 

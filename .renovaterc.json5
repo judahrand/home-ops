@@ -5,7 +5,7 @@
     "github>home-operations/renovate-presets//apps/cnpg.json5#8.1.0",
     "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#8.1.0",
     "github>home-operations/renovate-presets//apps/talosFactory.json5#8.1.0",
-    ":timezone(America/New_York)",
+    ":timezone(Europe/London)",
   ],
   lockFileMaintenance: {
     enabled: true,
@@ -13,8 +13,15 @@
     commitMessageExtra: "({{manager}})",
     additionalBranchPrefix: "{{manager}}-",
   },
-  suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
-  ignorePaths: ["**/resources/**"],
+  hostRules: [
+    {
+      description: "Authenticate against the ocharted OCI registry",
+      matchHost: "ocharted.turbo.ac",
+      hostType: "docker",
+      username: "{{ secrets.OCHARTED_USERNAME }}",
+      password: "{{ secrets.OCHARTED_PASSWORD }}",
+    },
+  ],
   packageRules: [
     // Auto-merge rules
     {
@@ -63,12 +70,13 @@
       automergeType: "branch",
       ignoreTests: true,
     },
-    // Override rules (helmfile dep name comes from the base preset)
     {
-      description: "Override Talos Installer Package Name",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["/factory\\.talos\\.dev/"],
-      overridePackageName: "ghcr.io/siderolabs/installer",
+      description: "Auto-merge Renovate Presents",
+      matchManagers: ["renovate-config"],
+      matchUpdateTypes: ["minor", "patch"],
+      automerge: true,
+      automergeType: "branch",
+      ignoreTests: true,
     },
     // Grouping rules
     {
@@ -85,11 +93,11 @@
       description: "Flux Operator Group",
       groupName: "flux-operator",
       matchDatasources: ["docker"],
-      matchPackageNames: ["/flux-operator/", "/flux-instance/", "/flux-operator-manifests/"],
+      matchPackageNames: ["/flux-operator/", "/flux-instance/"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
-      minimumGroupSize: 3,
+      minimumGroupSize: 2,
     },
     {
       description: "Kubernetes Group",
@@ -112,7 +120,7 @@
       // whichever update sorts first
       description: "Mise Tools Group",
       matchManagers: ["mise"],
-      matchDepNames: ["!oxfmt"],
+      matchDepNames: ["!node", "!oxfmt"],
       groupName: "mise tools",
       groupSlug: "mise-tools",
     },
@@ -127,18 +135,21 @@
       minimumGroupSize: 2,
     },
     {
-      // Unites the mise pin, the factory installer image and the tuppr upgrade version
+      // After the mise tools catch-all so talos wins its own group; unites the
+      // mise pin, the factory installer image, and the tuppr upgrade version
       description: "Talos Group",
       groupName: "talos",
-      matchPackageNames: [
-        "ghcr.io/siderolabs/installer",
-        "siderolabs/talos",
-        "/factory\\.talos\\.dev/",
-      ],
+      matchPackageNames: ["siderolabs/talos"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
       minimumGroupSize: 2,
+    },
+    {
+      description: "1Password CLI is not resolvable on GitHub, bump manually",
+      matchManagers: ["mise"],
+      matchDepNames: ["1password-cli"],
+      enabled: false,
     },
     {
       description: "Keep CloudNativePG on Postgres 18 until the extension images move with it",
@@ -146,26 +157,11 @@
       matchPackageNames: ["ghcr.io/cloudnative-pg/postgresql"],
       allowedVersions: "/^18\\./",
     },
-    {
-      // The shared `postgres17` cluster predates the Postgres 18 clusters and
-      // still serves authentik/homeassistant/kyoo, so exempt it from the pin.
-      description: "Keep the shared postgres17 cluster on Postgres 17",
-      matchDatasources: ["docker"],
-      matchPackageNames: ["ghcr.io/cloudnative-pg/postgresql"],
-      matchFileNames: ["kubernetes/apps/cnpg-system/cluster/**"],
-      allowedVersions: "/^17\\./",
-    },
-    // Changelog rules (1Password Connect + Cloudflared come from the base preset)
-    {
-      description: "Changelog URL for Spegel",
-      matchPackageNames: ["/spegel/"],
-      changelogUrl: "https://github.com/spegel-org/spegel/blob/main/CHANGELOG.md",
-    },
     // Scheduling rules
     {
       description: "High-cadence mise tools monthly",
       matchManagers: ["mise"],
-      matchDepNames: ["oxfmt"],
+      matchDepNames: ["node", "oxfmt"],
       schedule: ["before 3am on the first day of the month"],
     },
     // Labeling rules
