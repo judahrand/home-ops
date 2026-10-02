@@ -97,4 +97,3 @@ spec:
         enabled: true
     networkPolicy:
       enabled: true
-      type: cilium
