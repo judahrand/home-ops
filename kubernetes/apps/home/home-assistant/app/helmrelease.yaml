@@ -124,7 +124,7 @@ spec:
             namespace: network
         rules:
           - backendRefs:
-              - name: app
+              - identifier: app
                 port: *code-port
 
     persistence:
