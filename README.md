@@ -10,32 +10,24 @@ _... managed with Flux, Renovate, and GitHub Actions_ <img src="https://fonts.gs
 
 <div align="center">
 
-[![Discord](https://img.shields.io/discord/673534664354430999?style=for-the-badge&label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;
-[![Talos](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Ftalos_version&style=for-the-badge&logo=talos&logoColor=white&color=blue&label=%20)](https://talos.dev)&nbsp;&nbsp;
-[![Kubernetes](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fkubernetes_version&style=for-the-badge&logo=kubernetes&logoColor=white&color=blue&label=%20)](https://kubernetes.io)&nbsp;&nbsp;
-[![Flux](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fflux_version&style=for-the-badge&logo=flux&logoColor=white&color=blue&label=%20)](https://fluxcd.io)&nbsp;&nbsp;
-[![Renovate](https://img.shields.io/github/actions/workflow/status/judahrand/home-ops/renovate.yaml?branch=main&label=&logo=renovatebot&style=for-the-badge&color=blue)](https://github.com/judahrand/home-ops/actions/workflows/renovate.yaml)
+[![Discord](https://img.shields.io/discord/673534664354430999?label&logo=discord&logoColor=white&color=blue)](https://discord.gg/home-operations)&nbsp;&nbsp;
+[![Talos](https://kromgo.judahrand.net/badges/talos_version)](https://talos.dev)&nbsp;&nbsp;
+[![Kubernetes](https://kromgo.judahrand.net/badges/kubernetes_version)](https://kubernetes.io)&nbsp;&nbsp;
+[![Flux](https://kromgo.judahrand.net/badges/flux_version)](https://fluxcd.io)&nbsp;&nbsp;
+[![Renovate](https://img.shields.io/github/actions/workflow/status/judahrand/home-ops/renovate.yaml?branch=main&label&logo=renovate&color=blue)](https://github.com/judahrand/home-ops/actions/workflows/renovate.yaml)
 
 </div>
 
 <div align="center">
 
-[![Home-Internet](https://img.shields.io/endpoint?url=https%3A%2F%2Fhealthchecks.io%2Fb%2F2%2F461ecf88-c673-4870-a4a1-c60c929ea461.shields?color=brightgreeen&label=Home%20Internet&style=for-the-badge&logo=ubiquiti&logoColor=white)](https://status.judahrand.net)&nbsp;&nbsp;
-[![Status-Page](https://img.shields.io/uptimerobot/status/m800430364-ca0d1ba35fdd8492a07e9a93?color=brightgreeen&label=Status%20Page&style=for-the-badge&logo=statuspage&logoColor=white)](https://status.judahrand.net)&nbsp;&nbsp;
-[![Alertmanager](https://img.shields.io/endpoint?url=https%3A%2F%2Fhealthchecks.io%2Fb%2F2%2Fd3bebfd6-47da-446c-8eea-b3efcc4cab6d.shields?color=brightgreeen&label=Alertmanager&style=for-the-badge&logo=prometheus&logoColor=white)](https://status.judahrand.net)
-
-</div>
-
-<div align="center">
-
-[![Age-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_age_days&style=flat-square&label=Age)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Uptime-Days](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_uptime_days&style=flat-square&label=Uptime)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Node-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_node_count&style=flat-square&label=Nodes)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Pod-Count](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_pod_count&style=flat-square&label=Pods)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![CPU-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_cpu_usage&style=flat-square&label=CPU)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Memory-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_memory_usage&style=flat-square&label=Memory)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Power-Usage](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_power_usage&style=flat-square&label=Power)](https://github.com/kashalls/kromgo)&nbsp;&nbsp;
-[![Alerts](https://img.shields.io/endpoint?url=https%3A%2F%2Fkromgo.judahrand.net%2Fbadges%2Fcluster_alert_count&style=flat-square&label=Alerts)](https://github.com/kashalls/kromgo)
+[![Age](https://kromgo.judahrand.net/badges/cluster_age_days)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Uptime](https://kromgo.judahrand.net/badges/cluster_uptime_days)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Nodes](https://kromgo.judahrand.net/badges/cluster_node_count)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Pods](https://kromgo.judahrand.net/badges/cluster_pod_count)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![CPU](https://kromgo.judahrand.net/badges/cluster_cpu_usage)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Memory](https://kromgo.judahrand.net/badges/cluster_memory_usage)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Power](https://kromgo.judahrand.net/badges/cluster_power_usage)](https://github.com/home-operations/kromgo)&nbsp;&nbsp;
+[![Alerts](https://kromgo.judahrand.net/badges/cluster_alert_count)](https://github.com/home-operations/kromgo)
 
 </div>
 
@@ -55,16 +47,10 @@ There is a template over at [onedr0p/cluster-template](https://github.com/onedr0
 
 ### Core Components
 
-- [actions-runner-controller](https://github.com/actions/actions-runner-controller): Self-hosted Github runners.
-- [cert-manager](https://github.com/cert-manager/cert-manager): Creates SSL certificates for services in my cluster.
-- [cilium](https://github.com/cilium/cilium): eBPF-based networking for my workloads.
-- [cloudflared](https://github.com/cloudflare/cloudflared): Enables Cloudflare secure access to my routes.
-- [external-dns](https://github.com/kubernetes-sigs/external-dns): Automatically syncs ingress DNS records to a DNS provider.
-- [external-secrets](https://github.com/external-secrets/external-secrets): Managed Kubernetes secrets using [1Password Connect](https://github.com/1Password/connect).
-- [rook](https://github.com/rook/rook): Distributed block storage for peristent storage.
-- [sops](https://github.com/getsops/sops): Managed secrets for Kubernetes and Terraform which are commited to Git.
-- [spegel](https://github.com/spegel-org/spegel): Stateless cluster local OCI registry mirror.
-- [kopiur](https://github.com/home-operations/kopiur): Kopia-native backup and recovery of persistent volume claims.
+- **Networking & Ingress**: [cilium](https://github.com/cilium/cilium) provides eBPF-based networking with kube-proxy replacement, BGP peering to my core router, and DSR load balancing. [envoy-gateway](https://gateway.envoyproxy.io/) is the Gateway API ingress controller, exposing `envoy-external` for public traffic and `envoy-internal` for the LAN. [cloudflared](https://github.com/cloudflare/cloudflared) publishes public ingress through a Cloudflare Tunnel, and two [external-dns](https://github.com/kubernetes-sigs/external-dns) instances keep DNS in sync — one against Cloudflare for public records and one via RFC2136 against [Technitium](https://technitium.com/dns/) for internal records. [multus](https://github.com/k8snetworkplumbingwg/multus-cni) attaches secondary networks (IoT and VPN) to select workloads.
+- **Security & Secrets**: [cert-manager](https://github.com/cert-manager/cert-manager) automates SSL/TLS certificate management. For secrets, I use [external-secrets](https://github.com/external-secrets/external-secrets) with [1Password Connect](https://github.com/1Password/connect) to inject secrets into Kubernetes.
+- **Storage & Data Protection**: [rook](https://github.com/rook/rook) provides distributed storage for persistent volumes, with [kopiur](https://github.com/home-operations/kopiur) handling backups and restores. [spegel](https://github.com/spegel-org/spegel) improves reliability by running a stateless, cluster-local OCI image mirror.
+- **Automation & CI/CD**: [actions-runner-controller](https://github.com/actions/actions-runner-controller) runs self-hosted GitHub Actions runners directly in the cluster for continuous integration workflows.
 
 ### GitOps
 
@@ -106,61 +92,34 @@ While most of my infrastructure and workloads are self-hosted I do rely upon the
 
 Alternative solutions to the first two of these problems would be to host a Kubernetes cluster in the cloud and deploy applications like [HCVault](https://www.vaultproject.io/), [Vaultwarden](https://github.com/dani-garcia/vaultwarden), [ntfy](https://ntfy.sh/), and [Gatus](https://gatus.io/); however, maintaining another cluster and monitoring another group of workloads would be more work and probably be more or equal out to the same costs as described below.
 
-| Service                                   | Use                                                               | Cost          |
-| ----------------------------------------- | ----------------------------------------------------------------- | ------------- |
-| [1Password](https://1password.com/)       | Secrets with [External Secrets](https://external-secrets.io/)     | ~$36/yr       |
-| [Cloudflare](https://www.cloudflare.com/) | Domain and S3                                                     | ~$30/yr       |
-| [GCP](https://cloud.google.com/)          | Voice interactions with Home Assistant over Google Assistant      | Free          |
-| [GitHub](https://github.com/)             | Hosting this repository and continuous integration/deployments    | Free          |
-| [Pushover](https://pushover.net/)         | Kubernetes Alerts and application notifications                   | $5 OTP        |
-| [UptimeRobot](https://uptimerobot.com/)   | Monitoring internet connectivity and external facing applications | Free          |
-| [Healthchecks](https://healthchecks.io/)  | Monitoring internet connectivity and external facing applications | Free          |
-|                                           |                                                                   | Total: ~$6/mo |
+Cloudflare Tunnels could be swapped for many options, one of which is [Towonel](https://codeberg.org/towonel/towonel).
+
+| Service                                   | Use                                                            | Cost           |
+| ----------------------------------------- | -------------------------------------------------------------- | -------------- |
+| [1Password](https://1password.com/)       | Secrets with [External Secrets](https://external-secrets.io/)  | ~$65/yr        |
+| [Cloudflare](https://www.cloudflare.com/) | Domain and S3                                                  | ~$50/yr        |
+| [GCP](https://cloud.google.com/)          | Voice interactions with Home Assistant over Google Assistant   | Free           |
+| [GitHub](https://github.com/)             | Hosting this repository and continuous integration/deployments | Free           |
+| [Migadu](https://migadu.com/)             | Email hosting                                                  | ~$20/yr        |
+| [Pushover](https://pushover.net/)         | Kubernetes Alerts and application notifications                | $5 OTP         |
+|                                           |                                                                | Total: ~$10/mo |
 
 ---
 
 ## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f30e/512.gif" alt="🌎" width="20" height="20"> DNS
 
-In my cluster there are two instances of [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) running. One for syncing private DNS records to an instance of [AdGuard Home](https://adguard.com/) using [ExternalDNS webhook provider for AdGuard Home](https://github.com/muhlba91/external-dns-provider-adguard), while another instance syncs public DNS to `Cloudflare`. This setup is managed by creating gateways with two specific classes: `internal` for private DNS and `external` for public DNS. The `external-dns` instances then syncs the DNS records to their respective platforms accordingly.
-
----
-
-## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/2699_fe0f/512.gif" alt="⚙" width="20" height="20"> Hardware
-
-<details>
-  <summary>Click here to see my server rack</summary>
-
-  <img width="273" alt="Image" src="https://github.com/user-attachments/assets/5bd67299-a809-4e53-ba39-707cac8d3852" />
-</details>
-
-| Device                         | Num | OS Disk Size | Data Disk Size                  | Ram  | OS            | Function            |
-| ------------------------------ | --- | ------------ | ------------------------------- | ---- | ------------- | ------------------- |
-| Minisforum EliteMini UM780 XTX | 1   | 1TB SSD      | 2TB SSD                         | 64GB | Talos         | Kubernetes          |
-| Minisforum UN100P              | 2   | 1TB SSD      | 2TB SSD                         | 32GB | Talos         | Kubernetes          |
-| CWWK N100 NAS Motherboard      | 1   | 1TB SSD      | 2x18TB HDD ZFS (mirrored vdevs) | 64GB | TrueNAS SCALE | NFS + Backup Server |
-| Banana Pi BPI-R4               | 1   | -            | -                               | -    | -             | Router              |
-| Hasivo S1100WP-8GT-SE          | 1   | -            | -                               | -    | -             | 2.5Gb Core Switch   |
-| NETGEAR GS724T V3              | 1   | -            | -                               | -    | -             | 1GbGb Core Switch   |
-| APC SMT1500I                   | 1   | -            | -                               | -    | -             | UPS                 |
-
----
-
-## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.gif" alt="🌟" width="20" height="20"> Stargazers
-
-<div align="center">
-
-<a href="https://star-history.com/#judahrand/home-ops&Date">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=judahrand/home-ops&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=judahrand/home-ops&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=judahrand/home-ops&type=Date" />
-  </picture>
-</a>
-
-</div>
+In my cluster there are two instances of [ExternalDNS](https://github.com/kubernetes-sigs/external-dns) running. One syncs public DNS records to `Cloudflare`, while the other syncs internal records to [Technitium](https://technitium.com/dns/) via the RFC2136 provider. Both watch the HTTPRoutes attached to the `envoy-external` (public) and `envoy-internal` (private) gateways, alongside `Service` and `DNSEndpoint` sources, to keep records in sync on their respective platforms.
 
 ---
 
 ## <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f64f/512.gif" alt="🙏" width="20" height="20"> Gratitude and Thanks
 
 Thanks to all the people who donate their time to the [Home Operations](https://discord.gg/home-operations) Discord community. Be sure to check out [kubesearch.dev](https://kubesearch.dev/) for ideas on how to deploy applications or get ideas on what you could deploy.
+
+---
+
+<div align="center">
+
+[![DeepWiki](https://img.shields.io/badge/deepwiki-purple?label=&logo=deepl&style=for-the-badge&logoColor=white)](https://deepwiki.com/judahrand/home-ops)
+
+</div>

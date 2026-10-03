@@ -16,6 +16,7 @@ spec:
       prometheus: http://prometheus-operated.o11y.svc.cluster.local:9090
       defaults:
         badge:
+          style: for-the-badge
           size: 12
       badges:
         - id: talos_version
