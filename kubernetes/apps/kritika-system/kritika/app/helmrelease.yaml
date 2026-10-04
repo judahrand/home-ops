@@ -40,7 +40,9 @@ spec:
           type: openrouter
           apiKey: { env: OPENROUTER_API_KEY }
       egress:
-        allowHosts: [raw.githubusercontent.com]
+        allowHosts:
+          - raw.githubusercontent.com
+          - konflate.judahrand.net
       defaults:
         agent:
           commands: [gh, curl, jq, yq, rg, fd]
