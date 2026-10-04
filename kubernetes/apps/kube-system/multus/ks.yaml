@@ -30,6 +30,7 @@ metadata:
 spec:
   dependsOn:
     - name: multus
+      namespace: kube-system
   interval: 1h
   path: ./kubernetes/apps/kube-system/multus/networks
   prune: true
