@@ -19,7 +19,7 @@ spec:
   wait: true
   dependsOn:
     - name: multus-networks
-      namespace: network
+      namespace: kube-system
   postBuild:
     substitute:
       APP: qbittorrent

@@ -24,7 +24,7 @@ spec:
   targetNamespace: o11y
   dependsOn:
     - name: multus-networks
-      namespace: network
+      namespace: kube-system
   path: ./kubernetes/apps/o11y/blackbox-exporter/vpn
   prune: true
   sourceRef:

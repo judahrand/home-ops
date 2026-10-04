@@ -10,7 +10,7 @@ spec:
     - ../../../../components/zeroscaler
   dependsOn:
     - name: multus-networks
-      namespace: network
+      namespace: kube-system
   interval: 1h
   path: ./kubernetes/apps/downloads/nzbget/app
   postBuild:
