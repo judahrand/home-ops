@@ -18,7 +18,7 @@ spec:
   wait: false
   dependsOn:
     - name: multus-networks
-      namespace: network
+      namespace: kube-system
     - name: cloudnative-pg-cluster
       namespace: cnpg-system
   postBuild:

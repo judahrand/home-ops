@@ -15,6 +15,7 @@ resources:
   - ./intel-gpu-resource-driver/ks.yaml
   - ./k8s-gpu-dra-driver/ks.yaml
   - ./metrics-server/ks.yaml
+  - ./multus/ks.yaml
   - ./ocharted/ks.yaml
   - ./reloader/ks.yaml
   - ./kubelet-csr-approver/ks.yaml

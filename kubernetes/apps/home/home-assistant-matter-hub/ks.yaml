@@ -10,7 +10,7 @@ spec:
     - ../../../../components/kopiur/backup
   dependsOn:
     - name: multus-networks
-      namespace: network
+      namespace: kube-system
   path: ./kubernetes/apps/home/home-assistant-matter-hub/app
   prune: true
   sourceRef:
