@@ -21,8 +21,8 @@ spec:
       # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
       # repository content and run what the model asks.
       runnerRuntimeClass: gvisor
-      defaultsModelsReview: opencode/deepseek-v4.1-flash
-      defaultsModelsFallback: openrouter/deepseek/deepseek-v4.1-flash
+      reviewModel: opencode/deepseek-v4.1-flash
+      reviewFallback: openrouter/deepseek/deepseek-v4.1-flash
       embeddingModel: openrouter/voyageai/voyage-code-4
       embeddingDims: 1024
     configFile:
