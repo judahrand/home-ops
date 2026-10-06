@@ -44,8 +44,8 @@ spec:
         containers:
           app:
             image:
-              repository: ghcr.io/t0bst4r/home-assistant-matter-hub
-              tag: 3.0.4
+              repository: ghcr.io/riddix/home-assistant-matter-hub
+              tag: 2.0.58
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
