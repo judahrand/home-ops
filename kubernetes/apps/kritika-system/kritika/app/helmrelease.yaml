@@ -9,20 +9,16 @@ spec:
     kind: OCIRepository
     name: kritika
   interval: 1h
-  install:
-    # The first install can race the ExternalSecret; retry until it exists.
-    remediation:
-      retries: -1
   values:
+    replicas: 2
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     config:
       webUrl: https://{{ .Release.Name }}.judahrand.net
-      # Runner Jobs run under the gVisor RuntimeClass: they parse untrusted
-      # repository content and run what the model asks.
       runnerRuntimeClass: gvisor
       reviewModel: opencode/deepseek-v4.1-flash
       reviewFallback: openrouter/deepseek/deepseek-v4.1-flash
+      confidenceModel: opencode/deepseek-v4.1-flash
       embeddingModel: openrouter/voyageai/voyage-code-4
       embeddingDims: 1024
     configFile:
@@ -32,19 +28,12 @@ spec:
           clientId: { env: KRITIKA_GITHUB_CLIENT_ID }
           privateKey: { env: KRITIKA_GITHUB_PRIVATE_KEY }
           webhookSecret: { env: KRITIKA_GITHUB_WEBHOOK_SECRET }
-      providers:
-        opencode:
-          type: opencode
-          apiKey: { env: OPENCODE_API_KEY }
-        openrouter:
-          type: openrouter
-          apiKey: { env: OPENROUTER_API_KEY }
       egress:
-        allowHosts:
-          - raw.githubusercontent.com
-          - konflate.judahrand.net
-      agent:
-        commands: [gh, curl, jq, yq, rg, fd]
+        allow: ["*"]
+        deny: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, "*.internal"]
+      trigger:
+        exclude: [{ name: forks, expr: pr.fork }]
+      agent: { commands: [gh, curl, jq, yq, rg, fd, flate] }
     envFrom:
       - secretRef:
           name: kritika-secret
@@ -56,18 +45,15 @@ spec:
       runner:
         existingSecret: kritika-postgres-runner
     runner:
+      tools:
+        - name: flate
+          image: ghcr.io/home-operations/flate:0.6.5@sha256:e0e2d2de97539b3141977e8bb3bbb50ea5c5afe89477950e5fa972c9862478da
       resources:
         requests:
           cpu: 10m
-          memory: 128Mi
+          memory: 512Mi
         limits:
-          memory: 1Gi
-    resources:
-      requests:
-        cpu: 10m
-        memory: 64Mi
-      limits:
-        memory: 512Mi
+          memory: 3Gi
     httpRoute:
       enabled: true
       annotations:
@@ -92,3 +78,9 @@ spec:
         enabled: true
     networkPolicy:
       enabled: true
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 512Mi
