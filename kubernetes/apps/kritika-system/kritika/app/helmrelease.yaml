@@ -43,9 +43,8 @@ spec:
         allowHosts:
           - raw.githubusercontent.com
           - konflate.judahrand.net
-      defaults:
-        agent:
-          commands: [gh, curl, jq, yq, rg, fd]
+      agent:
+        commands: [gh, curl, jq, yq, rg, fd]
     envFrom:
       - secretRef:
           name: kritika-secret
