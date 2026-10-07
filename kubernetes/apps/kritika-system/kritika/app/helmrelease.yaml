@@ -28,6 +28,13 @@ spec:
           clientId: { env: KRITIKA_GITHUB_CLIENT_ID }
           privateKey: { env: KRITIKA_GITHUB_PRIVATE_KEY }
           webhookSecret: { env: KRITIKA_GITHUB_WEBHOOK_SECRET }
+      providers:
+        opencode:
+          type: opencode
+          apiKey: { env: OPENCODE_API_KEY }
+        openrouter:
+          type: openrouter
+          apiKey: { env: OPENROUTER_API_KEY }
       egress:
         allow: ["*"]
         deny: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16, "*.internal"]
