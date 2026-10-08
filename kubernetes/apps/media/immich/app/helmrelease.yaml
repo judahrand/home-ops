@@ -16,7 +16,7 @@ spec:
           main:
             image:
               # renovate: datasource=docker depName=ghcr.io/immich-app/immich-server
-              tag: v3.2.4
+              tag: v3.3.0
 
     immich:
       metrics:
@@ -104,10 +104,11 @@ spec:
             main:
               image:
                 # renovate: datasource=docker depName=ghcr.io/immich-app/immich-machine-learning
-                tag: v3.2.4-openvino
+                tag: v3.3.0-openvino
               env:
                 LOG_LEVEL: verbose
                 TZ: Europe/London
+                MACHINE_LEARNING_MODEL_REVISION: v2
                 MACHINE_LEARNING_PRELOAD__CLIP__TEXTUAL: ViT-SO400M-16-SigLIP2-384__webli
                 MACHINE_LEARNING_PRELOAD__CLIP__VISUAL: ViT-SO400M-16-SigLIP2-384__webli
                 MACHINE_LEARNING_PRELOAD__FACIAL_RECOGNITION__RECOGNITION: buffalo_l
