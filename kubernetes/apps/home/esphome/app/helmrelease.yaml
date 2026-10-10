@@ -16,12 +16,20 @@ spec:
         pod:
           annotations:
             k8s.v1.cni.cncf.io/networks: |
-              [{
-                "name":"iot",
-                "namespace": "kube-system",
-                "ips": ["10.0.60.85/24"],
-                "mac": "a0:41:a7:c5:0c:d9"
-              }]
+              [
+                {
+                  "name":"iot",
+                  "namespace": "kube-system",
+                  "ips": ["10.0.60.85/24"],
+                  "mac": "a0:41:a7:c5:0c:d9"
+                },
+                {
+                  "name":"iot-infra",
+                  "namespace": "kube-system",
+                  "ips": ["10.0.80.53/24"],
+                  "mac": "a0:41:a7:c5:0c:d9"
+                }
+              ]
           securityContext:
             runAsUser: 568
             runAsGroup: 568
