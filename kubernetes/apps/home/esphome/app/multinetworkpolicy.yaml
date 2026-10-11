@@ -22,27 +22,3 @@ spec:
           port: 5353
         - protocol: UDP
           port: 1900
----
-apiVersion: k8s.cni.cncf.io/v1beta1
-kind: MultiNetworkPolicy
-metadata:
-  name: esphome-iot-infra
-  annotations:
-    k8s.v1.cni.cncf.io/policy-for: kube-system/iot-infra
-spec:
-  podSelector:
-    matchLabels:
-      app.kubernetes.io/name: esphome
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - ipBlock:
-            cidr: 10.0.80.0/24
-        - ipBlock:
-            cidr: fe80::/10
-      ports:
-        - protocol: UDP
-          port: 5353
-        - protocol: UDP
-          port: 1900
