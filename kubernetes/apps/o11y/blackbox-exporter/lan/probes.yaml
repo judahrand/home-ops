@@ -11,7 +11,7 @@ spec:
   targets:
     staticConfig:
       static:
-        - slzb-06m.iot
+        - slzb-06m.iot-infra
         - truenas.servers
   metricRelabelings:
     - targetLabel: service

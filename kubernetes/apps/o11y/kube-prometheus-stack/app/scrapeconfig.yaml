@@ -37,7 +37,7 @@ metadata:
 spec:
   staticConfigs:
     - targets:
-        - slzb-06m.iot
+        - slzb-06m.iot-infra
   metricsPath: /metrics
   relabelings:
     - action: replace
