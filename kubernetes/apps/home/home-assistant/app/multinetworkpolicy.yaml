@@ -1,0 +1,44 @@
+---
+apiVersion: k8s.cni.cncf.io/v1beta1
+kind: MultiNetworkPolicy
+metadata:
+  name: home-assistant-iot
+  annotations:
+    k8s.v1.cni.cncf.io/policy-for: kube-system/iot
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: home-assistant
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 10.0.60.0/24
+      ports:
+        - protocol: UDP
+          port: 5353
+        - protocol: UDP
+          port: 1900
+---
+apiVersion: k8s.cni.cncf.io/v1beta1
+kind: MultiNetworkPolicy
+metadata:
+  name: home-assistant-iot-infra
+  annotations:
+    k8s.v1.cni.cncf.io/policy-for: kube-system/iot-infra
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: home-assistant
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 10.0.80.0/24
+      ports:
+        - protocol: UDP
+          port: 5353
+        - protocol: UDP
+          port: 1900

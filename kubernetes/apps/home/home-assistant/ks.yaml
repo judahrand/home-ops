@@ -19,6 +19,8 @@ spec:
   dependsOn:
     - name: multus-networks
       namespace: kube-system
+    - name: multi-networkpolicy-nftables
+      namespace: kube-system
     - name: cloudnative-pg-cluster
       namespace: cnpg-system
   postBuild:
