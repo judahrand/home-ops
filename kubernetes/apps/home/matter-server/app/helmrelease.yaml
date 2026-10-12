@@ -23,8 +23,7 @@ spec:
               [{
                 "name":"iot-infra",
                 "namespace": "kube-system",
-                "ips": ["10.0.80.50/24"],
-                "mac": "a0:41:a7:15:c3:00"
+                "ips": ["10.0.80.50/24"]
               }]
           securityContext:
             runAsNonRoot: false # Must be run as root user

@@ -23,8 +23,7 @@ spec:
               [{
                 "name":"iot-infra",
                 "namespace": "kube-system",
-                "ips": ["10.0.80.51/24"],
-                "mac": "a0:36:9f:5a:17:7b"
+                "ips": ["10.0.80.51/24"]
               }]
           securityContext:
             runAsUser: 568

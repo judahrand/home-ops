@@ -63,8 +63,7 @@ spec:
           [{
             "name": "vpn",
             "namespace": "kube-system",
-            "ips": ["10.0.70.10/24"],
-            "mac": "32:0b:d8:15:b6:e8"
+            "ips": ["10.0.70.10/24"]
           }]
       securityContext:
         runAsNonRoot: true
