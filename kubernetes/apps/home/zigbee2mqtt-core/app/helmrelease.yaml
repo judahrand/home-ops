@@ -50,9 +50,9 @@ spec:
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: zstack
               ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://slzb-ultima3.iot-infra:7638
-            # envFrom:
-            #   - secretRef:
-            #       name: zigbee2mqtt-core-secret
+            envFrom:
+              - secretRef:
+                  name: zigbee2mqtt-core-secret
             ports:
               - containerPort: 8080
                 name: http
@@ -109,7 +109,6 @@ spec:
 
     persistence:
       config:
-        # The kopiur backup component owns the PVC, which keeps the original name.
         existingClaim: zigbee2mqtt-core
         advancedMounts:
           zigbee2mqtt-core:

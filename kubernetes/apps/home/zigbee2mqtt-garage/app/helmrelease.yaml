@@ -49,11 +49,10 @@ spec:
               ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: "115200"
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ember
-              # TODO: point at the garage coordinator.
-              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://slzb-06m-garage.iot-infra:6638
-            # envFrom:
-            #   - secretRef:
-            #       name: zigbee2mqtt-garage-secret
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://slzb-06m.iot-infra:6638
+            envFrom:
+              - secretRef:
+                  name: zigbee2mqtt-garage-secret
             ports:
               - containerPort: 8080
                 name: http
