@@ -110,7 +110,7 @@ spec:
     persistence:
       config:
         # The kopiur backup component owns the PVC, which keeps the original name.
-        existingClaim: zigbee2mqtt
+        existingClaim: zigbee2mqtt-core
         advancedMounts:
           zigbee2mqtt-core:
             app:
