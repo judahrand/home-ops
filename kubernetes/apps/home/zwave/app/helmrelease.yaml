@@ -1,0 +1,83 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: zwave
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: zwave
+  interval: 1h
+  values:
+    controllers:
+      zwave:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/zwave-js/zwave-js-ui
+              tag: 11.24.3@sha256:3fef66d575ea0ea9d50aad3e05c36619228557cfa888557eac2035215a29a321
+            env:
+              TZ: Europe/London
+              PORT: "80"
+              # The Z-Wave radio is reached over the SLZB-Ultima3 serial-over-TCP
+              # gateway. Setting ZWAVE_PORT explicitly also prevents Kubernetes
+              # from injecting the service-link ZWAVE_PORT (tcp://<svc-ip>:80).
+              ZWAVE_PORT: tcp://slzb-ultima3.iot-infra:9638
+            envFrom:
+              - secretRef:
+                  name: "{{ .Release.Name }}-secret"
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: 80
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 10m
+              limits:
+                memory: 1Gi
+    service:
+      app:
+        ports:
+          http:
+            port: 80
+          websocket:
+            port: 3000
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: 80
+    persistence:
+      config:
+        existingClaim: "{{ .Release.Name }}"
+        globalMounts:
+          - path: /usr/src/app/store
+      tmp:
+        type: emptyDir
+        globalMounts:
+          - path: /tmp

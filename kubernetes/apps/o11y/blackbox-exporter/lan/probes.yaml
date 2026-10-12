@@ -21,6 +21,24 @@ spec:
 kind: Probe
 apiVersion: monitoring.coreos.com/v1
 metadata:
+  name: lan-slzb-ultima3
+spec:
+  jobName: slzb_ultima_probe
+  module: tcp_connect
+  prober:
+    url: blackbox-exporter-lan.o11y.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - slzb-ultima3.iot-infra:9638
+  metricRelabelings:
+    - targetLabel: service
+      replacement: blackbox-exporter-lan
+      action: replace
+---
+kind: Probe
+apiVersion: monitoring.coreos.com/v1
+metadata:
   name: lan-nfs
 spec:
   jobName: nfs_probe
