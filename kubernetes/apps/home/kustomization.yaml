@@ -15,3 +15,4 @@ resources:
   - ./mosquitto/ks.yaml
   - ./zigbee2mqtt-core/ks.yaml
   - ./zigbee2mqtt-garage/ks.yaml
+  - ./zwave/ks.yaml
