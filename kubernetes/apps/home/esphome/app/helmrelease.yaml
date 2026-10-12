@@ -87,6 +87,12 @@ spec:
           esphome:
             app:
               - path: /cache
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          esphome:
+            app:
+              - path: /tmp
 
     route:
       app:
