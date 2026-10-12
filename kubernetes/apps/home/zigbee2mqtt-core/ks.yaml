@@ -21,9 +21,5 @@ spec:
   interval: 1h
   postBuild:
     substitute:
-      # APP intentionally stays `zigbee2mqtt`: it names the existing PVC, SnapshotPolicy
-      # and Restore. Renaming it would orphan the backups and force re-pairing of every
-      # device. The Kubernetes objects are named `zigbee2mqtt-core`; only the backup
-      # chain keeps the original name.
       APP: zigbee2mqtt
       KOPIUR_CAPACITY: 1Gi
