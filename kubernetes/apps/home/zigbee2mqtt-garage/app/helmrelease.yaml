@@ -3,19 +3,19 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: zigbee2mqtt
+  name: zigbee2mqtt-garage
 spec:
   chartRef:
     kind: OCIRepository
-    name: zigbee2mqtt
+    name: zigbee2mqtt-garage
   interval: 1h
   values:
     global:
-      nameOverride: zigbee2mqtt
-      fullnameOverride: zigbee2mqtt
+      nameOverride: zigbee2mqtt-garage
+      fullnameOverride: zigbee2mqtt-garage
 
     controllers:
-      zigbee2mqtt:
+      zigbee2mqtt-garage:
         annotations:
           reloader.stakater.com/auto: "true"
         strategy: Recreate
@@ -27,7 +27,8 @@ spec:
             env:
               TZ: Europe/London
               ZIGBEE2MQTT_DATA: /data
-              ZIGBEE2MQTT_CONFIG_ADVANCED_CHANNEL: "20"
+              # Different channel from the house ("core") network to limit interference.
+              ZIGBEE2MQTT_CONFIG_ADVANCED_CHANNEL: "25"
               ZIGBEE2MQTT_CONFIG_ADVANCED_LAST_SEEN: ISO_8601
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL: info # debug
               ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_OUTPUT: '["console"]'
@@ -36,9 +37,10 @@ spec:
               ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_RETAIN: "true"
               ZIGBEE2MQTT_CONFIG_FRONTEND_ENABLED: "true"
               ZIGBEE2MQTT_CONFIG_FRONTEND_PORT: "8080"
-              ZIGBEE2MQTT_CONFIG_FRONTEND_URL: https://zigbee2mqtt.judahrand.net
+              ZIGBEE2MQTT_CONFIG_FRONTEND_URL: https://zigbee2mqtt-garage.judahrand.net
               ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_DISCOVERY_TOPIC: homeassistant
               ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_STATUS_TOPIC: homeassistant/status
+              ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC: zigbee2mqtt-garage
               ZIGBEE2MQTT_CONFIG_MQTT_INCLUDE_DEVICE_INFORMATION: "true"
               ZIGBEE2MQTT_CONFIG_MQTT_KEEPALIVE: "60"
               ZIGBEE2MQTT_CONFIG_MQTT_REJECT_UNAUTHORIZED: "true"
@@ -48,10 +50,11 @@ spec:
               ZIGBEE2MQTT_CONFIG_SERIAL_BAUDRATE: "115200"
               ZIGBEE2MQTT_CONFIG_SERIAL_DISABLE_LED: "false"
               ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER: ember
-              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://slzb-06m.iot-infra:6638
+              # TODO: point at the garage coordinator.
+              ZIGBEE2MQTT_CONFIG_SERIAL_PORT: tcp://slzb-06m-garage.iot-infra:6638
             envFrom:
               - secretRef:
-                  name: zigbee2mqtt-secret
+                  name: zigbee2mqtt-garage-secret
             ports:
               - containerPort: 8080
                 name: http
@@ -89,7 +92,7 @@ spec:
 
     service:
       app:
-        controller: zigbee2mqtt
+        controller: zigbee2mqtt-garage
         ports:
           http:
             port: 8080
@@ -108,8 +111,8 @@ spec:
 
     persistence:
       config:
-        existingClaim: zigbee2mqtt
+        existingClaim: zigbee2mqtt-garage
         advancedMounts:
-          zigbee2mqtt:
+          zigbee2mqtt-garage:
             app:
               - path: /data
