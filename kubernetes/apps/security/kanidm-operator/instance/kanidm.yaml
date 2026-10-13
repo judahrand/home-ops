@@ -1,0 +1,42 @@
+---
+apiVersion: kaniop.rs/v1beta1
+kind: Kanidm
+metadata:
+  name: kanidm
+spec:
+  domain: auth.judahrand.net
+  origin: https://auth.judahrand.net
+  replicaGroups:
+    - name: default
+      replicas: 1
+      primaryNode: true
+      resources:
+        requests:
+          cpu: 10m
+        limits:
+          memory: 512Mi
+  image: kanidm/server:1.11.2
+  logLevel: info
+  groupNamespaceSelector: {}
+  oauth2ClientNamespaceSelector: {}
+  serviceAccountNamespaceSelector: {}
+  tlsSecretName: kanidm-tls
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: ceph-block
+  gateway:
+    parentRefs:
+      - name: envoy-external
+        namespace: network
+    hostnames:
+      - auth.judahrand.net
+    backendTlsPolicy:
+      validation:
+        hostname: auth.judahrand.net
+        wellKnownCaCertificates: System
