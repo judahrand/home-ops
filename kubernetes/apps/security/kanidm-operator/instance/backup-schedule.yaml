@@ -1,0 +1,26 @@
+---
+apiVersion: kaniop.rs/v1alpha1
+kind: KanidmBackupSchedule
+metadata:
+  name: kanidm
+spec:
+  jitterSeconds: 300
+  kanidmRef:
+    name: kanidm
+  localVersions: 7
+  concurrencyPolicy: Forbid
+  repositoryRef:
+    name: truenas
+  # schedule, kanidmRef, repositoryRef and retention are IMMUTABLE after
+  # creation -- changing any of them means deleting this Schedule and creating
+  # a new one. Existing Backup CRs and the remote S3 data survive that.
+  retention:
+    keepLast: 8
+    daily: 7
+    weekly: 4
+    monthly: 6
+    minAge: 24h
+  # Standard 5-field cron (unlike CloudNativePG's six). 02:30 sits clear of the
+  # CloudNativePG daily backup and kopiur's 03:00 full maintenance window.
+  schedule: 30 2 * * *
+  timeZone: Europe/London
