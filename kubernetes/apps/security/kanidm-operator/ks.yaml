@@ -8,7 +8,7 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
-      name: kaniop
+      name: kanidm-operator
       namespace: security
   interval: 1h
   path: ./kubernetes/apps/security/kanidm-operator/app
