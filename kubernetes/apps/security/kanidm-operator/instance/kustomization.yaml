@@ -6,5 +6,6 @@ resources:
   - ./backup-repository.yaml
   - ./backup-schedule.yaml
   - ./certificate.yaml
+  - ./externalsecret.yaml
   - ./kanidm.yaml
   - ./pushsecret.yaml

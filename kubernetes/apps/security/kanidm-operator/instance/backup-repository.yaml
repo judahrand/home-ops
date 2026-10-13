@@ -1,25 +1,4 @@
 ---
-# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/external-secrets.io/externalsecret_v1.json
-apiVersion: external-secrets.io/v1
-kind: ExternalSecret
-metadata:
-  name: kanidm-backup
-spec:
-  secretStoreRef:
-    kind: ClusterSecretStore
-    name: onepassword-connect
-  target:
-    name: kanidm-backup-secret
-    template:
-      engineVersion: v2
-      data:
-        AWS_ACCESS_KEY_ID: "{{ .MINIO_USER }}"
-        AWS_SECRET_ACCESS_KEY: "{{ .MINIO_PASSWORD }}"
-        encryption-key: "{{ .BACKUP_ENCRYPTION_KEY }}"
-  dataFrom:
-    - extract:
-        key: kanidm-backup
----
 apiVersion: kaniop.rs/v1alpha1
 kind: KanidmBackupRepository
 metadata:
@@ -41,10 +20,8 @@ spec:
       name: kanidm-backup-secret
   s3:
     bucket: kanidm
-    # MinIO on the TrueNAS box (same backend the CloudNativePG databases use);
-    # it serves plain HTTP, so `insecure` must be set.
-    endpoint: http://truenas.servers:9000
+    endpoint: http://truenas.servers:30188
     forcePathStyle: true
     insecure: true
     prefix: kanidm
-    region: us-east-1
+    region: garage
