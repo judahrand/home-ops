@@ -15,6 +15,7 @@ spec:
           cpu: 10m
         limits:
           memory: 512Mi
+  # renovate: datasource=docker depName=kanidm/server
   image: kanidm/server:1.11.2
   logLevel: info
   groupNamespaceSelector: {}
