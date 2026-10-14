@@ -85,6 +85,7 @@ spec:
         enabled: true
     networkPolicy:
       enabled: true
+      type: cilium
     resources:
       requests:
         cpu: 10m
