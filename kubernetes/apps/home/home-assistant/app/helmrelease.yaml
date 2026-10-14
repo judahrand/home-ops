@@ -22,12 +22,14 @@ spec:
                 {
                   "name":"iot",
                   "namespace": "kube-system",
-                  "ips": ["10.0.60.87/24"]
+                  "ips": ["10.0.60.87/24"],
+                  "mac": "02:00:00:60:00:87"
                 },
                 {
                   "name":"iot-infra",
                   "namespace": "kube-system",
-                  "ips": ["10.0.80.52/24"]
+                  "ips": ["10.0.80.52/24"],
+                  "mac": "02:00:00:80:00:52"
                 }
               ]
 
@@ -86,13 +88,20 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
         # sysctls is a pod-level securityContext field - the API rejects it under
-        # a container. net1 is the Multus "iot" interface.
+        # a container. net1 is the Multus "iot" interface, net2 is "iot-infra".
+        # These let both interfaces autoconfigure an IPv6 address via SLAAC.
         sysctls:
           - name: net.ipv6.conf.net1.forwarding
             value: "0"
           - name: net.ipv6.conf.net1.accept_ra
             value: "1"
           - name: net.ipv6.conf.net1.accept_ra_rt_info_max_plen
+            value: "64"
+          - name: net.ipv6.conf.net2.forwarding
+            value: "0"
+          - name: net.ipv6.conf.net2.accept_ra
+            value: "1"
+          - name: net.ipv6.conf.net2.accept_ra_rt_info_max_plen
             value: "64"
 
     service:
