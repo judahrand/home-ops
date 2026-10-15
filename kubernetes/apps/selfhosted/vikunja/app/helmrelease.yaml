@@ -34,6 +34,19 @@ spec:
               VIKUNJA_SERVICE_ENABLELINKSHARING: false
               VIKUNJA_SERVICE_ENABLEREGISTRATION: false
               VIKUNJA_SERVICE_PUBLICURL: https://vikunja.judahrand.net/
+              VIKUNJA_AUTH_OPENID_ENABLED: "true"
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_NAME: Kanidm
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_AUTHURL: https://auth.judahrand.net/oauth2/openid/vikunja
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_CLIENTID: vikunja
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_CLIENTSECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: vikunja-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_SCOPE: "openid profile email"
+              # Link existing local accounts on first OIDC login (both must be set).
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_USERNAMEFALLBACK: "true"
+              VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_EMAILFALLBACK: "true"
             envFrom:
               - secretRef:
                   name: vikunja-secret
