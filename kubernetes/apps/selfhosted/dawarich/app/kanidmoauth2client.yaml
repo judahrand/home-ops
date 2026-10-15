@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: dawarich
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: security
+  displayname: Dawarich
+  origin: https://dawarich.judahrand.net/
+  redirectUrl:
+    - https://dawarich.judahrand.net/users/auth/openid_connect/callback
+  scopeMap:
+    - group: dawarich_users@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - email
+  # Dawarich supports PKCE (OIDC_PKCE_ENABLED=true), so PKCE stays required.
+  preferShortUsername: true
+  disableConsentPrompt: true

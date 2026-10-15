@@ -28,6 +28,17 @@ spec:
               TIME_ZONE: Europe/London
               ALLOW_EMAIL_PASSWORD_REGISTRATION: false
               ALLOW_EMAIL_PASSWORD_LOGIN: true
+              OIDC_ISSUER: https://auth.judahrand.net/oauth2/openid/dawarich
+              OIDC_CLIENT_ID: dawarich
+              OIDC_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: dawarich-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              OIDC_REDIRECT_URI: https://dawarich.judahrand.net/users/auth/openid_connect/callback
+              OIDC_PROVIDER_NAME: Kanidm
+              OIDC_AUTO_REGISTER: "true"
+              OIDC_PKCE_ENABLED: "true"
               APPLICATION_HOSTS: "{{ .Release.Name }}.judahrand.net"
               APPLICATION_PROTOCOL: http
               DISTANCE_UNIT: km
