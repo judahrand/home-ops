@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: actual
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: security
+  displayname: Actual
+  origin: https://actual.judahrand.net/
+  redirectUrl:
+    - https://actual.judahrand.net/openid/callback
+  scopeMap:
+    - group: actual_users@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - email
+  # Actual (openid-client) uses PKCE S256, so PKCE stays required.
+  preferShortUsername: true
+  disableConsentPrompt: true

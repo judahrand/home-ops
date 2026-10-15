@@ -29,6 +29,17 @@ spec:
               tag: 26.10.0
             env:
               ACTUAL_PORT: &httpPort 5006
+              ACTUAL_OPENID_DISCOVERY_URL: https://auth.judahrand.net/oauth2/openid/actual/.well-known/openid-configuration
+              ACTUAL_OPENID_CLIENT_ID: actual
+              ACTUAL_OPENID_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: actual-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              ACTUAL_OPENID_SERVER_HOSTNAME: https://actual.judahrand.net
+              ACTUAL_OPENID_PROVIDER_NAME: Kanidm
+              # The first OIDC login becomes the server owner; later users are created on login.
+              ACTUAL_USER_CREATION_MODE: login
             probes:
               liveness:
                 enabled: true
