@@ -19,5 +19,8 @@ spec:
         - profile
         - email
   # Actual (openid-client) uses PKCE S256, so PKCE stays required.
+  # It hard-expects an RS256 id_token and exposes no alg option, so this client
+  # must use Kanidm's legacy crypto (Kanidm then signs RS256, not ES256).
+  jwtLegacyCryptoEnable: true
   preferShortUsername: true
   disableConsentPrompt: true
