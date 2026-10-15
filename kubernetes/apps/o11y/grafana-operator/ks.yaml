@@ -23,6 +23,8 @@ metadata:
 spec:
   dependsOn:
     - name: grafana-operator
+    - name: kanidm-instance
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/o11y/grafana-operator/instance
   prune: true

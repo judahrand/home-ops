@@ -17,7 +17,21 @@ spec:
     auth:
       disable_login_form: "false"
     auth.anonymous:
+      enabled: "false"
+    auth.generic_oauth:
+      allow_assign_grafana_admin: "true"
+      allow_sign_up: "true"
+      api_url: https://auth.judahrand.net/oauth2/openid/grafana/userinfo
+      auth_url: https://auth.judahrand.net/ui/oauth2
+      client_id: grafana
       enabled: "true"
+      groups_attribute_path: groups
+      login_attribute_path: preferred_username
+      name: Kanidm
+      role_attribute_path: "contains(groups[*], 'grafana_admins@auth.judahrand.net') && 'Admin' || 'Viewer'"
+      scopes: openid profile email groups
+      token_url: https://auth.judahrand.net/oauth2/token
+      use_pkce: "true"
     log:
       mode: console
     metrics:
@@ -45,6 +59,11 @@ spec:
                     secretKeyRef:
                       name: grafana-admin-password-secret
                       key: GF_SECURITY_ADMIN_PASSWORD
+                - name: GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: grafana-kanidm-oauth2-credentials
+                      key: CLIENT_SECRET
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
