@@ -20,5 +20,8 @@ spec:
         - profile
         - email
   # Karakeep (better-auth) uses PKCE, so PKCE stays required.
+  # Its openid-client hard-expects an RS256 id_token and exposes no alg option,
+  # so this client must use Kanidm's legacy crypto (Kanidm then signs RS256).
+  jwtLegacyCryptoEnable: true
   preferShortUsername: true
   disableConsentPrompt: true

@@ -60,7 +60,7 @@ spec:
               OAUTH_PROVIDER_NAME: Kanidm
               OAUTH_SCOPE: openid email profile
               OAUTH_TOKEN_ENDPOINT_AUTH_METHOD: client_secret_basic
-              OAUTH_ID_TOKEN_SIGNED_RESPONSE_ALG: ES256
+              OAUTH_ID_TOKEN_SIGNED_RESPONSE_ALG: RS256
               # Link the existing local account(s) to Kanidm by email on first login
               # (sign-ups are disabled, so this is the only way in via OIDC).
               OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
