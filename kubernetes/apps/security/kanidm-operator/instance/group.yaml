@@ -15,8 +15,10 @@ spec:
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmGroup
 metadata:
-  name: forgejo_admins
+  name: forgejo-admins
 spec:
+  # Kanidm group names may contain underscores; Kubernetes names may not.
+  kanidmName: forgejo_admins
   kanidmRef:
     name: kanidm
   members:
@@ -26,8 +28,10 @@ spec:
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmGroup
 metadata:
-  name: forgejo_users
+  name: forgejo-users
 spec:
+  # Kanidm group names may contain underscores; Kubernetes names may not.
+  kanidmName: forgejo_users
   kanidmRef:
     name: kanidm
   members:
