@@ -25,6 +25,16 @@ spec:
       address: https://kyoo.judahrand.net
       middlewareRootURL: https://kyoo.judahrand.net
       transcoderAcceleration: vaapi # hardware acceleration profile (valid values: disabled, vaapi, qsv, nvidia)
+      oidc_providers:
+        - name: kanidm
+          existingSecret: kyoo-kanidm-oauth2-credentials
+          clientIdKey: CLIENT_ID
+          clientSecretKey: CLIENT_SECRET
+          authorizationAddress: https://auth.judahrand.net/ui/oauth2
+          tokenAddress: https://auth.judahrand.net/oauth2/token
+          profileAddress: https://auth.judahrand.net/oauth2/openid/kyoo/userinfo
+          scope: openid email profile
+          authMethod: ClientSecretBasic
       auth:
         apikeys:
           scanner:

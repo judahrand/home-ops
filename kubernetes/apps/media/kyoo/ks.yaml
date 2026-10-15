@@ -8,6 +8,9 @@ spec:
   targetNamespace: media
   components:
     - ../../../../components/kopiur/backup
+  dependsOn:
+    - name: kanidm-instance
+      namespace: security
   path: ./kubernetes/apps/media/kyoo/app
   prune: true
   sourceRef:
