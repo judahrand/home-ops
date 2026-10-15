@@ -8,6 +8,9 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/zeroscaler
+  dependsOn:
+    - name: kanidm-instance
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/downloads/autobrr/app
   postBuild:

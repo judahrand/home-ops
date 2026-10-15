@@ -27,6 +27,16 @@ spec:
               AUTOBRR__METRICS_PORT: &metricsPort 9094
               AUTOBRR__CHECK_FOR_UPDATES: false
               AUTOBRR__LOG_LEVEL: INFO
+              AUTOBRR__OIDC_ENABLED: "true"
+              AUTOBRR__OIDC_ISSUER: https://auth.judahrand.net/oauth2/openid/autobrr
+              AUTOBRR__OIDC_CLIENT_ID: autobrr
+              AUTOBRR__OIDC_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: autobrr-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              AUTOBRR__OIDC_REDIRECT_URL: https://autobrr.judahrand.net/api/auth/oidc/callback
+              AUTOBRR__OIDC_DISABLE_BUILT_IN_LOGIN: "false"
             envFrom:
               - secretRef:
                   name: autobrr-secret
