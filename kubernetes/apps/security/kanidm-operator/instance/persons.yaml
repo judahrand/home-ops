@@ -3,24 +3,24 @@
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmPersonAccount
 metadata:
-  name: judah
+  name: ${KANIDM_JUDAHRAND_USERNAME}
 spec:
   kanidmRef:
     name: kanidm
   personAttributes:
-    displayname: ${KANIDM_DISPLAY_NAME_JUDAH}
+    displayname: ${KANIDM_JUDAHRAND_DISPLAYNAME}
     mail:
-      - ${KANIDM_EMAIL_JUDAH}
+      - ${KANIDM_JUDAHRAND_EMAIL}
 ---
 # yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmpersonaccount_v1beta1.json
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmPersonAccount
 metadata:
-  name: jade
+  name: ${KANIDM_PARTNER_USERNAME}
 spec:
   kanidmRef:
     name: kanidm
   personAttributes:
-    displayname: ${KANIDM_DISPLAY_NAME_JADE}
+    displayname: ${KANIDM_PARTNER_DISPLAYNAME}
     mail:
-      - ${KANIDM_EMAIL_JADE}
+      - ${KANIDM_PARTNER_EMAIL}

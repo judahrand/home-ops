@@ -7,7 +7,7 @@ resources:
   - ./backup-schedule.yaml
   - ./certificate.yaml
   - ./externalsecret.yaml
-  - ./group.yaml
-  - ./person-account.yaml
+  - ./groups.yaml
   - ./kanidm.yaml
+  - ./persons.yaml
   - ./pushsecret.yaml

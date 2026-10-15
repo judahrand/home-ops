@@ -28,7 +28,7 @@ metadata:
 spec:
   dependsOn:
     - name: kanidm-operator
-    - name: kanidm-identity
+    - name: kanidm-secrets
   healthChecks:
     - apiVersion: kaniop.rs/v1beta1
       kind: Kanidm
@@ -44,9 +44,7 @@ spec:
   postBuild:
     substituteFrom:
       - kind: Secret
-        name: kanidm-person-jade
-      - kind: Secret
-        name: kanidm-person-judah
+        name: kanidm-persons-secret
   prune: true
   sourceRef:
     kind: GitRepository
@@ -59,19 +57,15 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kanidm-identity
+  name: kanidm-secrets
 spec:
   healthChecks:
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
-      name: kanidm-person-jade
-      namespace: security
-    - apiVersion: external-secrets.io/v1
-      kind: ExternalSecret
-      name: kanidm-person-judah
+      name: kanidm-persons
       namespace: security
   interval: 1h
-  path: ./kubernetes/apps/security/kanidm-operator/identity
+  path: ./kubernetes/apps/security/kanidm-operator/secrets
   prune: true
   sourceRef:
     kind: GitRepository
