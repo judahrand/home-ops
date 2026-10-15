@@ -7,6 +7,9 @@ metadata:
 spec:
   components:
     - ../../../../components/kopiur/backup
+  dependsOn:
+    - name: kanidm-instance
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/downloads/qui/app
   postBuild:
