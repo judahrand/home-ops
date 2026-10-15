@@ -8,6 +8,9 @@ spec:
   targetNamespace: selfhosted
   components:
     - ../../../../components/kopiur/backup
+  dependsOn:
+    - name: kanidm-instance
+      namespace: security
   interval: 1h
   path: ./kubernetes/apps/selfhosted/karakeep/app
   prune: true

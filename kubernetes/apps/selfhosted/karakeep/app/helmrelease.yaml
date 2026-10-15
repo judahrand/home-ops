@@ -50,6 +50,20 @@ spec:
                     name: karakeep-secret
                     key: encryption_key
               NEXTAUTH_URL: https://karakeep.judahrand.net
+              OAUTH_WELLKNOWN_URL: https://auth.judahrand.net/oauth2/openid/karakeep/.well-known/openid-configuration
+              OAUTH_CLIENT_ID: karakeep
+              OAUTH_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: karakeep-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              OAUTH_PROVIDER_NAME: Kanidm
+              OAUTH_SCOPE: openid email profile
+              OAUTH_TOKEN_ENDPOINT_AUTH_METHOD: client_secret_basic
+              OAUTH_ID_TOKEN_SIGNED_RESPONSE_ALG: ES256
+              # Link the existing local account(s) to Kanidm by email on first login
+              # (sign-ups are disabled, so this is the only way in via OIDC).
+              OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "true"
               DISABLE_NEW_RELEASE_CHECK: true
               COREPACK_INTEGRITY_KEYS: 0
               OPENAI_API_KEY:
