@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: forgejo
+  interval: 30m
+  values:
+    gitea:
+      admin:
+        username: ""
+      config:
+        database:
+          DB_TYPE: sqlite3
+        indexer:
+          ISSUE_INDEXER_TYPE: bleve
+          REPO_INDEXER_ENABLED: true
+        lfs:
+          PATH: /data/git/lfs
+        mailer:
+          ENABLED: false
+        openid:
+          ENABLE_OPENID_SIGNIN: false
+          ENABLE_OPENID_SIGNUP: false
+        repository:
+          DEFAULT_REPO_UNITS: repo.code,repo.releases,repo.issues,repo.pulls,repo.actions
+          DISABLED_REPO_UNITS: repo.ext_wiki,repo.ext_issues
+          ROOT: /data/git/repositories
+        repository.pull-request:
+          DEFAULT_MERGE_STYLE: squash
+        security:
+          LOGIN_REMEMBER_DAYS: 14
+          REVERSE_PROXY_TRUSTED_PROXIES: 10.244.0.0/16
+        server:
+          APP_DATA_PATH: /data/gitea
+          DOMAIN: git.judahrand.net
+          ROOT_URL: https://git.judahrand.net
+          SSH_DOMAIN: git.judahrand.net
+          SSH_PORT: 22
+          SSH_SERVER_HOST_KEYS: ssh/ssh_host_ed25519_key
+          SSH_SERVER_USE_PROXY_PROTOCOL: true
+        service:
+          ALLOW_ONLY_EXTERNAL_REGISTRATION: true
+          DEFAULT_ENABLE_TIMETRACKING: false
+          ENABLE_INTERNAL_SIGNIN: false
+          ENABLE_PASSWORD_SIGNIN_FORM: false
+          SHOW_REGISTRATION_BUTTON: false
+        service.explore:
+          DISABLE_CODE_PAGE: false
+          DISABLE_ORGANIZATIONS_PAGE: true
+          DISABLE_USERS_PAGE: true
+          REQUIRE_SIGNIN_VIEW: false
+        session:
+          SESSION_LIFE_TIME: "1209600"
+        webhook:
+          ALLOWED_HOST_LIST: "*"
+      oauth:
+        - name: kanidm
+          adminGroup: forgejo_admins@auth.judahrand.net
+          autoDiscoverUrl: https://auth.judahrand.net/oauth2/openid/forgejo/.well-known/openid-configuration
+          existingSecret: forgejo-kanidm-oauth2-credentials
+          groupClaimName: groups
+          provider: openidConnect
+          scopes: profile email groups
+    httpRoute:
+      enabled: false
+    deployment:
+      annotations:
+        reloader.stakater.com/auto: "true"
+    image:
+      rootless: true
+      registry: code.forgejo.org
+      repository: forgejo/forgejo
+      tag: 16.0.6-rootless
+    persistence:
+      create: false
+      claimName: forgejo
+    service:
+      ssh:
+        port: 22
+    tcpRoute:
+      enabled: true
+      parentRefs:
+        - name: envoy-external
+          namespace: network
+          sectionName: ssh
+        - name: envoy-external
+          namespace: network
+          sectionName: ssh-proxy
