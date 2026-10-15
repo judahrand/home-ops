@@ -10,6 +10,8 @@ spec:
   dependsOn:
     - name: immich-database
       namespace: media
+    - name: kanidm-instance
+      namespace: security
   prune: true
   sourceRef:
     kind: GitRepository
