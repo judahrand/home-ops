@@ -9,20 +9,6 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/zeroscaler
-  # One-time cutover: seed the new `seerr` volume from the old `jellyseerr`
-  # snapshot via the kopiur volume populator. Remove this patch once Seerr is
-  # verified and has taken its own snapshots.
-  patches:
-    - target:
-        group: kopiur.home-operations.com
-        kind: Restore
-      patch: |
-        - op: replace
-          path: /spec/source/fromPolicy/name
-          value: jellyseerr
-        - op: add
-          path: /spec/source/fromPolicy/sourcePath
-          value: /pvc/jellyseerr
   path: ./kubernetes/apps/media/seerr/app
   prune: true
   sourceRef:
