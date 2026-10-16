@@ -20,6 +20,9 @@ spec:
         - op: replace
           path: /spec/source/fromPolicy/name
           value: jellyseerr
+        - op: add
+          path: /spec/source/fromPolicy/sourcePath
+          value: /pvc/jellyseerr
   path: ./kubernetes/apps/media/seerr/app
   prune: true
   sourceRef:
