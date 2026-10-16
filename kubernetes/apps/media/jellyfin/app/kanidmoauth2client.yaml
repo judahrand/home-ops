@@ -1,0 +1,32 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: jellyfin
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: security
+  displayname: Jellyfin
+  origin: https://jellyfin.judahrand.net/
+  # K0lin jellyfin-plugin-sso (SSO-Auth) callback paths.
+  redirectUrl:
+    - https://jellyfin.judahrand.net/sso/OID/redirect/kanidm
+    - https://jellyfin.judahrand.net/sso/OID/r/kanidm
+  scopeMap:
+    # Both groups need the scopes so admins (who may not also be in the users
+    # group) can authenticate; the plugin maps roles from the `groups` claim.
+    - group: jellyfin_users@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - groups
+    - group: jellyfin_admins@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - groups
+  # The plugin uses PKCE S256 and validates the ES256 id_token via JWKS.
+  preferShortUsername: true
+  disableConsentPrompt: true
