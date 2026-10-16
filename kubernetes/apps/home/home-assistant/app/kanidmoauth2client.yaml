@@ -28,11 +28,10 @@ spec:
         - profile
         - email
         - groups
-  # auth_oidc is configured as a public client and uses PKCE (S256); it validates
-  # the ES256 id_token via JWKS, so no legacy crypto is required.
-  public: true
+  # Confidential client: kaniop creates the `homeassistant-kanidm-oauth2-credentials`
+  # Secret (CLIENT_ID/CLIENT_SECRET), consumed by the deployment as OIDC_CLIENT_SECRET.
+  # auth_oidc uses PKCE (S256) and validates the ES256 id_token via JWKS, so no
+  # legacy crypto is required. Unlike a public client, this lets us disable the
+  # consent prompt.
   preferShortUsername: true
-  # NOTE: no `disableConsentPrompt` here. Kanidm refuses to disable the consent
-  # prompt for public clients (RFC-6819 5.2.3.2), returning 403; kaniop would
-  # then retry that attribute forever and never report Ready. Users get Kanidm's
-  # one-time consent screen on first authorization instead.
+  disableConsentPrompt: true
