@@ -81,6 +81,21 @@ spec:
       mqtt:
         host: mosquitto.home.svc.cluster.local
 
+      # Authenticate via the Envoy Gateway OIDC policy; identity/roles arrive as
+      # headers. Home Assistant should use the internal port 5000 instead.
+      auth:
+        enabled: false
+        trusted_proxies:
+          - 10.244.0.0/16
+          - 10.96.0.0/16
+
+      proxy:
+        header_map:
+          user: x-forwarded-user
+          role: x-forwarded-groups
+        default_role: viewer
+        logout_url: /oauth2/logout
+
       ffmpeg:
         hwaccel_args: preset-vaapi
         output_args:

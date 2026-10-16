@@ -1,0 +1,37 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: frigate
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: security
+  displayname: Frigate
+  origin: https://frigate.judahrand.net/
+  redirectUrl:
+    - https://frigate.judahrand.net/oauth2/callback
+  scopeMap:
+    - group: frigate_users@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - email
+  # Scalar claim (csv) so Envoy's claimToHeaders can copy it verbatim into a
+  # header Frigate understands (array claims get base64-encoded JSON).
+  claimMap:
+    - name: frigate_groups
+      joinStrategy: csv
+      valuesMap:
+        - group: frigate_admins@auth.judahrand.net
+          values:
+            - admin
+  # Envoy Gateway reads the OIDC client secret from the key "client-secret".
+  secretKeyAliases:
+    clientSecret:
+      - client-secret
+  # Envoy's OAuth2 filter uses PKCE when the provider advertises S256, so PKCE
+  # stays required and the id_token is validated with ES256 via JWKS.
+  preferShortUsername: true
+  disableConsentPrompt: true

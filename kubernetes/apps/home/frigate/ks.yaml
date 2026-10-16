@@ -9,6 +9,9 @@ spec:
   components:
     - ../../../../components/kopiur/backup
     - ../../../../components/zeroscaler
+  dependsOn:
+    - name: kanidm-instance
+      namespace: security
   path: ./kubernetes/apps/home/frigate/app
   prune: true
   sourceRef:

@@ -4,6 +4,8 @@ kind: Kustomization
 resources:
   - ./externalsecret.yaml
   - ./helmrelease.yaml
+  - ./kanidmoauth2client.yaml
   - ./pvc.yaml
   - ./httproute.yaml
   - ./resourceclaimtemplate.yaml
+  - ./securitypolicy.yaml

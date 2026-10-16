@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/gateway.envoyproxy.io/securitypolicy_v1alpha1.json
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: frigate-oidc
+spec:
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: HTTPRoute
+      name: frigate
+  oidc:
+    provider:
+      issuer: https://auth.judahrand.net/oauth2/openid/frigate
+    clientID: frigate
+    clientSecret:
+      name: frigate-kanidm-oauth2-credentials
+    redirectURL: https://frigate.judahrand.net/oauth2/callback
+    logoutPath: /oauth2/logout
+    scopes:
+      - openid
+      - profile
+      - email
+    cookieNames:
+      idToken: IdToken
+    # Required so Envoy issues the IdToken cookie that the JWT filter reads.
+    forwardAccessToken: true
+  jwt:
+    providers:
+      - name: kanidm
+        issuer: https://auth.judahrand.net/oauth2/openid/frigate
+        remoteJWKS:
+          uri: https://auth.judahrand.net/oauth2/openid/frigate/public_key.jwk
+        extractFrom:
+          cookies:
+            - IdToken
+        # Map the claims onto Frigate's built-in trusted header names so no
+        # proxy_trusted_headers override is needed.
+        claimToHeaders:
+          - claim: preferred_username
+            header: x-forwarded-user
+          - claim: preferred_username
+            header: x-forwarded-preferred-username
+          - claim: email
+            header: x-forwarded-email
+          - claim: name
+            header: remote-name
+          - claim: frigate_groups
+            header: x-forwarded-groups
