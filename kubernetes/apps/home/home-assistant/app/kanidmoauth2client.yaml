@@ -1,0 +1,35 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: homeassistant
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: security
+  displayname: Home Assistant
+  # hacs "OpenID Connect/SSO Authentication" (auth_oidc) landing + callback paths.
+  origin: https://homeassistant.judahrand.net/auth/oidc/welcome
+  redirectUrl:
+    - https://homeassistant.judahrand.net/auth/oidc/callback
+  scopeMap:
+    # Both groups need the scopes so admins (who may not also be in the users
+    # group) can authenticate; the integration maps roles from the `groups` claim.
+    - group: homeassistant_users@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - email
+        - groups
+    - group: homeassistant_admins@auth.judahrand.net
+      scopes:
+        - openid
+        - profile
+        - email
+        - groups
+  # auth_oidc is configured as a public client and uses PKCE (S256); it validates
+  # the ES256 id_token via JWKS, so no legacy crypto is required.
+  public: true
+  preferShortUsername: true
+  disableConsentPrompt: true

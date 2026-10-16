@@ -8,3 +8,4 @@ resources:
   - ./multinetworkpolicy.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+  - ./kanidmoauth2client.yaml
