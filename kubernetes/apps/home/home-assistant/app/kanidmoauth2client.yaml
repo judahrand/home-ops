@@ -32,4 +32,7 @@ spec:
   # the ES256 id_token via JWKS, so no legacy crypto is required.
   public: true
   preferShortUsername: true
-  disableConsentPrompt: true
+  # NOTE: no `disableConsentPrompt` here. Kanidm refuses to disable the consent
+  # prompt for public clients (RFC-6819 5.2.3.2), returning 403; kaniop would
+  # then retry that attribute forever and never report Ready. Users get Kanidm's
+  # one-time consent screen on first authorization instead.
