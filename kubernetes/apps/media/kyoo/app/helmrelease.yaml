@@ -40,6 +40,9 @@ spec:
           scanner:
             existingSecret: *secret
             apikeyKey: KYOO_API_KEY
+        privatekey:
+          existingSecret: *secret
+          privatekeyKey: RSA_PRIVATE_KEY
     media:
       volumes:
         - name: media
@@ -57,6 +60,18 @@ spec:
     api:
       persistence:
         existingClaim: *app
+      service:
+        annotations:
+          gatus.home-operations.com/endpoint: |
+            name: kyoo-api
+            group: services
+            url: http://kyoo-api.media.svc.cluster.local:3567/api/health
+            interval: 1m
+            ui:
+              hide-url: true
+              hide-hostname: true
+            conditions:
+              - "[STATUS] == 200"
       kyoo_api:
         resources:
           requests:
@@ -93,8 +108,12 @@ spec:
             cpu: 1
             memory: 1Gi
     transcoder:
-      # persistence:
-      #   existingClaim: *app
+      persistence:
+        size: 30Gi
+      volumes:
+        - name: cache
+          emptyDir:
+            sizeLimit: 20Gi
       resourceClaims:
         - name: i915
           resourceClaimTemplateName: kyoo-gpu
@@ -195,6 +214,7 @@ spec:
               - Authorization
               - X-Api-Key
               - cookie
+              - Sec-WebSocket-Protocol
             recomputeRoute: true
             http:
               backendRefs:
