@@ -84,7 +84,7 @@ spec:
         barmanObjectName: kritika-postgres
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster kritika-postgres-v1
+        serverName: &currentCluster kritika-postgres-v2
 
   # To restore: uncomment the block below, bump the archiver `serverName` above
   # to the next version, and delete the Cluster together with its PVCs so the
@@ -92,7 +92,7 @@ spec:
   #
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster kritika-postgres-v0
+  #     source: &previousCluster kritika-postgres-v1
   #     recoveryTarget:
   #       backupID: 20260101T000000
   #       targetImmediate: true
