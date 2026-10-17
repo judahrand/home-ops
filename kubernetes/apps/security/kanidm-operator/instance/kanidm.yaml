@@ -19,6 +19,29 @@ spec:
   # renovate: datasource=docker depName=kanidm/server
   image: kanidm/server:1.11.2
   logLevel: info
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    fsGroup: 1000
+    fsGroupChangePolicy: OnRootMismatch
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: kanidm
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        readOnlyRootFilesystem: true
+  initContainers:
+    - name: kanidm-generate-replication-config
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
   groupNamespaceSelector: {}
   oauth2ClientNamespaceSelector: {}
   serviceAccountNamespaceSelector: {}
