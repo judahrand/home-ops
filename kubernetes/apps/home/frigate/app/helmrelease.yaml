@@ -29,7 +29,7 @@ spec:
     image:
       repository: ghcr.io/blakeblackshear/frigate
       # Settings for AMD 780M GPU
-      tag: 0.18.1-rocm
+      tag: 0.18.2-rocm
 
     env:
       TZ: Europe/London
