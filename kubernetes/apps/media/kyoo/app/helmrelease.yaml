@@ -212,9 +212,10 @@ spec:
           extAuth:
             headersToExtAuth:
               - Authorization
-              - X-Api-Key
               - cookie
               - Sec-WebSocket-Protocol
+              - X-Api-Key
+              - X-Forwarded-Uri
             recomputeRoute: true
             http:
               backendRefs:
