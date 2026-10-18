@@ -141,7 +141,7 @@ spec:
         spec:
           hostnames: ["kyoo.judahrand.net"]
           parentRefs:
-            - name: envoy-internal
+            - name: envoy-external
               namespace: network
           rules:
             - name: api
