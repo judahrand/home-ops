@@ -76,7 +76,7 @@ spec:
         barmanObjectName: nas-backup
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster postgres17-v6
+        serverName: &currentCluster postgres17-v7
 
   # To restore: uncomment the block below, bump the archiver `serverName` above
   # to the next version, and delete the Cluster together with its PVCs so the
@@ -84,15 +84,15 @@ spec:
   #
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster postgres17-plain
+  #     source: &previousCluster postgres17-v7
   #     recoveryTarget:
-  #       backupID: 20260830T000002
+  #       backupID: REPLACE_WITH_GARAGE_BACKUP_ID
   #       targetImmediate: true
   # externalClusters:
   #   - name: *previousCluster
   #     plugin:
   #       name: barman-cloud.cloudnative-pg.io
   #       parameters:
-  #         barmanObjectName: nas-backup-plain
+  #         barmanObjectName: nas-backup
   #         serverName: *previousCluster
   #

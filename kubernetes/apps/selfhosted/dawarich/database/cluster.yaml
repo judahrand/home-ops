@@ -67,7 +67,7 @@ spec:
         barmanObjectName: dawarich-database
         # Note: serverName version needs to be incremented
         # when recovering from an existing cnpg cluster
-        serverName: &currentCluster dawarich-database-v3
+        serverName: &currentCluster dawarich-database-v4
 
   # To restore: uncomment the block below, bump the archiver `serverName` above
   # to the next version, and delete the Cluster together with its PVCs so the
@@ -75,7 +75,7 @@ spec:
   #
   # bootstrap:
   #   recovery:
-  #     source: &previousCluster dawarich-database-v2
+  #     source: &previousCluster dawarich-database-v4
   # externalClusters:
   #   - name: *previousCluster
   #     plugin:

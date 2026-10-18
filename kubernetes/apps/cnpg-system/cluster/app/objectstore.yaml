@@ -5,7 +5,7 @@ metadata:
 spec:
   retentionPolicy: 30d
 
-  # MinIO compatibility: boto3 >= 1.36 enables checksum calculation/validation
+  # S3 compatibility: boto3 >= 1.36 enables checksum calculation/validation
   # by default, which trips some S3-compatible providers (cloudnative-pg#7715).
   # NB: this does NOT fix the IncompleteRead restore problem
   # (barman#1100 / cnpg/charts#788) - that is what `data.compression` below is
@@ -19,7 +19,7 @@ spec:
 
   configuration:
     destinationPath: s3://cloudnative-pg/
-    endpointURL: http://truenas.servers:9000
+    endpointURL: http://truenas.servers:30188
     s3Credentials:
       accessKeyId:
         name: cloudnative-pg-secret
@@ -27,6 +27,9 @@ spec:
       secretAccessKey:
         name: cloudnative-pg-secret
         key: aws-secret-access-key
+      region:
+        name: cloudnative-pg-secret
+        key: aws-region
     # gzip, not bzip2: barman-cloud-restore streams and decompresses inside the
     # socket read path, and bzip2 is slow enough that large base backups die
     # mid-download with "IncompleteRead" (barman#1100, cnpg/charts#788).
