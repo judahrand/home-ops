@@ -12,8 +12,9 @@ resources:
   - ./home-assistant/ks.yaml
   - ./home-assistant-matter-hub/ks.yaml
   - ./matter-server/ks.yaml
-  - ./matterbridge/ks.yaml
-  - ./matterbridge-garage/ks.yaml
+  - ./matterbridge-hass/ks.yaml
+  - ./matterbridge-zigbee2mqtt-core/ks.yaml
+  - ./matterbridge-zigbee2mqtt-garage/ks.yaml
   - ./mosquitto/ks.yaml
   - ./zigbee2mqtt-core/ks.yaml
   - ./zigbee2mqtt-garage/ks.yaml

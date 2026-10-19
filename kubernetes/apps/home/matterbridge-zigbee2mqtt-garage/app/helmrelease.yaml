@@ -1,0 +1,136 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app matterbridge-zigbee2mqtt-garage
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: matterbridge-zigbee2mqtt-garage
+  interval: 1h
+  values:
+    controllers:
+      matterbridge-zigbee2mqtt-garage:
+        type: deployment
+        replicas: 1
+        strategy: Recreate
+        pod:
+          automountServiceAccountToken: false
+          terminationGracePeriodSeconds: 60
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |
+              [{
+                "name": "iot-infra",
+                "namespace": "kube-system",
+                "interface": "net1",
+                "ips": ["10.0.80.55/24"],
+                "mac": "02:00:00:80:00:55"
+              }]
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
+            fsGroup: 1000
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile: { type: RuntimeDefault }
+            sysctls:
+              - name: net.ipv6.conf.net1.forwarding
+                value: "0"
+              - name: net.ipv6.conf.net1.accept_ra
+                value: "1"
+              - name: net.ipv6.conf.net1.accept_ra_rt_info_max_plen
+                value: "64"
+        containers:
+          app:
+            image:
+              repository: docker.io/luligu/matterbridge
+              tag: bun@sha256:c0168114bb1f62525e848cdf31ec4c8990339a778c548da1b442ed2f2b7667cc
+            args:
+              - bun
+              - --bun
+              - /usr/local/bin/matterbridge
+              - --docker
+              - --homedir
+              - /data
+              - --profile
+              - garage
+              - --bridge
+              - --mdnsinterface
+              - net1
+              - --frontend
+              - "8283"
+              - --port
+              - "5540"
+              - --no-ansi
+            env:
+              TZ: Europe/London
+            securityContext:
+              allowPrivilegeEscalation: false
+            probes:
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &port 8283
+                  periodSeconds: 5
+                  timeoutSeconds: 5
+                  failureThreshold: 60
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *port
+                  periodSeconds: 60
+                  timeoutSeconds: 10
+                  failureThreshold: 5
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+
+    service:
+      app:
+        controller: *app
+        ports:
+          http:
+            port: *port
+
+    persistence:
+      data:
+        existingClaim: *app
+        globalMounts:
+          - path: /data
+      tmp:
+        type: emptyDir
+        sizeLimit: 256Mi
+        globalMounts:
+          - path: /tmp
+
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *port
