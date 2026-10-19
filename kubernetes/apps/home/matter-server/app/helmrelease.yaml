@@ -53,6 +53,7 @@ spec:
             args:
               - --storage-path=/data
               - --primary-interface=net1
+              - --enable-test-net-dcl
             env:
               TZ: Europe/London
               MATTER_SERVER__INSTANCE_NAME: Matter-Server
