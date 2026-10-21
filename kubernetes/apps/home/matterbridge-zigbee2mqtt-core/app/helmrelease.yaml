@@ -45,7 +45,7 @@ spec:
           app:
             image:
               repository: docker.io/luligu/matterbridge
-              tag: bun@sha256:c0168114bb1f62525e848cdf31ec4c8990339a778c548da1b442ed2f2b7667cc
+              tag: bun-3.10.14@sha256:c0168114bb1f62525e848cdf31ec4c8990339a778c548da1b442ed2f2b7667cc
             args:
               - bun
               - --bun
