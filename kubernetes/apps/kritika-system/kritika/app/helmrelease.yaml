@@ -19,10 +19,9 @@ spec:
         admin:
           password: { env: KRITIKA_AUTH_ADMIN_PASSWORD }
       review:
-        model: opencode/deepseek-v4.1-flash
-        fallback: openrouter/deepseek/deepseek-v4.1-flash
+        model: openrouter/~openai/gpt-sol-latest
       confidence:
-        model: opencode/deepseek-v4.1-flash
+        model: openrouter/~anthropic/claude-sonnet-latest
       embedding:
         model: openrouter/voyageai/voyage-code-4
         dims: 1024
