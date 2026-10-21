@@ -1,12 +1,15 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    "github>home-operations/renovate-presets#9.0.0",
-    "github>home-operations/renovate-presets//apps/cnpg.json5#9.0.0",
-    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#9.0.0",
-    "github>home-operations/renovate-presets//apps/talosFactory.json5#9.0.0",
+    "github>home-operations/renovate-presets#10.0.0",
+    "github>home-operations/renovate-presets//apps/cnpg.json5#10.0.0",
+    "github>home-operations/renovate-presets//apps/grafanaDashboards.json5#10.0.0",
+    "github>home-operations/renovate-presets//apps/talosFactory.json5#10.0.0",
     ":timezone(Europe/London)",
   ],
+  // Main does not require up-to-date branches; avoid rebasing every automerge
+  // PR whenever main moves.
+  rebaseWhen: "conflicted",
   lockFileMaintenance: {
     enabled: true,
     schedule: ["before 3am on the first day of the month"],
@@ -15,6 +18,7 @@
   },
   hostRules: [
     {
+      // Repository secrets in developer.mend.io; see .github/RENOVATE.md.
       description: "Authenticate against the ocharted OCI registry",
       matchHost: "ocharted.turbo.ac",
       hostType: "docker",
@@ -48,35 +52,35 @@
       matchManagers: ["github-actions"],
       matchUpdateTypes: ["minor", "patch", "digest"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       minimumReleaseAge: "3 days",
-      ignoreTests: true,
+      ignoreTests: false,
     },
     {
       description: "Auto-merge trusted GitHub Actions",
       matchManagers: ["github-actions"],
-      matchPackageNames: ["/^actions\\//", "/^renovatebot\\//"],
+      matchPackageNames: ["/^actions\\//"],
       matchUpdateTypes: ["minor", "patch", "digest"],
       automerge: true,
-      automergeType: "branch",
+      automergeType: "pr",
       minimumReleaseAge: "1 minute",
-      ignoreTests: true,
+      ignoreTests: false,
     },
     {
       description: "Auto-merge Grafana dashboards",
       matchDatasources: ["custom.grafana-dashboards"],
       matchUpdateTypes: ["major"],
       automerge: true,
-      automergeType: "branch",
-      ignoreTests: true,
+      automergeType: "pr",
+      ignoreTests: false,
     },
     {
-      description: "Auto-merge Renovate Presents",
+      description: "Auto-merge Renovate presets",
       matchManagers: ["renovate-config"],
       matchUpdateTypes: ["minor", "patch"],
       automerge: true,
-      automergeType: "branch",
-      ignoreTests: true,
+      automergeType: "pr",
+      ignoreTests: false,
     },
     // Grouping rules
     {

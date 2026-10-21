@@ -14,7 +14,7 @@ _... managed with Flux, Renovate, and GitHub Actions_ <img src="https://fonts.gs
 [![Talos](https://kromgo.judahrand.net/badges/talos_version)](https://talos.dev)&nbsp;&nbsp;
 [![Kubernetes](https://kromgo.judahrand.net/badges/kubernetes_version)](https://kubernetes.io)&nbsp;&nbsp;
 [![Flux](https://kromgo.judahrand.net/badges/flux_version)](https://fluxcd.io)&nbsp;&nbsp;
-[![Renovate](https://img.shields.io/github/actions/workflow/status/judahrand/home-ops/renovate.yaml?branch=main&label&logo=renovate&color=blue)](https://github.com/judahrand/home-ops/actions/workflows/renovate.yaml)
+[![Renovate](https://img.shields.io/badge/Renovate-Mend_app-blue?logo=renovate)](https://developer.mend.io/)
 
 </div>
 
@@ -58,7 +58,7 @@ There is a template over at [onedr0p/cluster-template](https://github.com/onedr0
 
 The way Flux works for me here is it will recursively search the `kubernetes/apps` folder until it finds the most top level `kustomization.yaml` per directory and then apply all the resources listed in it. That aforementioned `kustomization.yaml` will generally only have a namespace resource and one or many Flux kustomizations (`ks.yaml`). Under the control of those Flux kustomizations there will be a `HelmRelease` or other resources related to the application which will be applied.
 
-[Renovate](https://github.com/renovatebot/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created. When some PRs are merged Flux applies the changes to my cluster.
+The [Mend Renovate app](https://github.com/apps/renovate) watches my **entire** repository looking for dependency updates, when they are found a PR is automatically created. When some PRs are merged Flux applies the changes to my cluster. Repository configuration and app setup are documented in [Renovate](./.github/RENOVATE.md).
 
 ### Directories
 
