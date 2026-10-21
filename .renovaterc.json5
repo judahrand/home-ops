@@ -20,7 +20,7 @@
     {
       // Repository secrets in developer.mend.io; see .github/RENOVATE.md.
       description: "Authenticate against the ocharted OCI registry",
-      matchHost: "ocharted.turbo.ac",
+      matchHost: "ocharted.judahrand.net",
       hostType: "docker",
       username: "{{ secrets.OCHARTED_USERNAME }}",
       password: "{{ secrets.OCHARTED_PASSWORD }}",
