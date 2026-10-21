@@ -5,6 +5,8 @@ kind: NetworkAttachmentDefinition
 metadata:
   name: iot-infra
 spec:
+  # Keep IPv4 source routing separate from iot in dual-attached pods,
+  # and leave the kernel's IPv6 link-local routes in the main table.
   config: |-
     {
       "cniVersion": "1.1.0",
@@ -17,12 +19,14 @@ spec:
           "ipam": {
             "type": "static",
             "routes": [
-              {"dst": "0.0.0.0/0", "gw": "10.0.80.1"}
+              {"dst": "10.0.80.0/24", "scope": 253, "table": 1080},
+              {"dst": "0.0.0.0/0", "gw": "10.0.80.1", "table": 1080}
             ]
           }
         },
         {
-          "type": "sbr"
+          "type": "sbr",
+          "table": 1080
         }
       ]
     }
