@@ -10,6 +10,26 @@ old and new versions, and whether anything in this repository depends on
 it. GitHub is read with `gh`; a project's own changelog or documentation
 site with `curl`.
 
+## Kritika runner tools
+
+In Kritika, use `fetch_repo` to inspect a public upstream at the exact
+release refs, compare two refs, or list tags. Use `fetch_oci` to inspect
+an image or chart artifact's digest, platforms, config, labels and
+annotations, or list its tags. These tools are available in the runner;
+in another review environment, use its available registry and source
+tools. Registry metadata identifies the artifact and its source; it does
+not establish that the upgrade is compatible or render the chart.
+
+The runner supplies `gh`, `curl`, `jq`, `yq`, `rg` and `fd`. This
+repository adds flate through `tools` in `.kritika.yaml`; the development
+tools in `.mise/config.toml` are not the runner's tool declaration. No
+shell is available: run each command separately, without pipes, redirects
+or command substitution. Read a fetched tree with `read_file` and search
+it with `rg`. When output is truncated and Kritika names a saved file,
+search or read that file instead of repeating the full command. If a
+fetch or tool install fails, report the verification gap; do not treat
+the failure as evidence that the dependency breaks.
+
 ## The update
 
 Take from the title, body, labels and diff: the package and its datasource
@@ -27,7 +47,9 @@ read every intermediate release, breaking changes land in the middle.
 
 - An image at `<registry>/<owner>/<repo>` usually comes from `<owner>/<repo>`
   on GitHub; otherwise the body or the image's
-  `org.opencontainers.image.source` annotation names the source.
+  `org.opencontainers.image.source` annotation names the source. In
+  Kritika, inspect it with `fetch_oci`; include the revision label when
+  mapping a digest-only rebuild to upstream changes.
 - A chart's source is the app's `OCIRepository` (`ocirepository.yaml`): its
   `url` is the registry path and `ref.tag` the version. A path under an
   owner (`oci://<registry>/<owner>/...`) is that owner's chart on GitHub,
@@ -107,9 +129,12 @@ capabilities see flate's bundled version, not the cluster's. Within that,
 take the label values, resource names and ports the exposure search
 depends on from the render rather than from a reading of the template,
 and narrow it with `--show-only <template path>` when the whole output is
-too long. Only the head is checked out, so the old chart does
-not render here: what it produced is read upstream, or from the names this
-repository already refers to.
+too long. Compare with a render from the base revision when available;
+otherwise read the old chart's values and templates at its exact release
+ref and check the names this repository already refers to. A successful
+head render alone does not prove that a default changed. A GitHub compare
+that diverges from the old release may include unrelated history; confirm
+the value at both release refs before reporting a change.
 
 ## Exposure here
 
@@ -180,5 +205,9 @@ printed.
   which PRs move several packages at once, each of which the review
   covers; its labels and the shared preset's `!` on a major update should
   agree with the title, and drift between them is worth a note.
+- Renovate runs through the hosted Mend app as `renovate[bot]`. All
+  configured auto-merges use PRs and respect required checks; branches
+  rebase only on conflicts, so a PR behind `main` is not itself a fault.
+  Read the current package rules for release-age exceptions and schedules.
 - Secrets are ExternalSecrets from 1Password: judge key names and mappings
   from the manifests.
