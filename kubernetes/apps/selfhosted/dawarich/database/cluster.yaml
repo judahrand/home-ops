@@ -30,7 +30,7 @@ spec:
     extensions:
       - name: postgis
         image:
-          reference: ghcr.io/cloudnative-pg/postgis-extension:3.6.4-18-bookworm@sha256:f16a2c70a55df192f0d7eeb29bbc6564901f07c610d2dbb917c63e899e01bb58
+          reference: ghcr.io/cloudnative-pg/postgis-extension:3.6.4-18-bookworm@sha256:fc4ed93bf9babe00f19dc5ba57e55489409229f5e5ee52b388b484ff5399cc28
         ld_library_path:
           - system
     parameters:
