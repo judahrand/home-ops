@@ -19,10 +19,10 @@ spec:
         admin:
           password: { env: KRITIKA_AUTH_ADMIN_PASSWORD }
       review:
-        model: chatgpt/~sol-latest
-        fallback: openrouter/~openai/gpt-sol-latest
+        model: openrouter/deepseek/deepseek-v4.1-flash-1017
+        fallback: chatgpt/~luna-latest
       confidence:
-        model: openrouter/~anthropic/claude-sonnet-latest
+        model: openrouter/qwen/qwen3.8-flash
       embedding:
         model: openrouter/voyageai/voyage-code-4
         dims: 1024
