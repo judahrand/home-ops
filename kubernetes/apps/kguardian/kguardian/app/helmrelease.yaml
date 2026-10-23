@@ -1,0 +1,44 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kguardian
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kguardian
+  interval: 1h
+  test:
+    enable: true
+  values:
+    controller:
+      # Include kube-system workloads; only exclude kguardian's own telemetry.
+      excludedNamespaces:
+        - kguardian
+    broker:
+      resources:
+        limits:
+          memory: 2Gi
+      metrics:
+        serviceMonitor:
+          enabled: true
+        prometheusRule:
+          enabled: true
+    database:
+      enabled: false
+      user: kguardian
+      databaseName: kguardian
+      # CNPG creates this Secret when bootstrapping the application database.
+      existingSecret: kguardian-postgres-app
+      external:
+        host: kguardian-postgres-rw.kguardian.svc.cluster.local
+    frontend:
+      allowedHosts:
+        - kguardian.judahrand.net
+    evaluator:
+      metrics:
+        serviceMonitor:
+          enabled: true
+    telemetry:
+      enabled: false
