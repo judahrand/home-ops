@@ -5,6 +5,8 @@ kind: SecurityPolicy
 metadata:
   name: frigate-oidc
 spec:
+  # Retain gateway-level CrowdSec external authorization alongside OIDC/JWT.
+  mergeType: StrategicMerge
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: HTTPRoute
