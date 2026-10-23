@@ -89,7 +89,7 @@ spec:
           main:
             image:
               repository: ghcr.io/karakeep-app/karakeep-chrome
-              tag: release@sha256:c51a8c8e6c3c1040a50fa0ecfd0b2fc298401b4229262636552458151f6f18fa
+              tag: release@sha256:4ad61127638dd27bfe685222787c5780dd1d083d23a7658c39af657775814c44
             # No command: the image entrypoint starts headless Chrome itself and
             # forwards 9222, so --no-sandbox and the --remote-debugging-* args
             # must not be passed (upstream's chrome-image migration guide).
