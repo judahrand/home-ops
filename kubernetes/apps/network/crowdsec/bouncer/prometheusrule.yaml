@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/monitoring.coreos.com/prometheusrule_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: crowdsec-bouncer-rules
+spec:
+  groups:
+    - name: crowdsec-bouncer.rules
+      rules:
+        - alert: CrowdSecBouncerUnavailable
+          expr: |
+            kube_deployment_status_replicas_available{namespace="network",deployment="crowdsec-bouncer"} == 0
+          for: 5m
+          annotations:
+            summary: CrowdSec bouncer has been unavailable for five minutes
+            description: All bans are bypassed while the bouncer is unavailable because the gateway fails open.
+          labels:
+            severity: critical
