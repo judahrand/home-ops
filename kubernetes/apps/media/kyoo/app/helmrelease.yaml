@@ -196,6 +196,7 @@ spec:
         metadata:
           name: kyoo-auth
         spec:
+          mergeType: StrategicMerge
           targetRefs:
             - group: gateway.networking.k8s.io
               kind: HTTPRoute

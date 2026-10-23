@@ -10,6 +10,7 @@ spec:
       kind: Gateway
       name: envoy-external
   extAuth:
+    # A bouncer outage means all bans are bypassed.
     failOpen: true
     grpc:
       backendRefs:
