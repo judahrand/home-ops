@@ -35,6 +35,8 @@ metadata:
   name: dawarich-database
 spec:
   targetNamespace: selfhosted
+  components:
+    - ../../../../components/cnpg
   path: ./kubernetes/apps/selfhosted/dawarich/database
   prune: true
   sourceRef:
