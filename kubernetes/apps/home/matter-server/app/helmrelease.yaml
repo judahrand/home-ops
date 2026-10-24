@@ -53,7 +53,7 @@ spec:
             env:
               STORAGE_PATH: /data
               PORT: &port 5580
-              LOG_LEVEL: debug
+              LOG_LEVEL: info
               PRIMARY_INTERFACE: net1
               ENABLE_TEST_NET_DCL: true
               BLE_PROXY: true
