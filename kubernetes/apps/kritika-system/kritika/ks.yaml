@@ -15,7 +15,12 @@ spec:
       kind: Cluster
       current: status.conditions.exists(e, e.type == 'Ready' && e.status == 'True')
   interval: 1h
+  components:
+    - ../../../../components/cnpg
   path: ./kubernetes/apps/kritika-system/kritika/database
+  postBuild:
+    substitute:
+      APP: kritika-postgres
   prune: true
   sourceRef:
     kind: GitRepository

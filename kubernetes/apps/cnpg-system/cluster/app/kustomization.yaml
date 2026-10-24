@@ -6,8 +6,36 @@ resources:
   - ./cluster17.yaml
   - ./databases.yaml
   - ./externalsecret.yaml
-  - ./scheduledbackup.yaml
   - ./prometheusrule.yaml
   - ./service.yaml
-  - ./objectstore.yaml
-  - ./podmonitor.yaml
+patches:
+  # Preserve the central cluster's existing backup names and S3 settings.
+  - target:
+      kind: ScheduledBackup
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: postgres
+  - target:
+      kind: ExternalSecret
+      name: cloudnative-pg
+    patch: |-
+      - op: add
+        path: /spec/target/template/engineVersion
+        value: v2
+  - target:
+      kind: ObjectStore
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: nas-backup
+      - op: add
+        path: /spec/instanceSidecarConfiguration
+        value:
+          # boto3 >= 1.36 defaults trip some S3-compatible providers
+          # (cloudnative-pg#7715); unrelated to the restore compression fix.
+          env:
+            - name: AWS_REQUEST_CHECKSUM_CALCULATION
+              value: when_required
+            - name: AWS_RESPONSE_CHECKSUM_VALIDATION
+              value: when_required

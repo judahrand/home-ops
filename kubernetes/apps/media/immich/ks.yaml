@@ -30,6 +30,8 @@ metadata:
   name: immich-database
 spec:
   targetNamespace: media
+  components:
+    - ../../../../components/cnpg
   path: ./kubernetes/apps/media/immich/database
   prune: true
   sourceRef:

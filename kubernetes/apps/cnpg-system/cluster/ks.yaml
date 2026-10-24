@@ -6,7 +6,12 @@ metadata:
   name: cloudnative-pg-cluster
 spec:
   targetNamespace: cnpg-system
+  components:
+    - ../../../../components/cnpg
   path: ./kubernetes/apps/cnpg-system/cluster/app
+  postBuild:
+    substitute:
+      APP: postgres17
   prune: true
   sourceRef:
     kind: GitRepository
