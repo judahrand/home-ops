@@ -14,7 +14,7 @@ spec:
     ingress:
       enabled: true
       annotations:
-        external-dns.alpha.kubernetes.io/target: internal.judahrand.net
+        external-dns.kubernetes.io/target: internal.judahrand.net
       className: internal
       hosts:
         - host: blackbox-exporter.judahrand.net
