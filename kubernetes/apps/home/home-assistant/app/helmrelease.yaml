@@ -120,6 +120,8 @@ spec:
             port: &hass-port 8123
           code-server:
             port: &code-port 12321
+          mcp:
+            port: &mcp-port 9584
 
     route:
       app:
@@ -137,6 +139,18 @@ spec:
           - backendRefs:
               - identifier: app
                 port: *hass-port
+
+      mcp:
+        hostnames:
+          - ha-mcp.judahrand.net
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *mcp-port
 
       code-server:
         hostnames:
