@@ -129,6 +129,7 @@ spec:
 
       lpr:
         enabled: true
+        device: CPU
         debug_save_plates: true
         format: "^[A-Z]{2}[0-9]{2} [A-Z]{3}$"
         replace_rules:
