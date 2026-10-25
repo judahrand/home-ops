@@ -6,6 +6,7 @@ resources:
   - ./externalsecret.yaml
   - ./pvc.yaml
   - ./multinetworkpolicy.yaml
+  - ./ciliumnetworkpolicy.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./kanidmoauth2client.yaml

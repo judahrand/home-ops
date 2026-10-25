@@ -1,0 +1,36 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/cilium.io/ciliumnetworkpolicy_v2.json
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: home-assistant
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: home-assistant
+  enableDefaultDeny:
+    egress: false
+  ingress:
+    # Keep the existing Home Assistant and code-server endpoints reachable.
+    # Discovery on the secondary interfaces is governed by MultiNetworkPolicy.
+    - fromEntities:
+        - all
+      toPorts:
+        - ports:
+            - port: "8123"
+              protocol: TCP
+            - port: "12321"
+              protocol: TCP
+            - port: "5353"
+              protocol: UDP
+            - port: "1900"
+              protocol: UDP
+    # Only internal Envoy may reach the direct MCP listener on the pod network.
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: network
+            gateway.envoyproxy.io/owning-gateway-name: envoy-internal
+      toPorts:
+        - ports:
+            - port: "9584"
+              protocol: TCP
