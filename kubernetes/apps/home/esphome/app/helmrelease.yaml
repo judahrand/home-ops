@@ -55,7 +55,7 @@ spec:
           app:
             image:
               repository: ghcr.io/home-operations/esphome
-              tag: 2026.9.1
+              tag: 2026.10.0
               pullPolicy: IfNotPresent
             env:
               TZ: Europe/London
@@ -63,6 +63,8 @@ spec:
               ESPHOME__PORT: &port 6052
               ESPHOME__APPLICATION_URL: &host "esphome.judahrand.net"
               ESPHOME__LOG_LEVEL: info
+              ESPHOME_ARDUINO8266_PREFIX: /cache/arduino8266
+              ESPHOME_ESP_IDF_PREFIX: /cache/idf
             probes:
               liveness:
                 enabled: true
