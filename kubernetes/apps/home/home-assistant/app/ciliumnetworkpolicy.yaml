@@ -25,12 +25,3 @@ spec:
               protocol: UDP
             - port: "1900"
               protocol: UDP
-    # Only internal Envoy may reach the direct MCP listener on the pod network.
-    - fromEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: network
-            gateway.envoyproxy.io/owning-gateway-name: envoy-internal
-      toPorts:
-        - ports:
-            - port: "9584"
-              protocol: TCP

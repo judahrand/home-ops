@@ -9,6 +9,12 @@ spec:
     kind: OCIRepository
     name: home-assistant
   interval: 1h
+  valuesFrom:
+    - kind: Secret
+      name: home-assistant-secret
+      valuesKey: HA_MCP_WEBHOOK_ID
+      targetPath: global.haMcpWebhookId
+      optional: false
   values:
     controllers:
       home-assistant:
@@ -120,8 +126,6 @@ spec:
             port: &hass-port 8123
           code-server:
             port: &code-port 12321
-          mcp:
-            port: &mcp-port 9584
 
     route:
       app:
@@ -136,6 +140,19 @@ spec:
           - name: envoy-external
             namespace: network
         rules:
+          - matches:
+              - path:
+                  type: PathPrefix
+                  value: '/api/webhook/{{ required "HA_MCP_WEBHOOK_ID must be nonempty" .Values.global.haMcpWebhookId }}'
+              - path:
+                  type: PathPrefix
+                  value: '/.well-known/oauth-protected-resource/api/webhook/{{ required "HA_MCP_WEBHOOK_ID must be nonempty" .Values.global.haMcpWebhookId }}'
+            filters:
+              - type: ExtensionRef
+                extensionRef:
+                  group: gateway.envoyproxy.io
+                  kind: HTTPRouteFilter
+                  name: home-assistant-mcp-internal-only
           - backendRefs:
               - identifier: app
                 port: *hass-port
@@ -150,7 +167,7 @@ spec:
         rules:
           - backendRefs:
               - identifier: app
-                port: *mcp-port
+                port: *hass-port
 
       code-server:
         hostnames:

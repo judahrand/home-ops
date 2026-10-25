@@ -13,6 +13,7 @@ spec:
   origin: https://homeassistant.judahrand.net/auth/oidc/welcome
   redirectUrl:
     - https://homeassistant.judahrand.net/auth/oidc/callback
+    - https://ha-mcp.judahrand.net/auth/oidc/callback
   scopeMap:
     # Both groups need the scopes so admins (who may not also be in the users
     # group) can authenticate; the integration maps roles from the `groups` claim.
