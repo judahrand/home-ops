@@ -7,6 +7,7 @@ resources:
   - ./pvc.yaml
   - ./multinetworkpolicy.yaml
   - ./ciliumnetworkpolicy.yaml
+  - ./httproutefilter.yaml
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./kanidmoauth2client.yaml
