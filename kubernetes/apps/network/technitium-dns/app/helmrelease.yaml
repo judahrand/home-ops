@@ -39,7 +39,7 @@ spec:
     extraArgs:
       - --rfc2136-zone=judahrand.net
       - --rfc2136-tsig-secret-alg=hmac-sha256
-      - --rfc2136-tsig-axfr
+      - --rfc2136-axfr
     policy: sync
     sources: ["gateway-httproute", "service"]
     txtOwnerId: main
