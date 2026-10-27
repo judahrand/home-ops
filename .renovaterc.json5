@@ -29,10 +29,8 @@
   packageRules: [
     // Auto-merge rules
     {
-      description: "Auto-merge trusted OCI digests",
-      matchDatasources: ["docker"],
-      matchUpdateTypes: ["digest"],
-      matchPackageNames: ["/home-operations/"],
+      description: "Auto-merge patch and digest updates",
+      matchUpdateTypes: ["patch", "digest"],
       automerge: true,
       automergeType: "pr",
       ignoreTests: false,
