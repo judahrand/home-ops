@@ -112,6 +112,7 @@
         "/kube-scheduler/",
         "/kubelet/",
       ],
+      automerge: false,
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
@@ -142,6 +143,7 @@
       description: "Talos Group",
       groupName: "talos",
       matchPackageNames: ["siderolabs/talos"],
+      automerge: false,
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },
