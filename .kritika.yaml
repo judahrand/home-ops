@@ -1,7 +1,7 @@
 ---
 # yaml-language-server: $schema=https://kritika.home-operations.com/kritika.schema.json
 tools:
-  "github:home-operations/flate": "0.6.5"
+  aqua:home-operations/flate: v0.6.5
 skills:
   scope:
     renovate-review:
