@@ -4,6 +4,5 @@ tools:
   aqua:home-operations/flate: v0.6.5
 skills:
   scope:
-    renovate-review:
-      when: [{ expr: pr.headRef.startsWith("renovate/") }]
+    reviewing-pull-requests:
       load: true

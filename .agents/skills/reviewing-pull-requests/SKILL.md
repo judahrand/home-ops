@@ -1,14 +1,16 @@
 ---
-name: renovate-review
-description: Review a Renovate dependency update in this Flux repository. Where to find a dependency's upstream history (charts from their OCIRepository, images, actions, mise tools), what counts as a breaking change, how to check what under kubernetes/ depends on it, how to write checked lines a second reader can verify, and where this repository's Renovate rules live. Read it for any pull request on a renovate/ branch.
+name: reviewing-pull-requests
+description: Review pull requests in this Flux repository, including Renovate updates. Covers dependency history, chart rendering, affected Kubernetes resources, and evidence for checked lines.
 ---
 
-# Review a Renovate PR
+# Review a pull request
 
-Judge whether the update is safe to merge: what changed upstream between the
-old and new versions, and whether anything in this repository depends on
-it. GitHub is read with `gh`; a project's own changelog or documentation
-site with `curl`.
+Judge whether the change is safe to merge. For every PR, read the diff and
+description, identify the affected resources and their users under
+`kubernetes/`, and explain what the available evidence does and does not
+verify. For a Renovate PR, also check what changed upstream between the old
+and new versions. GitHub is read with `gh`; a project's own changelog or
+documentation site with `curl`.
 
 ## Kritika runner tools
 
@@ -20,17 +22,17 @@ in another review environment, use its available registry and source
 tools. Registry metadata identifies the artifact and its source; it does
 not establish that the upgrade is compatible or render the chart.
 
-The runner supplies `gh`, `curl`, `jq`, `yq`, `rg` and `fd`. This
+The runner image supplies `gh`, `curl`, `jq`, `grep` and `find`. This
 repository adds flate through `tools` in `.kritika.yaml`; the development
 tools in `.mise/config.toml` are not the runner's tool declaration. No
 shell is available: run each command separately, without pipes, redirects
 or command substitution. Read a fetched tree with `read_file` and search
-it with `rg`. When output is truncated and Kritika names a saved file,
+it with the available search tool. When output is truncated and Kritika names a saved file,
 search or read that file instead of repeating the full command. If a
 fetch or tool install fails, report the verification gap; do not treat
 the failure as evidence that the dependency breaks.
 
-## The update
+## A Renovate update
 
 Take from the title, body, labels and diff: the package and its datasource
 (container image, Helm chart as an `OCIRepository`, GitHub Action, mise
@@ -116,7 +118,7 @@ flate build hr <name> -n <namespace> --path kubernetes/flux/cluster --no-progres
 
 flate reports every failure in the namespace, not only the requested
 HelmRelease's, and exits nonzero for any of them. A failure is a finding
-on the bumped line only when it belongs to the HelmRelease under review
+on the changed line only when it belongs to the HelmRelease under review
 and the update caused it: a value the new chart's schema rejects, a
 template that errors on this repository's values. A failure of another
 HelmRelease, or a source that could not be fetched, says nothing about the
@@ -164,7 +166,7 @@ PR's diff or from the chart's template at the new tag, read raw with
 Without that, make it a check to do after the merge rather than an edit; a
 wrong edit that gets applied is worse than none.
 
-A finding anchors to the bumped line in the diff; name the dependent file
+A finding anchors to the changed line in the diff; name the dependent file
 and line in its explanation. A breaking change that touches nothing here
 is not a finding: one sentence in the take, with the search that came up
 empty, is enough.
