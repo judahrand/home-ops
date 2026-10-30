@@ -22,4 +22,4 @@ spec:
   postBuild:
     substitute:
       APP: matter-server
-      KOPIUR_CAPACITY: 512Mi
+      KOPIUR_CAPACITY: 5Gi
