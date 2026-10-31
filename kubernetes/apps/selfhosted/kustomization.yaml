@@ -10,6 +10,7 @@ resources:
   - ./namespace.yaml
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
+  - ./bambu-studio-api/ks.yaml
   - ./bambuddy/ks.yaml
   - ./obico-ml-api/ks.yaml
   - ./orca-slicer-api/ks.yaml

@@ -1,0 +1,67 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bambu-studio-api
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: bambu-studio-api
+  interval: 1h
+  values:
+    controllers:
+      bambu-studio-api:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/maziggy/bambu-studio-api
+              # renovate: datasource=docker depName=ghcr.io/maziggy/bambu-studio-api
+              tag: bambuddy-1.2.5.7
+            env:
+              NODE_ENV: production
+              PORT: &httpPort 3001
+              MAX_MODEL_UPLOAD_MB: 512
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *httpPort
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *httpPort
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 8Gi
+    service:
+      app:
+        controller: bambu-studio-api
+        ports:
+          http:
+            port: *httpPort
+    persistence:
+      data:
+        existingClaim: bambu-studio-api
+        globalMounts:
+          - path: /app/data

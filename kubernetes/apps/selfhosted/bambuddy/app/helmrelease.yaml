@@ -24,7 +24,8 @@ spec:
               TZ: Europe/London
               PORT: &httpPort 8000
               APP_URL: https://bambuddy.judahrand.net
-              SLICER_API_URL: http://orca-slicer-api.selfhosted.svc.cluster.local:3000
+              SLICER_API_URL: http://orca-slicer-api:3000
+              BAMBU_STUDIO_API_URL: http://bambu-studio-api:3001
               BAMBUDDY_OIDC_NAME: Kanidm
               BAMBUDDY_OIDC_ISSUER_URL: https://auth.judahrand.net/oauth2/openid/bambuddy
               BAMBUDDY_OIDC_CLIENT_ID: bambuddy
