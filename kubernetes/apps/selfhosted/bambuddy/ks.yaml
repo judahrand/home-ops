@@ -22,3 +22,5 @@ spec:
   postBuild:
     substitute:
       APP: bambuddy
+      KOPIUR_PUID: "2000"
+      KOPIUR_PGID: "2000"
