@@ -1,0 +1,67 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: orca-slicer-api
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: orca-slicer-api
+  interval: 1h
+  values:
+    controllers:
+      orca-slicer-api:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/maziggy/orca-slicer-api
+              # renovate: datasource=docker depName=ghcr.io/maziggy/orca-slicer-api
+              tag: bambuddy-1.2.5.7
+            env:
+              NODE_ENV: production
+              PORT: 3000
+              MAX_MODEL_UPLOAD_MB: 512
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: &httpPort 3000
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *httpPort
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              requests:
+                cpu: 100m
+                memory: 512Mi
+              limits:
+                memory: 8Gi
+    service:
+      app:
+        controller: orca-slicer-api
+        ports:
+          http:
+            port: *httpPort
+    persistence:
+      data:
+        existingClaim: orca-slicer-api
+        globalMounts:
+          - path: /app/data
