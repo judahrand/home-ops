@@ -64,13 +64,26 @@ spec:
               limits:
                 memory: 4Gi
             securityContext:
+              # The image marks Python with CAP_NET_BIND_SERVICE so optional
+              # virtual-printer listeners on ports 322 and 990 can bind.
               allowPrivilegeEscalation: false
               readOnlyRootFilesystem: true
               capabilities:
+                add:
+                  - NET_BIND_SERVICE
                 drop:
                   - ALL
 
     defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "iot",
+            "namespace": "kube-system",
+            "interface": "net1",
+            "ips": ["10.0.60.86/24"],
+            "mac": "02:00:00:60:00:86"
+          }]
       securityContext:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
