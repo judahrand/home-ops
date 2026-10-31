@@ -9,6 +9,7 @@ spec:
   components:
     - ../../../../components/kopiur/backup
   dependsOn:
+    - name: orca-slicer-api
     - name: kanidm-instance
       namespace: security
   interval: 1h
