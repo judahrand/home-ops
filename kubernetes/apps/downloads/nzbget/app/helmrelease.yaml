@@ -19,6 +19,7 @@ spec:
               tag: 26.3.0@sha256:af04d3bf15361afae8b4105df2f7b7157799c651bb169cf360f742455c162b6e
             env:
               NZBGET__PORT: &port 80
+              NZBGET__INTERDIR: /intermediate
               TZ: Europe/London
             probes:
               liveness: &probes
@@ -73,5 +74,10 @@ spec:
         globalMounts:
           - path: /media/Downloads/nzbget
             subPath: Downloads/nzbget
+      intermediate:
+        type: emptyDir
+        sizeLimit: 200Gi
+        globalMounts:
+          - path: /intermediate
       tmp:
         type: emptyDir
