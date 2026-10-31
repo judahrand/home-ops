@@ -23,6 +23,7 @@ spec:
         fallback: chatgpt/~openai/gpt-luna-latest
       confidence:
         model: openrouter/qwen/qwen3.8-flash
+        fallback: chatgpt/~sol-latest
       embedding:
         model: openrouter/voyageai/voyage-code-4
         dims: 1024
