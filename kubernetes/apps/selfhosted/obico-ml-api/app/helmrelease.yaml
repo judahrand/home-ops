@@ -1,0 +1,85 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: obico-ml-api
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: obico-ml-api
+  interval: 1h
+  values:
+    controllers:
+      obico-ml-api:
+        containers:
+          app:
+            image:
+              repository: ghcr.io/gabe565/obico/ml-api
+              # renovate: datasource=docker depName=ghcr.io/gabe565/obico/ml-api
+              tag: latest
+            command:
+              - gunicorn
+            args:
+              - --bind=0.0.0.0:3333
+              - --workers=1
+              - --timeout=120
+              - --access-logfile=-
+              - wsgi
+            env:
+              DEBUG: "False"
+              FLASK_APP: server.py
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /hc/
+                    port: &httpPort 3333
+                  periodSeconds: 30
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /hc/
+                    port: *httpPort
+                  periodSeconds: 10
+                  timeoutSeconds: 10
+                  failureThreshold: 3
+              startup:
+                enabled: true
+                spec:
+                  httpGet:
+                    path: /hc/
+                    port: *httpPort
+                  periodSeconds: 10
+                  timeoutSeconds: 10
+                  failureThreshold: 30
+            resources:
+              requests:
+                cpu: 1
+                memory: 3Gi
+              limits:
+                cpu: 4
+                memory: 6Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 65534
+        runAsGroup: 65534
+        runAsNonRoot: true
+        runAsUser: 65534
+    service:
+      app:
+        controller: obico-ml-api
+        ports:
+          http:
+            port: *httpPort

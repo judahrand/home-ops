@@ -11,6 +11,7 @@ resources:
   - ./actual/ks.yaml
   - ./atuin/ks.yaml
   - ./bambuddy/ks.yaml
+  - ./obico-ml-api/ks.yaml
   - ./orca-slicer-api/ks.yaml
   - ./dawarich/ks.yaml
   - ./karakeep/ks.yaml
