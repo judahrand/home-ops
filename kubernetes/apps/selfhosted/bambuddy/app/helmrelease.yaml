@@ -1,0 +1,117 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bambuddy
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: bambuddy
+  interval: 1h
+  values:
+    controllers:
+      bambuddy:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            image:
+              repository: ghcr.io/maziggy/bambuddy
+              # renovate: datasource=docker depName=ghcr.io/maziggy/bambuddy
+              tag: 1.2.5.7
+            env:
+              TZ: Europe/London
+              PORT: &httpPort 8000
+              APP_URL: https://bambuddy.judahrand.net
+              BAMBUDDY_OIDC_NAME: Kanidm
+              BAMBUDDY_OIDC_ISSUER_URL: https://auth.judahrand.net/oauth2/openid/bambuddy
+              BAMBUDDY_OIDC_CLIENT_ID: bambuddy
+              BAMBUDDY_OIDC_CLIENT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: bambuddy-kanidm-oauth2-credentials
+                    key: CLIENT_SECRET
+              BAMBUDDY_OIDC_AUTO_CREATE_USERS: "true"
+              BAMBUDDY_OIDC_AUTO_LINK_EXISTING: "true"
+              BAMBUDDY_OIDC_REQUIRE_EMAIL_VERIFIED: "true"
+            probes:
+              liveness:
+                enabled: true
+                spec:
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /health
+                    port: *httpPort
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 5
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 10
+            resources:
+              requests:
+                memory: 160Mi
+                cpu: 36m
+              limits:
+                memory: 4Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
+
+    defaultPodOptions:
+      securityContext:
+        fsGroup: 2000
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 2000
+        runAsUser: 2000
+
+    service:
+      app:
+        controller: bambuddy
+        ports:
+          http:
+            appProtocol: kubernetes.io/ws
+            port: *httpPort
+
+    route:
+      app:
+        hostnames:
+          - "{{ .Release.Name }}.judahrand.net"
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+            sectionName: https
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *httpPort
+
+    persistence:
+      config:
+        existingClaim: bambuddy
+        advancedMounts:
+          bambuddy:
+            app:
+              - path: /app/data
+                subPath: data
+      tmpfs:
+        type: emptyDir
+        advancedMounts:
+          bambuddy:
+            app:
+              - path: /tmp
+                subPath: tmp
+              - path: /app/logs
+                subPath: logs
