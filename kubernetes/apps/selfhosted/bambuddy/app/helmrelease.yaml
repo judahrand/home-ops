@@ -105,7 +105,7 @@ spec:
         hostnames:
           - "{{ .Release.Name }}.judahrand.net"
         parentRefs:
-          - name: envoy-internal
+          - name: envoy-external
             namespace: network
             sectionName: https
         rules:
