@@ -20,7 +20,7 @@ spec:
           password: { env: KRITIKA_AUTH_ADMIN_PASSWORD }
       review:
         model: openrouter/deepseek/deepseek-v4.1-flash-1017
-        fallback: chatgpt/~luna-latest
+        fallback: chatgpt/~openai/gpt-luna-latest
       confidence:
         model: openrouter/qwen/qwen3.8-flash
       embedding:
