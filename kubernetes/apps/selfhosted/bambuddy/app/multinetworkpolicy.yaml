@@ -1,0 +1,21 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/k8s.cni.cncf.io/multinetworkpolicy_v1beta1.json
+apiVersion: k8s.cni.cncf.io/v1beta1
+kind: MultiNetworkPolicy
+metadata:
+  name: bambuddy-iot
+  annotations:
+    k8s.v1.cni.cncf.io/policy-for: kube-system/iot
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: bambuddy
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 10.0.60.0/24
+      ports:
+        - protocol: UDP
+          port: 2021

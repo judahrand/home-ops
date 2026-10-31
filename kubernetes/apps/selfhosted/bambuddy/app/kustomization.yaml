@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - ./kanidmoauth2client.yaml
   - ./helmrelease.yaml
+  - ./multinetworkpolicy.yaml
   - ./ocirepository.yaml

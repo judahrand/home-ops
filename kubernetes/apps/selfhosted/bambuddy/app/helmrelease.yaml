@@ -71,6 +71,15 @@ spec:
                   - ALL
 
     defaultPodOptions:
+      annotations:
+        k8s.v1.cni.cncf.io/networks: |-
+          [{
+            "name": "iot",
+            "namespace": "kube-system",
+            "interface": "net1",
+            "ips": ["10.0.60.86/24"],
+            "mac": "02:00:00:60:00:86"
+          }]
       securityContext:
         fsGroup: 2000
         fsGroupChangePolicy: OnRootMismatch
