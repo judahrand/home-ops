@@ -1,5 +1,7 @@
 ---
 # yaml-language-server: $schema=https://kritika.home-operations.com/kritika.schema.json
+review:
+  approve: true
 tools:
   aqua:home-operations/flate: v0.6.5
 skills:
