@@ -36,6 +36,7 @@ spec:
               BAMBUDDY_OIDC_AUTO_CREATE_USERS: "true"
               BAMBUDDY_OIDC_AUTO_LINK_EXISTING: "true"
               BAMBUDDY_OIDC_REQUIRE_EMAIL_VERIFIED: "true"
+              BAMBUDDY_LOCAL_LOGIN: "false"
             probes:
               liveness:
                 enabled: true
