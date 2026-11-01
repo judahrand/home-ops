@@ -115,18 +115,21 @@ spec:
           emptyDir:
             sizeLimit: 20Gi
       resourceClaims:
-        - name: i915
-          resourceClaimTemplateName: kyoo-gpu
+        - name: gpu
+          resourceClaimTemplateName: kyoo-gpu-amd
       kyoo_transcoder:
         resources:
           claims:
-            - name: i915
+            - name: gpu
           requests:
             cpu: 100m
             memory: 500Mi
           limits:
             cpu: 3
             memory: 8Gi
+        extraEnv:
+          - name: LIBVA_DRIVER_NAME
+            value: radeonsi
     postgres:
       enabled: false
     ingress:
