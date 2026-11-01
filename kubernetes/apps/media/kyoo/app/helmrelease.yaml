@@ -23,7 +23,6 @@ spec:
           passwordKey: POSTGRES_PASSWORD
     kyoo:
       address: https://kyoo.judahrand.net
-      middlewareRootURL: https://kyoo.judahrand.net
       transcoderAcceleration: vaapi # hardware acceleration profile (valid values: disabled, vaapi, qsv, nvidia)
       oidc_providers:
         - name: kanidm
@@ -132,7 +131,7 @@ spec:
     ingress:
       enabled: false
     traefikproxy:
-      enabled: false
+      enabled: true
     extraObjects:
       - apiVersion: gateway.networking.k8s.io/v1
         kind: HTTPRoute
@@ -196,7 +195,6 @@ spec:
         metadata:
           name: kyoo-auth
         spec:
-          mergeType: StrategicMerge
           targetRefs:
             - group: gateway.networking.k8s.io
               kind: HTTPRoute
