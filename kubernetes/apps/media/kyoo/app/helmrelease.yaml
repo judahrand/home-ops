@@ -125,7 +125,7 @@ spec:
             cpu: 100m
             memory: 500Mi
           limits:
-            cpu: 2
+            cpu: 3
             memory: 8Gi
     postgres:
       enabled: false
