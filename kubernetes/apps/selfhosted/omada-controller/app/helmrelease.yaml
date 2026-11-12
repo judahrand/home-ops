@@ -33,7 +33,7 @@ spec:
           app:
             image:
               repository: mbentley/omada-controller
-              tag: 6.3.0.111@sha256:7258ebe7b9ba356b52122ed5bb68b42b1b5e959674ec1b8d3918f82dbe05a53d
+              tag: 6.3.0.111@sha256:7ffded380f2e5806bc92f4ae47518c2a60ee3b46f3bf03ebd0725078e960cb49
             env:
               TZ: Europe/London
               # ROOTLESS: "true"
