@@ -34,7 +34,7 @@ spec:
                 spec:
                   httpGet:
                     path: /api/status
-                    port: 8562
+                    port: 8560
                   periodSeconds: 30
                   timeoutSeconds: 5
                   failureThreshold: 3
