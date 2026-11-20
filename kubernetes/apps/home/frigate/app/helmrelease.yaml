@@ -273,23 +273,23 @@ spec:
       audio_transcription:
         enabled: true
 
-      go2rtc:
-        streams:
-          doorbell_cam:
-            - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
-            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
-          doorbell_cam_sub:
-            - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
-          alleyway_cam:
-            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_main
-          alleyway_cam_sub:
-            - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-            - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_sub
-          webrtc:
-            candidates:
-              - homeassistant.local:8555
-              - stun:8555
+      # go2rtc:
+      #   streams:
+      #     doorbell_cam:
+      #       - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
+      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
+      #     doorbell_cam_sub:
+      #       - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
+      #     alleyway_cam:
+      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_main
+      #     alleyway_cam_sub:
+      #       - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
+      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_sub
+      #     webrtc:
+      #       candidates:
+      #         - homeassistant.local:8555
+      #         - stun:8555
 
       birdseye:
         enabled: true
@@ -303,15 +303,10 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: rtsp://127.0.0.1:8554/doorbell_cam
-                input_args: preset-rtsp-restream
-                roles:
-                  - record
-              - path: rtsp://127.0.0.1:8554/doorbell_cam_sub
-                input_args: preset-rtsp-restream
-                roles:
-                  - audio
-                  - detect
+              - path: http://reostream:8560/front_door_sub.ts
+                roles: [detect]
+              - path: http://reostream:8560/front_door.ts
+                roles: [record, audio]
           detect:
             width: 640
             height: 480
@@ -351,15 +346,10 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: rtsp://127.0.0.1:8554/alleyway_cam
-                input_args: preset-rtsp-restream
-                roles:
-                  - record
-              - path: rtsp://127.0.0.1:8554/alleyway_cam_sub
-                input_args: preset-rtsp-restream
-                roles:
-                  - audio
-                  - detect
+              - path: http://reostream:8560/alleyway_sub.ts
+                roles: [detect]
+              - path: http://reostream:8560/alleyway.ts
+                roles: [record, audio]
           detect:
             width: 640
             height: 360
