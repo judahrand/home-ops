@@ -281,13 +281,13 @@ spec:
       go2rtc:
         streams:
           front_door_cam:
-            - rtsp://reostream:8561/front_door
+            - rtsp://{FRIGATE_REOSTREAM_USER}:{FRIGATE_REOSTREAM_PASSWORD}@reostream:8561/front_door
           front_door_cam_sub:
-            - rtsp://reostream:8561/front_door_sub
+            - rtsp://{FRIGATE_REOSTREAM_USER}:{FRIGATE_REOSTREAM_PASSWORD}@reostream:8561/front_door_sub
           alleyway_cam:
-            - rtsp://reostream:8561/alleyway
+            - rtsp://{FRIGATE_REOSTREAM_USER}:{FRIGATE_REOSTREAM_PASSWORD}@reostream:8561/alleyway
           alleyway_cam_sub:
-            - rtsp://reostream:8561/alleyway_sub
+            - rtsp://{FRIGATE_REOSTREAM_USER}:{FRIGATE_REOSTREAM_PASSWORD}@reostream:8561/alleyway_sub
         webrtc:
           candidates:
             - homeassistant.local:8555
