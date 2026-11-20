@@ -12,6 +12,7 @@ resources:
   - ./reostream/ks.yaml
   - ./home-assistant/ks.yaml
   - ./matter-server/ks.yaml
+  - ./matterbridge-camera/ks.yaml
   - ./matterbridge-hass/ks.yaml
   - ./matterbridge-zigbee2mqtt-core/ks.yaml
   - ./matterbridge-zigbee2mqtt-garage/ks.yaml
