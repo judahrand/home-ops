@@ -294,7 +294,7 @@ spec:
             - stun:8555
 
       cameras:
-        doorbell_cam:
+        front_door:
           webui_url: http://front.iot
           audio:
             enabled: true
@@ -339,7 +339,7 @@ spec:
                 - driveway_street
             detections:
               required_zones: driveway
-        alleyway_cam:
+        alleyway:
           webui_url: http://alleyway.iot
           audio:
             enabled: true
@@ -388,11 +388,11 @@ spec:
         Driveway:
           order: 1
           icon: LuCar
-          cameras: doorbell_cam
+          cameras: front_door
         Alleyway:
           order: 2
           icon: LuHouse
-          cameras: alleyway_cam
+          cameras: alleyway
         Birdseye:
           order: 3
           icon: LuBird
