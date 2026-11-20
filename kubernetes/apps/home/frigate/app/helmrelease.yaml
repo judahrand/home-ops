@@ -273,28 +273,25 @@ spec:
       audio_transcription:
         enabled: true
 
-      # go2rtc:
-      #   streams:
-      #     doorbell_cam:
-      #       - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_main.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}#video=copy#audio=copy#audio=opus
-      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
-      #     doorbell_cam_sub:
-      #       - ffmpeg:http://front.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@front.iot/Preview_01_sub
-      #     alleyway_cam:
-      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_main
-      #     alleyway_cam_sub:
-      #       - ffmpeg:http://alleyway.iot/flv?port=1935&app=bcs&stream=channel0_ext.bcs&user={FRIGATE_REOLINK_USER}&password={FRIGATE_REOLINK_PASSWORD}
-      #       - rtsp://{FRIGATE_REOLINK_USER}:{FRIGATE_REOLINK_PASSWORD}@alleyway.iot/Preview_01_sub
-      #     webrtc:
-      #       candidates:
-      #         - homeassistant.local:8555
-      #         - stun:8555
-
       birdseye:
         enabled: true
         mode: continuous
         restream: true
+
+      go2rtc:
+        streams:
+          front_door:
+            - rtsp://reostream:8561/front_door
+          front_door_sub:
+            - rtsp://reostream:8561/front_door_sub
+          alleyway:
+            - rtsp://reostream:8561/alleyway
+          alleyway_sub:
+            - rtsp://reostream:8561/alleyway_sub
+        webrtc:
+          candidates:
+            - homeassistant.local:8555
+            - stun:8555
 
       cameras:
         doorbell_cam:
@@ -303,11 +300,11 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: http://reostream:8560/front_door_sub.ts
-                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
+              - path: rtsp://127.0.0.1:8554/front_door_sub
+                input_args: preset-rtsp-restream
                 roles: [detect]
-              - path: http://reostream:8560/front_door.ts
-                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
+              - path: rtsp://127.0.0.1:8554/front_door
+                input_args: preset-rtsp-restream
                 roles: [record, audio]
           detect:
             width: 640
@@ -348,11 +345,11 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: http://reostream:8560/alleyway_sub.ts
-                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
+              - path: rtsp://127.0.0.1:8554/alleyway_sub
+                input_args: preset-rtsp-restream
                 roles: [detect]
-              - path: http://reostream:8560/alleyway.ts
-                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
+              - path: rtsp://127.0.0.1:8554/alleyway
+                input_args: preset-rtsp-restream
                 roles: [record, audio]
           detect:
             width: 640
