@@ -304,10 +304,10 @@ spec:
           ffmpeg:
             inputs:
               - path: http://reostream:8560/front_door_sub.ts
-                input_args: []
+                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
                 roles: [detect]
               - path: http://reostream:8560/front_door.ts
-                input_args: []
+                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
                 roles: [record, audio]
           detect:
             width: 640
@@ -349,10 +349,10 @@ spec:
           ffmpeg:
             inputs:
               - path: http://reostream:8560/alleyway_sub.ts
-                input_args: []
+                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
                 roles: [detect]
               - path: http://reostream:8560/alleyway.ts
-                input_args: []
+                input_args: ["-fflags", "+genpts+discardcorrupt", "-rw_timeout", "10000000"]
                 roles: [record, audio]
           detect:
             width: 640
