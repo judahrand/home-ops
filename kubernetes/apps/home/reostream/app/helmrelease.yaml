@@ -1,0 +1,82 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: reostream
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: reostream
+  interval: 1h
+  values:
+    controllers:
+      reostream:
+        pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |-
+              [{
+                "name": "iot",
+                "namespace": "kube-system",
+                "interface": "net1",
+                "ips": ["10.0.60.88/24"],
+                "mac": "02:00:00:60:00:88"
+              }]
+        containers:
+          app:
+            image:
+              repository: ghcr.io/volttech21/reostream
+              tag: 0.2.9
+            probes:
+              liveness: &probe
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/status
+                    port: control
+                  periodSeconds: 30
+                  timeoutSeconds: 5
+                  failureThreshold: 3
+              readiness: *probe
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                memory: 512Mi
+    defaultPodOptions:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+    service:
+      app:
+        controller: reostream
+        ports:
+          http:
+            port: 8560
+          rtsp:
+            port: 8561
+          control:
+            port: &controlPort 8562
+    route:
+      app:
+        hostnames:
+          - reostream.judahrand.net
+        parentRefs:
+          - name: envoy-internal
+            namespace: network
+        rules:
+          - backendRefs:
+              - identifier: app
+                port: *controlPort
+    persistence:
+      data:
+        existingClaim: reostream
+        globalMounts:
+          - path: /data
