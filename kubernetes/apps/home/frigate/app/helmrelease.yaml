@@ -280,13 +280,13 @@ spec:
 
       go2rtc:
         streams:
-          front_door:
+          front_door_cam:
             - rtsp://reostream:8561/front_door
-          front_door_sub:
+          front_door_cam_sub:
             - rtsp://reostream:8561/front_door_sub
-          alleyway:
+          alleyway_cam:
             - rtsp://reostream:8561/alleyway
-          alleyway_sub:
+          alleyway_cam_sub:
             - rtsp://reostream:8561/alleyway_sub
         webrtc:
           candidates:
@@ -300,10 +300,10 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: rtsp://127.0.0.1:8554/front_door_sub
+              - path: rtsp://127.0.0.1:8554/front_door_cam_sub
                 input_args: preset-rtsp-restream
                 roles: [detect]
-              - path: rtsp://127.0.0.1:8554/front_door
+              - path: rtsp://127.0.0.1:8554/front_door_cam
                 input_args: preset-rtsp-restream
                 roles: [record, audio]
           detect:
@@ -345,10 +345,10 @@ spec:
             enabled: true
           ffmpeg:
             inputs:
-              - path: rtsp://127.0.0.1:8554/alleyway_sub
+              - path: rtsp://127.0.0.1:8554/alleyway_cam_sub
                 input_args: preset-rtsp-restream
                 roles: [detect]
-              - path: rtsp://127.0.0.1:8554/alleyway
+              - path: rtsp://127.0.0.1:8554/alleyway_cam
                 input_args: preset-rtsp-restream
                 roles: [record, audio]
           detect:
