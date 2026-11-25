@@ -4,3 +4,11 @@ kind: Kustomization
 resources:
   - ./cluster.yaml
   - ./externalsecret.yaml
+patches:
+  - patch: |
+      apiVersion: postgresql.cnpg.io/v1
+      kind: ScheduledBackup
+      metadata:
+        name: ${APP}
+      spec:
+        schedule: "0 0 0 * * *"

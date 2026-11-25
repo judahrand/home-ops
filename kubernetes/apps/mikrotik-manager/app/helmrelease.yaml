@@ -71,6 +71,7 @@ spec:
               PASSWORD_LOGIN: "true"
               POLLER_ROLE: all
               PORT: 3001
+              NETFLOW_BIND_PORT: 2055
             probes:
               readiness: &backendProbe
                 enabled: true

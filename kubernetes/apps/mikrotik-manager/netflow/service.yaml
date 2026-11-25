@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mikrotik-manager-netflow
+  annotations:
+    lbipam.cilium.io/ips: 10.0.42.128
+spec:
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  allocateLoadBalancerNodePorts: false
+  loadBalancerSourceRanges:
+    - ${NETFLOW_EXPORTER_CIDR}
+  selector:
+    app.kubernetes.io/instance: mikrotik-manager
+    app.kubernetes.io/controller: backend
+  ports:
+    - name: ipfix
+      port: 2055
+      targetPort: 2055
+      protocol: UDP

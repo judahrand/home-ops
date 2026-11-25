@@ -55,14 +55,6 @@ spec:
       # The upstream InfluxDB entrypoint runs as root and writes its CLI config.
       KOPIUR_PUID: "0"
       KOPIUR_PGID: "0"
-  patches:
-    - patch: |
-        apiVersion: v1
-        kind: PersistentVolumeClaim
-        metadata:
-          name: ${APP}
-          annotations:
-            kustomize.toolkit.fluxcd.io/prune: disabled
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -92,14 +84,6 @@ spec:
       KOPIUR_CAPACITY: 5Gi
       KOPIUR_PUID: "100"
       KOPIUR_PGID: "101"
-  patches:
-    - patch: |
-        apiVersion: v1
-        kind: PersistentVolumeClaim
-        metadata:
-          name: ${APP}
-          annotations:
-            kustomize.toolkit.fluxcd.io/prune: disabled
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -127,6 +111,30 @@ spec:
   path: ./kubernetes/apps/mikrotik-manager/edge
   prune: true
   # Resume in Git after rotating the seeded administrator through a port-forward.
+  suspend: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 1h
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mikrotik-manager-netflow
+spec:
+  targetNamespace: mikrotik-manager
+  dependsOn:
+    - name: mikrotik-manager
+    - name: cilium
+      namespace: kube-system
+  path: ./kubernetes/apps/mikrotik-manager/netflow
+  postBuild:
+    substituteFrom:
+      - kind: ConfigMap
+        name: mikrotik-manager-netflow
+  prune: true
+  # Resume in Git after configuring the management network ACL and exporter CIDR.
   suspend: true
   sourceRef:
     kind: GitRepository
