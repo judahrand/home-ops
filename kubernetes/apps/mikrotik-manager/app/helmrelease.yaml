@@ -1,0 +1,173 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mikrotik-manager
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mikrotik-manager
+  interval: 1h
+  values:
+    defaultPodOptions:
+      automountServiceAccountToken: false
+    controllers:
+      backend:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          terminationGracePeriodSeconds: 60
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 100
+            runAsGroup: 101
+            fsGroup: 101
+            fsGroupChangePolicy: OnRootMismatch
+            seccompProfile:
+              type: RuntimeDefault
+        containers:
+          backend:
+            image:
+              repository: ghcr.io/2gt-media-group-llc/mikrotik-manager-backend
+              tag: &release "1.0.36"
+              digest: sha256:c390ba831a3bc7e91f08fc468f9e262ef0839a7d23becf7642d463bfcfd612c2
+            env:
+              TZ: Europe/London
+              NODE_ENV: production
+              DATABASE_URL: postgresql://mikrotik@mikrotik-manager-database-rw:5432/mikrotik_manager
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: mikrotik-manager-database
+                    key: password
+              REDIS_URL: redis://redis:6379
+              REDIS_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: &secret mikrotik-manager-secret
+                    key: REDIS_PASSWORD
+              INFLUXDB_URL: http://influxdb:8086
+              INFLUXDB_ORG: mikrotik-manager
+              INFLUXDB_BUCKET: metrics
+              INFLUXDB_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: *secret
+                    key: INFLUXDB_TOKEN
+              JWT_SECRET:
+                valueFrom:
+                  secretKeyRef:
+                    name: *secret
+                    key: JWT_SECRET
+              ENCRYPTION_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: *secret
+                    key: ENCRYPTION_KEY
+              CORS_ORIGIN: http://localhost:8080
+              PASSWORD_LOGIN: "true"
+              POLLER_ROLE: all
+              PORT: 3001
+            probes:
+              readiness: &backendProbe
+                enabled: true
+                custom: true
+                spec: &backendProbeSpec
+                  httpGet:
+                    path: /api/health
+                    port: 3001
+                  periodSeconds: 5
+                  timeoutSeconds: 3
+              startup:
+                <<: *backendProbe
+                spec:
+                  <<: *backendProbeSpec
+                  failureThreshold: 60
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 1Gi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: [ALL]
+      nginx:
+        pod:
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+        containers:
+          nginx:
+            image:
+              repository: ghcr.io/2gt-media-group-llc/mikrotik-manager-nginx
+              tag: *release
+              digest: sha256:d580abb7a7c3520f301437ec71dc4e79a1fb19b75489535f7492febe75ad0db8
+            env:
+              TLS_MODE: proxy
+            probes:
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /api/health
+                    port: 80
+                  periodSeconds: 5
+                  timeoutSeconds: 3
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop: [ALL]
+                add: [CHOWN, DAC_OVERRIDE, FOWNER, SETUID, SETGID, NET_BIND_SERVICE]
+    service:
+      backend:
+        forceRename: backend
+        controller: backend
+        ports:
+          http:
+            port: 3001
+      nginx:
+        forceRename: mikrotik-manager
+        controller: nginx
+        ports:
+          http:
+            appProtocol: kubernetes.io/ws
+            port: 80
+    persistence:
+      data:
+        existingClaim: mikrotik-manager
+        advancedMounts:
+          backend:
+            backend:
+              - path: /app/data
+                subPath: data
+              - path: /app/backups
+                subPath: backups
+      tmp:
+        type: emptyDir
+        advancedMounts:
+          backend:
+            backend:
+              - path: /tmp
+          nginx:
+            nginx:
+              - path: /tmp
+                subPath: tmp
+              - path: /var/cache/nginx
+                subPath: cache
+              - path: /var/run
+                subPath: run
+              - path: /certs
+                subPath: certs

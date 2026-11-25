@@ -74,3 +74,40 @@ spec:
     name: flux-system
     namespace: flux-system
   interval: 1h
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: mikrotik-manager
+spec:
+  targetNamespace: mikrotik-manager
+  components:
+    - ../../../components/kopiur/backup
+  dependsOn:
+    - name: mikrotik-manager-stores
+  path: ./kubernetes/apps/mikrotik-manager/app
+  postBuild:
+    substitute:
+      APP: mikrotik-manager
+      KOPIUR_CAPACITY: 5Gi
+      KOPIUR_PUID: "100"
+      KOPIUR_PGID: "101"
+  patches:
+    - patch: |
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: ${APP}
+          annotations:
+            kustomize.toolkit.fluxcd.io/prune: disabled
+  healthChecks:
+    - apiVersion: helm.toolkit.fluxcd.io/v2
+      kind: HelmRelease
+      name: mikrotik-manager
+      namespace: mikrotik-manager
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  interval: 1h
