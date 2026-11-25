@@ -66,7 +66,8 @@ spec:
                   secretKeyRef:
                     name: *secret
                     key: ENCRYPTION_KEY
-              CORS_ORIGIN: http://localhost:8080
+              # Keep localhost available for the bootstrap port-forward.
+              CORS_ORIGIN: https://mikrotik-manager.judahrand.net,http://localhost:8080
               PASSWORD_LOGIN: "true"
               POLLER_ROLE: all
               PORT: 3001
@@ -109,6 +110,8 @@ spec:
               digest: sha256:d580abb7a7c3520f301437ec71dc4e79a1fb19b75489535f7492febe75ad0db8
             env:
               TLS_MODE: proxy
+              # The nginx NetworkPolicy permits HTTP only from internal Envoy.
+              TRUSTED_PROXIES: 10.244.0.0/16
             probes:
               readiness:
                 enabled: true
