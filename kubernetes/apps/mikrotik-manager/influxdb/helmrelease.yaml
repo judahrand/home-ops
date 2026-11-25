@@ -3,7 +3,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: mikrotik-manager-stores
+  name: mikrotik-manager-influxdb
 spec:
   chartRef:
     kind: OCIRepository
@@ -11,53 +11,6 @@ spec:
   interval: 1h
   values:
     controllers:
-      redis:
-        strategy: Recreate
-        annotations:
-          reloader.stakater.com/auto: "true"
-        pod:
-          terminationGracePeriodSeconds: 60
-        containers:
-          redis:
-            image:
-              repository: mirror.gcr.io/library/redis
-              tag: 7-alpine
-              digest: sha256:57e4255cc971b1c8d6f8a6ca283ac01bc3ecdd914273ef6bfaede87aaecd6541
-            args:
-              - sh
-              - -ec
-              - |
-                exec docker-entrypoint.sh redis-server --appendonly yes --maxmemory 512mb \
-                  --maxmemory-policy noeviction --requirepass "$REDIS_PASSWORD"
-            env:
-              REDIS_PASSWORD:
-                valueFrom:
-                  secretKeyRef:
-                    name: &secret mikrotik-manager-secret
-                    key: REDIS_PASSWORD
-            probes:
-              readiness: &redisProbe
-                enabled: true
-                custom: true
-                spec: &redisProbeSpec
-                  exec:
-                    command:
-                      - sh
-                      - -ec
-                      - 'REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli ping | grep -qx PONG'
-                  periodSeconds: 5
-                  timeoutSeconds: 2
-              startup:
-                <<: *redisProbe
-                spec:
-                  <<: *redisProbeSpec
-                  failureThreshold: 60
-            resources:
-              requests:
-                cpu: 25m
-                memory: 128Mi
-              limits:
-                memory: 1Gi
       influxdb:
         strategy: Recreate
         annotations:
@@ -78,7 +31,7 @@ spec:
               DOCKER_INFLUXDB_INIT_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: *secret
+                    name: &secret mikrotik-manager-secret
                     key: INFLUXDB_ADMIN_PASSWORD
               DOCKER_INFLUXDB_INIT_ADMIN_TOKEN:
                 valueFrom:
@@ -107,12 +60,6 @@ spec:
               limits:
                 memory: 2Gi
     service:
-      redis:
-        forceRename: redis
-        controller: redis
-        ports:
-          redis:
-            port: 6379
       influxdb:
         forceRename: influxdb
         controller: influxdb
@@ -120,12 +67,6 @@ spec:
           http:
             port: 8086
     persistence:
-      redis:
-        existingClaim: mikrotik-manager-redis
-        advancedMounts:
-          redis:
-            redis:
-              - path: /data
       influxdb:
         existingClaim: mikrotik-manager-influxdb
         advancedMounts:

@@ -8,8 +8,8 @@
    Generate each independently. Use at least 32 random characters for the JWT
    secret and exactly 32 ASCII characters for the encryption key. Keep the
    encryption key with the recovery material for the database.
-2. Reconcile the database and stores in order. Confirm the ExternalSecrets,
-   PostgreSQL and data-store releases are Ready. Verify the Barman backup, Redis
+2. Reconcile PostgreSQL, Valkey, and InfluxDB. Confirm the ExternalSecrets,
+   PostgreSQL and data-store releases are Ready. Verify the Barman backup, Valkey
    authentication and persistence, and an authenticated write and query in
    InfluxDB's `metrics` bucket.
 3. Reconcile the app and check that its migrations succeed on PostgreSQL 18.

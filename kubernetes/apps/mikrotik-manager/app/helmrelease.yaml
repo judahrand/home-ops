@@ -42,19 +42,19 @@ spec:
                   secretKeyRef:
                     name: mikrotik-manager-database
                     key: password
-              REDIS_URL: redis://redis:6379
+              REDIS_URL: redis://mikrotik-manager-valkey:6379
               REDIS_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: &secret mikrotik-manager-secret
-                    key: REDIS_PASSWORD
+                    name: mikrotik-manager-valkey-secret
+                    key: password
               INFLUXDB_URL: http://influxdb:8086
               INFLUXDB_ORG: mikrotik-manager
               INFLUXDB_BUCKET: metrics
               INFLUXDB_TOKEN:
                 valueFrom:
                   secretKeyRef:
-                    name: *secret
+                    name: &secret mikrotik-manager-secret
                     key: INFLUXDB_TOKEN
               JWT_SECRET:
                 valueFrom:
