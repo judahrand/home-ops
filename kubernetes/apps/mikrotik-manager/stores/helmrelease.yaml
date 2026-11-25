@@ -1,0 +1,137 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/bjw-s-labs/helm-charts/main/charts/other/app-template/schemas/helmrelease-helm-v2.schema.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mikrotik-manager-stores
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mikrotik-manager
+  interval: 1h
+  values:
+    controllers:
+      redis:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          terminationGracePeriodSeconds: 60
+        containers:
+          redis:
+            image:
+              repository: mirror.gcr.io/library/redis
+              tag: 7-alpine
+              digest: sha256:57e4255cc971b1c8d6f8a6ca283ac01bc3ecdd914273ef6bfaede87aaecd6541
+            args:
+              - sh
+              - -ec
+              - |
+                exec docker-entrypoint.sh redis-server --appendonly yes --maxmemory 512mb \
+                  --maxmemory-policy noeviction --requirepass "$REDIS_PASSWORD"
+            env:
+              REDIS_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: &secret mikrotik-manager-secret
+                    key: REDIS_PASSWORD
+            probes:
+              readiness: &redisProbe
+                enabled: true
+                custom: true
+                spec: &redisProbeSpec
+                  exec:
+                    command:
+                      - sh
+                      - -ec
+                      - 'REDISCLI_AUTH="$REDIS_PASSWORD" redis-cli ping | grep -qx PONG'
+                  periodSeconds: 5
+                  timeoutSeconds: 2
+              startup:
+                <<: *redisProbe
+                spec:
+                  <<: *redisProbeSpec
+                  failureThreshold: 60
+            resources:
+              requests:
+                cpu: 25m
+                memory: 128Mi
+              limits:
+                memory: 1Gi
+      influxdb:
+        strategy: Recreate
+        annotations:
+          reloader.stakater.com/auto: "true"
+        pod:
+          terminationGracePeriodSeconds: 60
+        containers:
+          influxdb:
+            image:
+              repository: mirror.gcr.io/library/influxdb
+              tag: "2.7"
+              digest: sha256:b8d940ca9376f85118260f5b6bd236b8a00b1749c3350c5578d4cde8e27f31f2
+            env:
+              DOCKER_INFLUXDB_INIT_MODE: setup
+              DOCKER_INFLUXDB_INIT_USERNAME: admin
+              DOCKER_INFLUXDB_INIT_ORG: mikrotik-manager
+              DOCKER_INFLUXDB_INIT_BUCKET: metrics
+              DOCKER_INFLUXDB_INIT_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: *secret
+                    key: INFLUXDB_ADMIN_PASSWORD
+              DOCKER_INFLUXDB_INIT_ADMIN_TOKEN:
+                valueFrom:
+                  secretKeyRef:
+                    name: *secret
+                    key: INFLUXDB_TOKEN
+            probes:
+              readiness: &influxProbe
+                enabled: true
+                custom: true
+                spec: &influxProbeSpec
+                  httpGet:
+                    path: /health
+                    port: 8086
+                  periodSeconds: 5
+                  timeoutSeconds: 3
+              startup:
+                <<: *influxProbe
+                spec:
+                  <<: *influxProbeSpec
+                  failureThreshold: 60
+            resources:
+              requests:
+                cpu: 50m
+                memory: 256Mi
+              limits:
+                memory: 2Gi
+    service:
+      redis:
+        forceRename: redis
+        controller: redis
+        ports:
+          redis:
+            port: 6379
+      influxdb:
+        forceRename: influxdb
+        controller: influxdb
+        ports:
+          http:
+            port: 8086
+    persistence:
+      redis:
+        existingClaim: mikrotik-manager-redis
+        advancedMounts:
+          redis:
+            redis:
+              - path: /data
+      influxdb:
+        existingClaim: mikrotik-manager-influxdb
+        advancedMounts:
+          influxdb:
+            influxdb:
+              - path: /var/lib/influxdb2
+                subPath: data
+              - path: /etc/influxdb2
+                subPath: config
