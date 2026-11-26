@@ -114,3 +114,47 @@ spec:
                 expr: node_zfs_zpool_state{state!="online"} > 0
                 labels:
                   severity: critical
+  postRenderers:
+    - kustomize:
+        patches:
+          # Reuse the upstream expressions and keep the public series fresh for instant queries.
+          # The tests catch upstream rule reordering before a chart upgrade can patch the wrong rule.
+          - patch: |-
+              - op: test
+                path: /spec/groups/0/name
+                value: kube-apiserver-availability.rules
+              - op: test
+                path: /spec/groups/0/rules/0/record
+                value: code_verb:apiserver_request_total:increase30d
+              - op: test
+                path: /spec/groups/0/rules/4/record
+                value: cluster_verb_scope_le:apiserver_request_sli_duration_seconds_bucket:increase30d
+              - op: add
+                path: /spec/groups/-
+                value:
+                  name: kube-apiserver-availability-30d.rules
+                  interval: 30m
+                  rules: []
+              - op: copy
+                from: /spec/groups/0/rules/0
+                path: /spec/groups/1/rules/-
+              - op: copy
+                from: /spec/groups/0/rules/4
+                path: /spec/groups/1/rules/-
+              - op: replace
+                path: /spec/groups/1/rules/0/record
+                value: code_verb:apiserver_request_total:increase30d_cached
+              - op: replace
+                path: /spec/groups/1/rules/1/record
+                value: cluster_verb_scope_le:apiserver_request_sli_duration_seconds_bucket:increase30d_cached
+              - op: replace
+                path: /spec/groups/0/rules/0/expr
+                value: last_over_time(code_verb:apiserver_request_total:increase30d_cached[45m])
+              - op: replace
+                path: /spec/groups/0/rules/4/expr
+                value: last_over_time(cluster_verb_scope_le:apiserver_request_sli_duration_seconds_bucket:increase30d_cached[45m])
+            target:
+              group: monitoring.coreos.com
+              version: v1
+              kind: PrometheusRule
+              name: kube-prometheus-stack-kube-apiserver-availability.rules
