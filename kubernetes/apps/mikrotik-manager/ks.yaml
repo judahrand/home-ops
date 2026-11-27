@@ -100,6 +100,10 @@ spec:
   dependsOn:
     - name: mikrotik-manager-influxdb
     - name: mikrotik-manager-valkey
+    - name: multus-networks
+      namespace: kube-system
+    - name: multi-networkpolicy-nftables
+      namespace: kube-system
   path: ./kubernetes/apps/mikrotik-manager/app
   postBuild:
     substitute:

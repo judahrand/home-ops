@@ -12,9 +12,10 @@
    PostgreSQL and data-store releases are Ready. Verify the Barman backup, Valkey
    authentication and persistence, and an authenticated write and query in
    InfluxDB's `metrics` bucket.
-3. Reconcile the app and check that its migrations succeed on PostgreSQL 18.
-   Verify Kopiur snapshots for the app and InfluxDB and rehearse a restore in
-   isolation with the same encryption key.
+3. Confirm that `10.0.1.31` is free on VLAN 1 and reserve it outside the DHCP
+   pool before merging the deployment. Check that the migrations succeed on
+   PostgreSQL 18. Verify Kopiur snapshots for the app and InfluxDB and rehearse a
+   restore in isolation with the same encryption key.
 
 ## Internal UI and Kanidm
 
@@ -35,25 +36,25 @@
 4. Verify HTTPS, Socket.IO, Kanidm administrator sign-in, denial for a user
    outside the group, and local recovery sign-in.
 
-## RouterOS pilot and NetFlow
+## VLAN 1 discovery and NetFlow
 
 1. Enrol one router by its management IP over routed API-SSL on TCP `8729`
    using a dedicated polling account. Confirm polling and the source address
    RouterOS sees. Choose the same management IP as the IPFIX export source.
-2. Recheck that `10.0.42.128` is available in Cilium IPAM and the network.
-   Restrict access to the VIP on UDP `2055` to the pilot exporter at the router.
-3. Set `service.netflow.enabled` to `true` in the app's
-   [HelmRelease](app/helmrelease.yaml). Reconcile and confirm the VIP is
-   assigned and advertised only by the node with the ready
-   backend. Enable the collector on UDP `2055` in MikroTik Manager and keep
-   unknown exporters disabled.
+2. Confirm the backend pod has `10.0.1.31/24` on `lan0`. Run
+   `arp-scan --localnet --quiet` in the backend container and check that it
+   finds VLAN 1 neighbours. Confirm TCP `3001` is blocked when accessed via the
+   VLAN 1 address and works through nginx.
+3. Enable the collector on UDP `2055` in MikroTik Manager and keep unknown
+   exporters disabled. The VLAN 1 network policy permits this port from
+   `10.0.1.0/24`.
 4. Configure the pilot router's Traffic Flow/IPFIX target as
-   `10.0.42.128:2055`. Verify the collector sees the router's management IP,
+   `10.0.1.31:2055`. Verify the collector sees the router's management IP,
    attributes traffic to that device, rejects unauthorized sources, and resumes
    ingestion after a backend restart.
 
-To roll back NetFlow exposure, remove the router's export target and set
-`service.netflow.enabled` to `false` in Git. To withdraw the web UI, remove the
+To roll back NetFlow, remove the router's export target and disable the
+collector in MikroTik Manager. To withdraw the web UI, remove the
 HTTPRoute from Git so Flux prunes it. Keep the database, claims, and secrets
 for recovery. If an upgrade changes the schema incompatibly, restore the
 matching pre-upgrade database and application state before reverting the images.

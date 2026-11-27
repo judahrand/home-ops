@@ -18,6 +18,9 @@ spec:
         annotations:
           reloader.stakater.com/auto: "true"
         pod:
+          annotations:
+            k8s.v1.cni.cncf.io/networks: |-
+              [{"name":"lan","namespace":"kube-system","interface":"lan0","ips":["10.0.1.31/24"]}]
           terminationGracePeriodSeconds: 60
           securityContext:
             runAsNonRoot: true
@@ -36,6 +39,7 @@ spec:
             env:
               TZ: Europe/London
               NODE_ENV: production
+              PATH: /opt/mikrotik-manager/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
               DATABASE_URL: postgresql://mikrotik@mikrotik-manager-database-rw:5432/mikrotik_manager
               DB_PASSWORD:
                 valueFrom:
@@ -94,10 +98,12 @@ spec:
               limits:
                 memory: 1Gi
             securityContext:
-              allowPrivilegeEscalation: false
+              # The bundled arp-scan binary gains NET_RAW through its file capability.
+              allowPrivilegeEscalation: true
               readOnlyRootFilesystem: true
               capabilities:
                 drop: [ALL]
+                add: [NET_RAW]
       nginx:
         pod:
           securityContext:
@@ -149,33 +155,23 @@ spec:
           http:
             appProtocol: kubernetes.io/ws
             port: 80
-      netflow:
-        # Enable after restricting UDP 2055 to the exporters at the router.
-        enabled: &netflowEnabled false
-        forceRename: mikrotik-manager-netflow
-        controller: backend
-        type: LoadBalancer
-        externalTrafficPolicy: Local
-        allocateLoadBalancerNodePorts: false
-        annotations:
-          lbipam.cilium.io/ips: 10.0.42.128
-        ports:
-          ipfix:
-            protocol: UDP
-            port: 2055
-            targetPort: 2055
-    networkpolicies:
-      netflow:
-        enabled: *netflowEnabled
-        forceRename: mikrotik-manager-netflow
-        controller: backend
-        policyTypes: [Ingress]
-        rules:
-          ingress:
-            - ports:
-                - protocol: UDP
-                  port: 2055
+    configMaps:
+      discovery:
+        data:
+          # Upstream calls arp-scan without an interface. Select the LAN
+          # explicitly so it scans VLAN 1 instead of the primary pod network.
+          arp-scan: |
+            #!/bin/sh
+            exec /usr/bin/arp-scan --interface=lan0 "$@"
     persistence:
+      discovery:
+        type: configMap
+        identifier: discovery
+        defaultMode: 0555
+        advancedMounts:
+          backend:
+            backend:
+              - path: /opt/mikrotik-manager/bin
       data:
         existingClaim: mikrotik-manager
         advancedMounts:
