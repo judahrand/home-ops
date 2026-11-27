@@ -34,7 +34,7 @@ spec:
           backend:
             image:
               repository: ghcr.io/2gt-media-group-llc/mikrotik-manager-backend
-              tag: &release "1.0.36"
+              tag: &release "1.0.38"
               digest: sha256:c390ba831a3bc7e91f08fc468f9e262ef0839a7d23becf7642d463bfcfd612c2
             env:
               TZ: Europe/London
