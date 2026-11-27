@@ -55,6 +55,7 @@ spec:
       # drained/rolled, so the prior CSI key generation is no longer needed.
       security:
         cephx:
+          allowedCiphers: [aes256k]
           daemon:
             keyRotationPolicy: KeyGeneration
             keyGeneration: 2

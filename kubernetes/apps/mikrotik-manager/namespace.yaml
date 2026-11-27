@@ -5,6 +5,7 @@ metadata:
   name: mikrotik-manager
   annotations:
     kustomize.toolkit.fluxcd.io/prune: disabled
+    kopiur.home-operations.com/privileged-movers: "true"
   labels:
     # The backend needs NET_RAW for local ARP discovery.
     pod-security.kubernetes.io/enforce: privileged
