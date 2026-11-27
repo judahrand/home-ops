@@ -22,8 +22,8 @@ spec:
       valuesMap:
         - group: mikrotik_manager_admins@auth.judahrand.net
           values: [admin]
-  # Temporary workaround for MikroTik Manager 1.0.x, which expects RS256.
-  # Remove when https://github.com/2GT-Media-Group-LLC/mikrotik-manager/issues/511 is resolved.
+  # TODO: Remove this temporary MikroTik Manager 1.0.x RS256 workaround when
+  # https://github.com/2GT-Media-Group-LLC/mikrotik-manager/issues/511 is resolved.
   jwtLegacyCryptoEnable: true
   preferShortUsername: true
   disableConsentPrompt: true
