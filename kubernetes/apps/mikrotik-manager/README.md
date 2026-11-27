@@ -19,13 +19,16 @@
 
 ## Internal UI and Kanidm
 
+The internal route is enabled by default. For port-forward-only bootstrap, set
+`route.app.enabled: false` in the [HelmRelease](app/helmrelease.yaml) before the
+first app reconciliation.
+
 1. Run `kubectl -n mikrotik-manager port-forward svc/mikrotik-manager 8080:80`.
    Open `http://localhost:8080`, sign in as `admin` with the seeded password
    `admin`, then rotate the password and save the recovery credential in
    1Password.
-2. Set `route.app.enabled` to `true` in the app's
-   [HelmRelease](app/helmrelease.yaml). Reconcile and check the HTTPRoute's
-   `Accepted` and `ResolvedRefs` conditions.
+2. If you disabled the route for bootstrap, remove the override and reconcile.
+   Check the HTTPRoute's `Accepted` and `ResolvedRefs` conditions.
 3. In Settings → SSO / OIDC, enter issuer
    `https://auth.judahrand.net/oauth2/openid/mikrotik-manager`, client ID
    `mikrotik-manager`, and the `CLIENT_SECRET` from the operator-generated

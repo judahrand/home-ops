@@ -157,8 +157,6 @@ spec:
             port: 80
     route:
       app:
-        # Enable after rotating the seeded administrator over a port-forward.
-        enabled: false
         hostnames:
           - mikrotik-manager.judahrand.net
         parentRefs:
