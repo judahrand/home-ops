@@ -104,6 +104,8 @@ spec:
       namespace: kube-system
     - name: multi-networkpolicy-nftables
       namespace: kube-system
+    - name: kanidm-instance
+      namespace: security
   path: ./kubernetes/apps/mikrotik-manager/app
   postBuild:
     substitute:
@@ -117,28 +119,6 @@ spec:
       name: mikrotik-manager
       namespace: mikrotik-manager
   prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  interval: 1h
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: mikrotik-manager-edge
-spec:
-  targetNamespace: mikrotik-manager
-  dependsOn:
-    - name: mikrotik-manager
-    - name: envoy-gateway
-      namespace: network
-    - name: kanidm-instance
-      namespace: security
-  path: ./kubernetes/apps/mikrotik-manager/edge
-  prune: true
-  # Resume in Git after rotating the seeded administrator through a port-forward.
-  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system

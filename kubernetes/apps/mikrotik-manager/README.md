@@ -23,8 +23,9 @@
    Open `http://localhost:8080`, sign in as `admin` with the seeded password
    `admin`, then rotate the password and save the recovery credential in
    1Password.
-2. Remove `suspend: true` from `mikrotik-manager-edge` in [ks.yaml](ks.yaml).
-   Reconcile and check the HTTPRoute's `Accepted` and `ResolvedRefs` conditions.
+2. Set `route.app.enabled` to `true` in the app's
+   [HelmRelease](app/helmrelease.yaml). Reconcile and check the HTTPRoute's
+   `Accepted` and `ResolvedRefs` conditions.
 3. In Settings → SSO / OIDC, enter issuer
    `https://auth.judahrand.net/oauth2/openid/mikrotik-manager`, client ID
    `mikrotik-manager`, and the `CLIENT_SECRET` from the operator-generated
@@ -41,7 +42,7 @@
 1. Enrol one router by its management IP over routed API-SSL on TCP `8729`
    using a dedicated polling account. Confirm polling and the source address
    RouterOS sees. Choose the same management IP as the IPFIX export source.
-2. Confirm the backend pod has `10.0.1.31/24` on `lan0`. Run
+2. Confirm the backend pod has `10.0.1.31/24` on `net1`. Run
    `arp-scan --localnet --quiet` in the backend container and check that it
    finds VLAN 1 neighbours. Confirm TCP `3001` is blocked when accessed via the
    VLAN 1 address and works through nginx.
@@ -54,7 +55,7 @@
    ingestion after a backend restart.
 
 To roll back NetFlow, remove the router's export target and disable the
-collector in MikroTik Manager. To withdraw the web UI, remove the
-HTTPRoute from Git so Flux prunes it. Keep the database, claims, and secrets
+collector in MikroTik Manager. To withdraw the web UI, set
+`route.app.enabled` to `false` in Git. Keep the database, claims, and secrets
 for recovery. If an upgrade changes the schema incompatibly, restore the
 matching pre-upgrade database and application state before reverting the images.
