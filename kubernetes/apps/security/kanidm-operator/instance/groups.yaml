@@ -282,3 +282,15 @@ spec:
     name: kanidm
   members:
     - ${KANIDM_JUDAHRAND_USERNAME}
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: mikrotik-manager-admins
+spec:
+  kanidmName: mikrotik_manager_admins
+  kanidmRef:
+    name: kanidm
+  members:
+    - ${KANIDM_JUDAHRAND_USERNAME}

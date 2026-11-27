@@ -1,0 +1,19 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: mikrotik-manager-influxdb
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: mikrotik-manager-influxdb
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: mikrotik-manager
+              app.kubernetes.io/controller: backend
+      ports:
+        - port: 8086

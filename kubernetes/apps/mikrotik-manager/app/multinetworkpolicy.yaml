@@ -1,0 +1,22 @@
+---
+# yaml-language-server: $schema=https://k8s-schemas.home-operations.com/k8s.cni.cncf.io/multinetworkpolicy_v1beta1.json
+apiVersion: k8s.cni.cncf.io/v1beta1
+kind: MultiNetworkPolicy
+metadata:
+  name: mikrotik-manager-lan
+  annotations:
+    k8s.v1.cni.cncf.io/policy-for: kube-system/lan
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: mikrotik-manager
+      app.kubernetes.io/controller: backend
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - ipBlock:
+            cidr: 10.0.1.0/24
+      ports:
+        - port: 2055
+          protocol: UDP

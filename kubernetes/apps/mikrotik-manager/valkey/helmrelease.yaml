@@ -1,0 +1,56 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mikrotik-manager-valkey
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: mikrotik-manager-valkey
+  interval: 1h
+  values:
+    image:
+      registry: ghcr.io
+      repository: valkey-io/valkey
+      tag: 9.1.4
+    deploymentStrategy: Recreate
+    workloadAnnotations:
+      secret.reloader.stakater.com/reload: &secret mikrotik-manager-valkey-secret
+    dataStorage:
+      enabled: true
+      persistentVolumeClaimName: mikrotik-manager-redis
+    valkeyConfig: |
+      appendonly yes
+      maxmemory 512mb
+      maxmemory-policy noeviction
+    auth:
+      enabled: true
+      usersExistingSecret: *secret
+      aclUsers:
+        default:
+          permissions: "~* &* +@all"
+          passwordKey: password
+    extraValkeySecrets:
+      - name: *secret
+        mountPath: /run/secrets/valkey
+    readinessProbe:
+      enabled: true
+      customProbe: &authenticatedProbe
+        exec:
+          command:
+            - sh
+            - -ec
+            - 'VALKEYCLI_AUTH="$(cat /run/secrets/valkey/password)" valkey-cli ping | grep -qx PONG'
+        periodSeconds: 5
+        timeoutSeconds: 2
+    startupProbe:
+      enabled: true
+      customProbe:
+        <<: *authenticatedProbe
+        failureThreshold: 60
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 1Gi
