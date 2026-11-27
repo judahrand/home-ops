@@ -142,7 +142,11 @@
       // mise pin, the factory installer image, and the tuppr upgrade version
       description: "Talos Group",
       groupName: "talos",
-      matchPackageNames: ["siderolabs/talos"],
+      matchPackageNames: [
+        "ghcr.io/siderolabs/installer",
+        "siderolabs/talos",
+        "/factory\\.talos\\.dev/",
+      ],
       automerge: false,
       group: {
         commitMessageTopic: "{{{groupName}}} group",
