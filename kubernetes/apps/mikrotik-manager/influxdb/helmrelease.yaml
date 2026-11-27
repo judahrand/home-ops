@@ -31,7 +31,7 @@ spec:
               DOCKER_INFLUXDB_INIT_PASSWORD:
                 valueFrom:
                   secretKeyRef:
-                    name: &secret mikrotik-manager-secret
+                    name: &secret mikrotik-manager-influxdb-secret
                     key: INFLUXDB_ADMIN_PASSWORD
               DOCKER_INFLUXDB_INIT_ADMIN_TOKEN:
                 valueFrom:

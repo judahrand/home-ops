@@ -26,7 +26,7 @@ spec:
       namespace: mikrotik-manager
     - apiVersion: external-secrets.io/v1
       kind: ExternalSecret
-      name: mikrotik-manager
+      name: mikrotik-manager-database
       namespace: mikrotik-manager
   prune: true
   sourceRef:
@@ -44,7 +44,8 @@ spec:
   components:
     - ../../../components/kopiur/backup
   dependsOn:
-    - name: mikrotik-manager-database
+    - name: onepassword-connect
+      namespace: external-secrets
     - name: kopiur-repository
       namespace: kopiur-system
   path: ./kubernetes/apps/mikrotik-manager/influxdb
@@ -58,6 +59,10 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
+      name: mikrotik-manager-influxdb
+      namespace: mikrotik-manager
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
       name: mikrotik-manager-influxdb
       namespace: mikrotik-manager
   prune: true
@@ -98,6 +103,7 @@ spec:
   components:
     - ../../../components/kopiur/backup
   dependsOn:
+    - name: mikrotik-manager-database
     - name: mikrotik-manager-influxdb
     - name: mikrotik-manager-valkey
     - name: multus-networks
@@ -116,6 +122,10 @@ spec:
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
+      name: mikrotik-manager
+      namespace: mikrotik-manager
+    - apiVersion: external-secrets.io/v1
+      kind: ExternalSecret
       name: mikrotik-manager
       namespace: mikrotik-manager
   prune: true

@@ -58,12 +58,12 @@ spec:
               INFLUXDB_TOKEN:
                 valueFrom:
                   secretKeyRef:
-                    name: &secret mikrotik-manager-secret
+                    name: mikrotik-manager-influxdb-secret
                     key: INFLUXDB_TOKEN
               JWT_SECRET:
                 valueFrom:
                   secretKeyRef:
-                    name: *secret
+                    name: &secret mikrotik-manager-secret
                     key: JWT_SECRET
               ENCRYPTION_KEY:
                 valueFrom:
