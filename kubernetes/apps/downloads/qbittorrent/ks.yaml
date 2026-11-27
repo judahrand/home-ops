@@ -13,8 +13,8 @@ spec:
   path: ./kubernetes/apps/downloads/qbittorrent/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: qbittorrent
     namespace: flux-system
   wait: true
   dependsOn:

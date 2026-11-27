@@ -13,8 +13,8 @@ spec:
   path: ./kubernetes/apps/downloads/sabnzbd/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: sabnzbd
     namespace: flux-system
   wait: false
   dependsOn:

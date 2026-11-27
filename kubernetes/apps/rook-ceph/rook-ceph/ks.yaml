@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/apps/rook-ceph/rook-ceph/app
   prune: false # never should be deleted
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: rook-ceph
     namespace: flux-system
   wait: false
   interval: 1h
@@ -30,8 +30,8 @@ spec:
   path: ./kubernetes/apps/rook-ceph/rook-ceph/cluster
   prune: false # never should be deleted
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: rook-ceph
     namespace: flux-system
   wait: false
   interval: 1h

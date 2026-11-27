@@ -14,8 +14,8 @@ spec:
   path: ./kubernetes/apps/media/kyoo/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kyoo
     namespace: flux-system
   wait: false # no flux ks dependents
   interval: 1h

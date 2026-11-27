@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/apps/kube-system/node-feature-discovery/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: node-feature-discovery
     namespace: flux-system
   wait: true
   interval: 1h
@@ -28,8 +28,8 @@ spec:
       namespace: kube-system
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: node-feature-discovery
     namespace: flux-system
   wait: true
   interval: 1h

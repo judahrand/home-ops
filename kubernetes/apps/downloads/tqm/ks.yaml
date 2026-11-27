@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/apps/downloads/tqm/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: tqm
     namespace: flux-system
   targetNamespace: downloads
   wait: false

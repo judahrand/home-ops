@@ -13,8 +13,8 @@ spec:
   path: ./kubernetes/apps/selfhosted/omada-controller/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: omada-controller
     namespace: flux-system
   wait: false
   postBuild:

@@ -12,8 +12,8 @@ spec:
       APP: network-ups-tools
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: network-ups-tools
     namespace: flux-system
   targetNamespace: o11y
   wait: false

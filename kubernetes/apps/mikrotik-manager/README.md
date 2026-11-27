@@ -20,7 +20,7 @@
 ## Internal UI and Kanidm
 
 The internal route is enabled by default. For port-forward-only bootstrap, set
-`route.app.enabled: false` in the [HelmRelease](app/helmrelease.yaml) before the
+`route.app.enabled: false` in the [HelmRelease](mikrotik-manager/app/helmrelease.yaml) before the
 first app reconciliation.
 
 1. Run `kubectl -n mikrotik-manager port-forward svc/mikrotik-manager 8080:80`.

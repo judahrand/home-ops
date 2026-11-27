@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/apps/kube-system/kubelet-csr-approver/app
   prune: false # never should be deleted
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kubelet-csr-approver
     namespace: flux-system
   wait: false
   interval: 1h

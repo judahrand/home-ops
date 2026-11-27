@@ -19,8 +19,8 @@ spec:
       KOPIUR_CAPACITY: 10Gi
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: nzbget
     namespace: flux-system
   targetNamespace: downloads
   wait: false

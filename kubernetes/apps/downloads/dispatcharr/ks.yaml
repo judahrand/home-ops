@@ -14,8 +14,8 @@ spec:
   path: ./kubernetes/apps/downloads/dispatcharr/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: dispatcharr
     namespace: flux-system
   wait: false
   interval: 1h

@@ -10,7 +10,7 @@ spec:
   path: ./kubernetes/apps/selfhosted/obico-ml-api/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: obico-ml-api
     namespace: flux-system
   wait: false

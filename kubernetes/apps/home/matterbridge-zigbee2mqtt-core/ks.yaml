@@ -15,8 +15,8 @@ spec:
   path: ./kubernetes/apps/home/matterbridge-zigbee2mqtt-core/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: matterbridge-zigbee2mqtt-core
     namespace: flux-system
   wait: false
   interval: 1h
