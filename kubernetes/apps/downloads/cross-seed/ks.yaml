@@ -15,8 +15,8 @@ spec:
       APP: cross-seed
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: cross-seed
     namespace: flux-system
   targetNamespace: downloads
   wait: false

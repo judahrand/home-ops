@@ -23,8 +23,8 @@ spec:
       APP: kritika-postgres
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kritika
     namespace: flux-system
   targetNamespace: kritika-system
 ---
@@ -46,8 +46,8 @@ spec:
   path: ./kubernetes/apps/kritika-system/kritika/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kritika
     namespace: flux-system
   targetNamespace: kritika-system
   wait: false

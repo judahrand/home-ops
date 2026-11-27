@@ -12,8 +12,8 @@ spec:
   path: ./kubernetes/apps/selfhosted/dawarich/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: dawarich
     namespace: flux-system
   wait: false
   dependsOn:
@@ -40,8 +40,8 @@ spec:
   path: ./kubernetes/apps/selfhosted/dawarich/database
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: dawarich
     namespace: flux-system
   wait: false
   interval: 1h
@@ -59,8 +59,8 @@ spec:
   path: ./kubernetes/apps/selfhosted/dawarich/valkey
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: dawarich
     namespace: flux-system
   wait: false
   interval: 1h

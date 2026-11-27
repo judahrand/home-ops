@@ -14,8 +14,8 @@ spec:
   path: ./kubernetes/apps/home/matterbridge-hass/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: matterbridge-hass
     namespace: flux-system
   wait: false
   interval: 1h

@@ -6,4 +6,4 @@ components:
   - ../../components/kopiur/secret
 resources:
   - ./namespace.yaml
-  - ./ks.yaml
+  - ./mikrotik-manager/ks.yaml

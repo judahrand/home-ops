@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/apps/default/openwrt-backup/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: openwrt-backup
     namespace: flux-system
   wait: true
   interval: 1h

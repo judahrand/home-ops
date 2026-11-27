@@ -14,8 +14,8 @@ spec:
   path: ./kubernetes/apps/home/zigbee2mqtt-garage/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: zigbee2mqtt-garage
     namespace: flux-system
   wait: false
   interval: 1h

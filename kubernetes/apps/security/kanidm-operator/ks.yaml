@@ -14,8 +14,8 @@ spec:
   path: ./kubernetes/apps/security/kanidm-operator/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kanidm-operator
     namespace: flux-system
   targetNamespace: security
   wait: true
@@ -47,8 +47,8 @@ spec:
         name: kanidm-persons-secret
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kanidm-operator
     namespace: flux-system
   targetNamespace: security
   wait: false
@@ -68,8 +68,8 @@ spec:
   path: ./kubernetes/apps/security/kanidm-operator/secrets
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: kanidm-operator
     namespace: flux-system
   targetNamespace: security
   wait: true

@@ -7,7 +7,7 @@ metadata:
 spec:
   targetNamespace: mikrotik-manager
   components:
-    - ../../../components/cnpg
+    - ../../../../components/cnpg
   dependsOn:
     - name: onepassword-connect
       namespace: external-secrets
@@ -15,7 +15,7 @@ spec:
       namespace: cnpg-system
     - name: barman-plugin
       namespace: cnpg-system
-  path: ./kubernetes/apps/mikrotik-manager/database
+  path: ./kubernetes/apps/mikrotik-manager/mikrotik-manager/database
   postBuild:
     substitute:
       APP: mikrotik-manager-database
@@ -30,8 +30,8 @@ spec:
       namespace: mikrotik-manager
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: mikrotik-manager
     namespace: flux-system
   interval: 1h
 ---
@@ -42,13 +42,13 @@ metadata:
 spec:
   targetNamespace: mikrotik-manager
   components:
-    - ../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: onepassword-connect
       namespace: external-secrets
     - name: kopiur-repository
       namespace: kopiur-system
-  path: ./kubernetes/apps/mikrotik-manager/influxdb
+  path: ./kubernetes/apps/mikrotik-manager/mikrotik-manager/influxdb
   postBuild:
     substitute:
       APP: mikrotik-manager-influxdb
@@ -67,8 +67,8 @@ spec:
       namespace: mikrotik-manager
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: mikrotik-manager
     namespace: flux-system
   interval: 1h
 ---
@@ -81,7 +81,7 @@ spec:
   dependsOn:
     - name: onepassword-connect
       namespace: external-secrets
-  path: ./kubernetes/apps/mikrotik-manager/valkey
+  path: ./kubernetes/apps/mikrotik-manager/mikrotik-manager/valkey
   healthChecks:
     - apiVersion: helm.toolkit.fluxcd.io/v2
       kind: HelmRelease
@@ -89,8 +89,8 @@ spec:
       namespace: mikrotik-manager
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: mikrotik-manager
     namespace: flux-system
   interval: 1h
 ---
@@ -101,7 +101,7 @@ metadata:
 spec:
   targetNamespace: mikrotik-manager
   components:
-    - ../../../components/kopiur/backup
+    - ../../../../components/kopiur/backup
   dependsOn:
     - name: mikrotik-manager-database
     - name: mikrotik-manager-influxdb
@@ -112,7 +112,7 @@ spec:
       namespace: kube-system
     - name: kanidm-instance
       namespace: security
-  path: ./kubernetes/apps/mikrotik-manager/app
+  path: ./kubernetes/apps/mikrotik-manager/mikrotik-manager/app
   postBuild:
     substitute:
       APP: mikrotik-manager
@@ -130,7 +130,7 @@ spec:
       namespace: mikrotik-manager
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: mikrotik-manager
     namespace: flux-system
   interval: 1h

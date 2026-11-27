@@ -14,7 +14,7 @@ spec:
   path: ./kubernetes/apps/kube-system/multi-networkpolicy-nftables/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: multi-networkpolicy-nftables
     namespace: flux-system
   targetNamespace: kube-system

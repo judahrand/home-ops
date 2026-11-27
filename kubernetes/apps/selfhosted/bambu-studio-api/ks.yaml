@@ -12,8 +12,8 @@ spec:
   path: ./kubernetes/apps/selfhosted/bambu-studio-api/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: bambu-studio-api
     namespace: flux-system
   wait: false
   postBuild:

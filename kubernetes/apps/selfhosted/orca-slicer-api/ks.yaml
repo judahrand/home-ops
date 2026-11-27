@@ -12,8 +12,8 @@ spec:
   path: ./kubernetes/apps/selfhosted/orca-slicer-api/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: orca-slicer-api
     namespace: flux-system
   wait: false
   postBuild:

@@ -12,8 +12,8 @@ spec:
   path: ./kubernetes/apps/home/zwave/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: zwave
     namespace: flux-system
   wait: false
   interval: 1h

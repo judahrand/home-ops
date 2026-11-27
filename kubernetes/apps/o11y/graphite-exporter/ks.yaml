@@ -9,8 +9,8 @@ spec:
   path: ./kubernetes/apps/o11y/graphite-exporter/app
   prune: true
   sourceRef:
-    kind: GitRepository
-    name: flux-system
+    kind: ExternalArtifact
+    name: graphite-exporter
     namespace: flux-system
   wait: false
   interval: 1h
