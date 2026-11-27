@@ -44,6 +44,8 @@ spec:
                     name: vikunja-kanidm-oauth2-credentials
                     key: CLIENT_SECRET
               VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_SCOPE: "openid profile email"
+              # Deprecated since Vikunja 2.8.0 (openid emailfallback/usernamefallback);
+              # each user must link Kanidm under Settings → Linked accounts before these are removed.
               # Link existing local accounts on first OIDC login (both must be set).
               VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_USERNAMEFALLBACK: "true"
               VIKUNJA_AUTH_OPENID_PROVIDERS_KANIDM_EMAILFALLBACK: "true"
