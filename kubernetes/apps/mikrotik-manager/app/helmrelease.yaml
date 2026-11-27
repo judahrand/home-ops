@@ -149,6 +149,32 @@ spec:
           http:
             appProtocol: kubernetes.io/ws
             port: 80
+      netflow:
+        # Enable after restricting UDP 2055 to the exporters at the router.
+        enabled: &netflowEnabled false
+        forceRename: mikrotik-manager-netflow
+        controller: backend
+        type: LoadBalancer
+        externalTrafficPolicy: Local
+        allocateLoadBalancerNodePorts: false
+        annotations:
+          lbipam.cilium.io/ips: 10.0.42.128
+        ports:
+          ipfix:
+            protocol: UDP
+            port: 2055
+            targetPort: 2055
+    networkpolicies:
+      netflow:
+        enabled: *netflowEnabled
+        forceRename: mikrotik-manager-netflow
+        controller: backend
+        policyTypes: [Ingress]
+        rules:
+          ingress:
+            - ports:
+                - protocol: UDP
+                  port: 2055
     persistence:
       data:
         existingClaim: mikrotik-manager

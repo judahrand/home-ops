@@ -41,17 +41,10 @@
    using a dedicated polling account. Confirm polling and the source address
    RouterOS sees. Choose the same management IP as the IPFIX export source.
 2. Recheck that `10.0.42.128` is available in Cilium IPAM and the network.
-   Restrict access to UDP `2055` at the network boundary to the pilot exporter.
-   Set `exporter_ip` in your shell to the pilot router's management IP and
-   create the Flux input with that address as a `/32`.
-
-    ```sh
-    kubectl -n mikrotik-manager create configmap mikrotik-manager-netflow \
-      --from-literal=NETFLOW_EXPORTER_CIDR="${exporter_ip}/32"
-    ```
-
-3. Remove `suspend: true` from `mikrotik-manager-netflow` in Git. Reconcile and
-   confirm the VIP is assigned and advertised only by the node with the ready
+   Restrict access to the VIP on UDP `2055` to the pilot exporter at the router.
+3. Set `service.netflow.enabled` to `true` in the app's
+   [HelmRelease](app/helmrelease.yaml). Reconcile and confirm the VIP is
+   assigned and advertised only by the node with the ready
    backend. Enable the collector on UDP `2055` in MikroTik Manager and keep
    unknown exporters disabled.
 4. Configure the pilot router's Traffic Flow/IPFIX target as
@@ -59,9 +52,8 @@
    attributes traffic to that device, rejects unauthorized sources, and resumes
    ingestion after a backend restart.
 
-To roll back exposure, remove the router's export target and remove the
-HTTPRoute and UDP Service from Git so Flux prunes them. Suspending a
-Kustomization freezes resources already applied. Keep the database, claims, and
-secrets for recovery. If an upgrade changes the schema incompatibly, restore
-the matching pre-upgrade database and application state before reverting the
-images.
+To roll back NetFlow exposure, remove the router's export target and set
+`service.netflow.enabled` to `false` in Git. To withdraw the web UI, remove the
+HTTPRoute from Git so Flux prunes it. Keep the database, claims, and secrets
+for recovery. If an upgrade changes the schema incompatibly, restore the
+matching pre-upgrade database and application state before reverting the images.

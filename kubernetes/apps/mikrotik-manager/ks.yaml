@@ -140,27 +140,3 @@ spec:
     name: flux-system
     namespace: flux-system
   interval: 1h
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: mikrotik-manager-netflow
-spec:
-  targetNamespace: mikrotik-manager
-  dependsOn:
-    - name: mikrotik-manager
-    - name: cilium
-      namespace: kube-system
-  path: ./kubernetes/apps/mikrotik-manager/netflow
-  postBuild:
-    substituteFrom:
-      - kind: ConfigMap
-        name: mikrotik-manager-netflow
-  prune: true
-  # Resume in Git after configuring the management network ACL and exporter CIDR.
-  suspend: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  interval: 1h
