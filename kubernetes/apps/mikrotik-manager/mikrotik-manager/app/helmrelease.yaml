@@ -34,7 +34,7 @@ spec:
           backend:
             image:
               repository: ghcr.io/2gt-media-group-llc/mikrotik-manager-backend
-              tag: &release "1.0.39"
+              tag: &release "1.0.42"
             env:
               TZ: Europe/London
               NODE_ENV: production
